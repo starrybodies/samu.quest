@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alchememes — Strategic Meme Engineering</title>
+  <meta name="description" content="Transmuting culture through strategic meme engineering for web3 and regenerative movements.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --blue: #7dd3fc;
+      --blue-dim: #0ea5e9;
+      --muted: #525252;
+      --subtle: #0a0a0a;
+      --border: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    ::selection { background: var(--blue); color: var(--bg); }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Background canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor.hovering {
+      transform: scale(3);
+      background: var(--blue);
+      opacity: 0.3;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Back navigation */
+    .back-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 25px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    .back-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s, gap 0.3s;
+    }
+
+    .back-link:hover { color: var(--fg); gap: 12px; }
+
+    .back-link::before { content: '\2190'; }
+
+    .back-nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+    }
+
+    .hero-content {
+      padding: 140px 60px 80px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--blue);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 .line span {
+      display: inline-block;
+      transform: translateY(100%);
+      animation: slideUp 1s ease forwards;
+    }
+
+    .hero h1 .line:nth-child(2) span { animation-delay: 0.1s; }
+
+    @keyframes slideUp { to { transform: translateY(0); } }
+
+    .hero h1 em { font-style: normal; color: var(--blue); }
+
+    .hero-description {
+      font-size: 14px;
+      max-width: 480px;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 48px;
+    }
+
+    .hero-description p { margin-bottom: 18px; }
+    .hero-description p:last-child { margin-bottom: 0; }
+    .hero-description strong { color: var(--fg); font-weight: 400; }
+
+    .hero-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-link:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .hero-link::after { content: '\2197'; }
+
+    .hero-link.primary {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .hero-link.primary:hover {
+      background: var(--blue);
+      color: var(--bg);
+    }
+
+    /* Hero image panel */
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      opacity: 0.95;
+      animation: floatIn 1.2s ease 0.3s both;
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: scale(0.94) translateY(20px); }
+      to { opacity: 0.95; transform: scale(1) translateY(0); }
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(125,211,252,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Manifesto section */
+    .manifesto {
+      padding: 120px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--muted);
+      padding-top: 8px;
+    }
+
+    .manifesto-lead {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 3.5vw, 36px);
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .manifesto-lead em { font-style: normal; color: var(--blue); }
+
+    .manifesto-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .pillar {
+      background: var(--bg);
+      padding: 48px 40px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .pillar:hover::before { transform: scaleX(1); }
+    .pillar:hover { background: var(--subtle); }
+
+    .pillar-number {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--blue);
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    .pillar h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .pillar p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    /* Quote band */
+    .quote-section {
+      padding: 140px 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .quote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 3.5vw, 34px);
+      font-style: normal;
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    .quote em { font-style: normal; color: var(--blue); }
+
+    .quote-attr {
+      margin-top: 32px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    /* Connect */
+    .connect {
+      padding: 120px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .connect-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .connect-intro {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      line-height: 1.5;
+      max-width: 600px;
+    }
+
+    .connect-intro em { font-style: normal; color: var(--blue); }
+
+    .connect-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .connect-item {
+      background: var(--bg);
+      padding: 35px;
+      transition: background 0.3s;
+      display: block;
+    }
+
+    .connect-item:hover { background: var(--subtle); }
+
+    .connect-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .connect-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .connect-arrow {
+      color: var(--border);
+      transition: color 0.3s, transform 0.3s;
+      transform: rotate(-45deg);
+    }
+
+    .connect-item:hover .connect-arrow {
+      color: var(--blue);
+      transform: rotate(0deg);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-links { display: flex; gap: 40px; }
+    .footer-links a:hover { color: var(--blue); transition: color 0.3s; }
+
+    /* Mobile */
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-image {
+        height: 55vw;
+        min-height: 260px;
+        order: -1;
+        padding: 40px;
+      }
+      .hero-image img { max-height: 100%; }
+      .hero-content { padding: 60px 20px; }
+      .manifesto-grid { grid-template-columns: 1fr; gap: 20px; }
+      .manifesto-pillars { grid-template-columns: 1fr; }
+      .connect-header { grid-template-columns: 1fr; gap: 20px; }
+      .connect-links { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .back-nav { padding: 15px 20px; }
+      .back-nav-label { display: none; }
+      .hero-content { padding: 50px 20px 60px; }
+      .hero h1 { font-size: clamp(34px, 10vw, 56px); letter-spacing: -1px; }
+      .hero-description { font-size: 13px; }
+      .manifesto { padding: 60px 20px; }
+      .pillar { padding: 30px 24px; }
+      .quote-section { padding: 80px 20px; }
+      .connect { padding: 60px 20px; }
+      .connect-item { padding: 25px 20px; }
+      .connect-name { font-size: 17px; }
+      .cursor, .cursor-dot { display: none; }
+      footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 30px 20px;
+      }
+      .footer-links { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-image { height: 65vw; padding: 24px; }
+      .hero-content { padding: 36px 16px 60px; }
+      .hero h1 { margin-bottom: 20px; }
+      .hero-description { font-size: 12px; margin-bottom: 32px; }
+      .hero-link { padding: 10px 18px; font-size: 10px; }
+      .manifesto-lead { font-size: 20px; }
+      .pillar h3 { font-size: 19px; }
+      .connect-name { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <nav class="back-nav">
+    <a href="index.html" class="back-link">Back</a>
+    <span class="back-nav-label">Alchememes</span>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">Strategic Meme Engineering</div>
+        <h1>
+          <span class="line"><span>Alche</span></span>
+          <span class="line"><span><em>memes</em></span></span>
+        </h1>
+        <div class="hero-description">
+          <p>Transmuting culture through <strong>strategic meme engineering</strong> for web3 and regenerative movements. Building narrative infrastructure for the ideas that matter.</p>
+          <p>Because the revolution will be memed&mdash;or it won't happen at all. <strong>Memes are the compression algorithm of culture.</strong> We craft viral thought-packages that carry regenerative ideas into the mainstream consciousness.</p>
+        </div>
+        <div class="hero-links">
+          <a href="https://instagram.com/alchememes__" target="_blank" rel="noopener" class="hero-link primary">Instagram</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/alchememes-logo.png" alt="Alchememes">
+      </div>
+    </section>
+
+    <!-- Manifesto / Pillars -->
+    <section class="manifesto">
+      <div class="manifesto-grid reveal">
+        <div class="section-label">What We Do</div>
+        <p class="manifesto-lead">Memes aren't jokes. They're <em>units of cultural transmission</em>&mdash;the DNA of collective belief. We engineer them with intention.</p>
+      </div>
+
+      <div class="manifesto-pillars">
+        <div class="pillar reveal">
+          <div class="pillar-number">01</div>
+          <h3>Narrative Infrastructure</h3>
+          <p>Every movement needs a story. We build the meme ecosystems that carry complex regenerative ideas into the cultural bloodstream&mdash;making the esoteric visceral and the systemic personal.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-number">02</div>
+          <h3>Cultural Alchemy</h3>
+          <p>We transmute raw internet culture into purposeful signal. Taking the energy of meme virality and redirecting it toward regenerative futures, web3 communities, and paradigm-shifting ideas.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-number">03</div>
+          <h3>Viral Thought-Packages</h3>
+          <p>Information wants to be free and fast. We craft thought-packages optimized for propagation&mdash;ideas so sharp and resonant they replicate themselves across consciousness networks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="quote-section reveal">
+      <blockquote class="quote">
+        "The revolution will be memed&mdash;or it <em>won't happen at all.</em> Memes are how paradigms shift at the speed of culture."
+      </blockquote>
+      <div class="quote-attr">&mdash; Alchememes</div>
+    </section>
+
+    <!-- Connect -->
+    <section class="connect">
+      <div class="connect-header reveal">
+        <div class="section-label">Find Us</div>
+        <p class="connect-intro">Follow the meme stream. <em>Culture moves fast</em>&mdash;we move with it.</p>
+      </div>
+
+      <div class="connect-links reveal">
+        <a href="https://instagram.com/alchememes__" target="_blank" rel="noopener" class="connect-item">
+          <div class="connect-label">Instagram</div>
+          <div class="connect-name">@alchememes__ <span class="connect-arrow">&nearr;</span></div>
+        </a>
+        <a href="index.html" class="connect-item">
+          <div class="connect-label">About the Alchemist</div>
+          <div class="connect-name">samu.quest <span class="connect-arrow">&nearr;</span></div>
+        </a>
+        <a href="mailto:samu@samu.quest" class="connect-item">
+          <div class="connect-label">Collaborate</div>
+          <div class="connect-name">Get in touch <span class="connect-arrow">&nearr;</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>Alchememes &mdash; samu.quest &mdash; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="mailto:samu@samu.quest">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    let cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
+
+    document.addEventListener('mousemove', e => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+    });
+
+    function animateCursor() {
+      dotX += (cursorX - dotX) * 0.15;
+      dotY += (cursorY - dotY) * 0.15;
+      cursor.style.left = cursorX - 6 + 'px';
+      cursor.style.top = cursorY - 6 + 'px';
+      cursorDot.style.left = dotX - 2 + 'px';
+      cursorDot.style.top = dotY - 2 + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      reveals.forEach((el, i) => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+          setTimeout(() => el.classList.add('visible'), i * 80);
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // Background particles
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    const PARTICLE_COUNT = window.innerWidth < 768 ? 50 : 120;
+    const CELL_SIZE = 30;
+    let noiseZ = 0;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function noise(x, y, z) {
+      return (
+        Math.sin(x * 0.8 + z * 0.5) * 0.5 +
+        Math.sin(y * 0.6 + z * 0.3) * 0.5 +
+        Math.sin((x + y) * 0.4 + z * 0.7) * 0.3
+      ) / 1.3;
+    }
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.speed = 0.3 + Math.random() * 0.8;
+        this.life = 0;
+        this.maxLife = 200 + Math.random() * 300;
+        this.size = 0.5 + Math.random() * 1.2;
+        const pick = Math.random();
+        this.color = pick < 0.6 ? '125,211,252' : pick < 0.85 ? '14,165,233' : '255,255,255';
+      }
+      update() {
+        const col = Math.floor(this.x / CELL_SIZE);
+        const row = Math.floor(this.y / CELL_SIZE);
+        const angle = noise(col * 0.06, row * 0.06, noiseZ) * Math.PI * 4;
+        this.x += Math.cos(angle) * this.speed;
+        this.y += Math.sin(angle) * this.speed;
+        this.life++;
+        if (this.life > this.maxLife || this.x < -10 || this.x > w + 10 || this.y < -10 || this.y > h + 10) this.reset();
+      }
+      draw() {
+        const fade = Math.min(1, this.life / 40) * Math.min(1, (this.maxLife - this.life) / 40);
+        ctx.fillStyle = `rgba(${this.color},${fade * 0.35})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+    }
+
+    function drawBg() {
+      ctx.clearRect(0, 0, w, h);
+      noiseZ += 0.003;
+      particles.forEach(p => { p.update(); p.draw(); });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = dx * dx + dy * dy;
+          if (dist < 8000) {
+            ctx.strokeStyle = `rgba(125,211,252,${(1 - dist / 8000) * 0.08})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawBg);
+    }
+
+    resize();
+    initParticles();
+    drawBg();
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Light Web — samu.quest</title>
+  <meta name="description" content="Essays on building an internet that heals. Exploring the counter-narrative to extractive tech.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --blue: #7dd3fc;
+      --blue-dim: #0ea5e9;
+      --muted: #525252;
+      --subtle: #0a0a0a;
+      --border: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: var(--blue); color: var(--bg); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Back nav */
+    .top-nav {
+      padding: 32px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.3s, gap 0.3s;
+    }
+
+    .back-link::before { content: '\2190'; }
+    .back-link:hover { color: var(--blue); gap: 16px; }
+
+    .nav-site {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* Hero — icon layout */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-icon-panel {
+      border-right: 1px solid var(--border);
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-icon-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(125,211,252,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Subtle web lines behind the icon text */
+    .web-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.06;
+    }
+
+    .hero-icon-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(80px, 12vw, 140px);
+      color: var(--blue);
+      letter-spacing: -4px;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .hero-content {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--blue);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 400;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 40px;
+    }
+
+    .hero-description {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 13px;
+      max-width: 480px;
+      margin-bottom: 50px;
+    }
+
+    .hero-description p { margin-bottom: 18px; }
+    .hero-description p:last-child { margin-bottom: 0; }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      padding: 16px 32px;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      transition: all 0.3s;
+      align-self: flex-start;
+    }
+
+    .cta-btn::after { content: '\2197'; transition: transform 0.3s; }
+    .cta-btn:hover { background: var(--blue); color: var(--bg); }
+    .cta-btn:hover::after { transform: translate(2px, -2px); }
+
+    /* Themes */
+    .themes {
+      padding: 80px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .themes-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--muted);
+      margin-bottom: 50px;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .theme-item {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      transition: border-color 0.3s;
+    }
+
+    .theme-item:hover { border-top-color: var(--blue); }
+
+    .theme-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: var(--fg);
+    }
+
+    .theme-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      padding: 100px 40px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .pull-quote blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-style: normal;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .pull-quote blockquote em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Cursor */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor.hovering {
+      transform: scale(3);
+      background: var(--blue);
+      opacity: 0.3;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-icon-panel { border-right: none; border-bottom: 1px solid var(--border); min-height: 280px; }
+      .hero-content { padding: 50px 40px; }
+      .themes-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+
+    @media (max-width: 600px) {
+      .top-nav { padding: 20px; }
+      .hero-content { padding: 40px 20px; }
+      .themes { padding: 50px 20px; }
+      .pull-quote { padding: 60px 20px; }
+      .hero-title { font-size: clamp(28px, 8vw, 44px); }
+      .hero-icon-text { font-size: clamp(60px, 18vw, 100px); }
+      .cursor, .cursor-dot { display: none; }
+      footer { flex-direction: column; gap: 12px; padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <header class="top-nav">
+    <a href="index.html" class="back-link">Back</a>
+    <span class="nav-site">samu.quest</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-icon-panel">
+        <svg class="web-lines" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+          <line x1="250" y1="0" x2="250" y2="500" stroke="#7dd3fc" stroke-width="0.5"/>
+          <line x1="0" y1="250" x2="500" y2="250" stroke="#7dd3fc" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="500" y2="500" stroke="#7dd3fc" stroke-width="0.5"/>
+          <line x1="500" y1="0" x2="0" y2="500" stroke="#7dd3fc" stroke-width="0.5"/>
+          <circle cx="250" cy="250" r="200" fill="none" stroke="#7dd3fc" stroke-width="0.5"/>
+          <circle cx="250" cy="250" r="120" fill="none" stroke="#7dd3fc" stroke-width="0.5"/>
+          <circle cx="250" cy="250" r="60" fill="none" stroke="#7dd3fc" stroke-width="0.5"/>
+          <line x1="50" y1="50" x2="450" y2="450" stroke="#7dd3fc" stroke-width="0.3"/>
+          <line x1="450" y1="50" x2="50" y2="450" stroke="#7dd3fc" stroke-width="0.3"/>
+          <line x1="0" y1="150" x2="500" y2="350" stroke="#7dd3fc" stroke-width="0.3"/>
+          <line x1="0" y1="350" x2="500" y2="150" stroke="#7dd3fc" stroke-width="0.3"/>
+        </svg>
+        <span class="hero-icon-text">LW</span>
+      </div>
+      <div class="hero-content">
+        <div class="hero-tag reveal">Newsletter</div>
+        <h1 class="hero-title reveal">The Light<br>Web</h1>
+        <div class="hero-description reveal">
+          <p>Essays on building an internet that heals. Exploring the counter-narrative to extractive tech—how decentralized networks, regenerative AI, and conscious culture can weave a web of light.</p>
+          <p>The Light Web is a Substack exploring the emerging topology of a healthier internet—one built on sovereignty, reciprocity, and genuine connection.</p>
+        </div>
+        <a href="https://alightweb.substack.com" target="_blank" class="cta-btn reveal">Subscribe</a>
+      </div>
+    </section>
+
+    <section class="themes reveal">
+      <div class="themes-label">Recurring Themes</div>
+      <div class="themes-grid">
+        <div class="theme-item">
+          <div class="theme-name">Sovereignty</div>
+          <div class="theme-desc">Digital self-determination. Owning your data, your identity, your attention—reclaiming agency in networked life.</div>
+        </div>
+        <div class="theme-item">
+          <div class="theme-name">Reciprocity</div>
+          <div class="theme-desc">Moving beyond extraction toward mutualism—how value flows create ecosystems instead of strip mines.</div>
+        </div>
+        <div class="theme-item">
+          <div class="theme-name">Connection</div>
+          <div class="theme-desc">Genuine encounter in digital space. Technology that strengthens rather than fragments human belonging.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pull-quote reveal">
+      <blockquote>
+        "The internet we need already exists in seed form. Our work is to <em>water the right roots</em>—to build infrastructure for the world we want to live in."
+      </blockquote>
+    </section>
+  </main>
+
+  <footer>
+    <div>samu.quest &mdash; 2026</div>
+    <div>The Light Web</div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.querySelector('.cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    let cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
+
+    document.addEventListener('mousemove', e => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+    });
+
+    function animateCursor() {
+      dotX += (cursorX - dotX) * 0.15;
+      dotY += (cursorY - dotY) * 0.15;
+      cursor.style.left = cursorX - 6 + 'px';
+      cursor.style.top = cursorY - 6 + 'px';
+      cursorDot.style.left = dotX - 2 + 'px';
+      cursorDot.style.top = dotY - 2 + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      reveals.forEach((el, i) => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 60) {
+          setTimeout(() => el.classList.add('visible'), i * 80);
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
+</body>
+</html>

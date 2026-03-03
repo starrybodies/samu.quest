@@ -8,7 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #000;
@@ -20,20 +20,11 @@
       --border: #1a1a1a;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    ::selection {
-      background: var(--blue);
-      color: var(--bg);
-    }
+    ::selection { background: var(--blue); color: var(--bg); }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'JetBrains Mono', monospace;
@@ -45,10 +36,53 @@
       overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    a { color: inherit; text-decoration: none; }
+
+    /* Enter Gate — unlocks autoplay */
+    .enter-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.8s ease, visibility 0.8s;
     }
+
+    .enter-gate.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .enter-gate-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+
+    .enter-gate-text em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .enter-gate-hint {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeIn 1s ease 0.8s forwards, pulse 2s ease-in-out 1.8s infinite;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     .reveal {
       opacity: 0;
@@ -94,11 +128,9 @@
       transition: color 0.3s;
     }
 
-    .nav-links a:hover {
-      color: var(--fg);
-    }
+    .nav-links a:hover { color: var(--fg); }
 
-    /* Hero with image */
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -115,7 +147,7 @@
 
     .hero h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(38px, 6vw, 72px);
+      font-size: clamp(32px, 6vw, 72px);
       font-weight: 400;
       line-height: 1.1;
       letter-spacing: -2px;
@@ -136,14 +168,9 @@
     .hero h1 .line:nth-child(2) span { animation-delay: 0.1s; }
     .hero h1 .line:nth-child(3) span { animation-delay: 0.2s; }
 
-    @keyframes slideUp {
-      to { transform: translateY(0); }
-    }
+    @keyframes slideUp { to { transform: translateY(0); } }
 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--blue);
-    }
+    .hero h1 em { font-style: normal; color: var(--blue); }
 
     .hero-bio {
       font-size: 14px;
@@ -164,13 +191,8 @@
       transition: gap 0.3s;
     }
 
-    .hero-cta:hover {
-      gap: 20px;
-    }
-
-    .hero-cta::after {
-      content: '→';
-    }
+    .hero-cta:hover { gap: 20px; }
+    .hero-cta::after { content: '\2192'; }
 
     .hero-image {
       position: relative;
@@ -192,11 +214,8 @@
       background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 50%);
     }
 
-    /* Work Section */
-    .work {
-      padding: 120px 40px;
-      border-top: 1px solid var(--border);
-    }
+    /* Sections */
+    .work { padding: 120px 40px; border-top: 1px solid var(--border); }
 
     .section-header {
       display: grid;
@@ -220,12 +239,9 @@
       max-width: 700px;
     }
 
-    .section-intro em {
-      font-style: italic;
-      color: var(--blue);
-    }
+    .section-intro em { font-style: normal; color: var(--blue); }
 
-    /* Featured Project - GAIA AI */
+    /* Featured Project */
     .featured-project {
       margin-bottom: 100px;
       padding-bottom: 100px;
@@ -239,11 +255,7 @@
       align-items: start;
     }
 
-    .featured-image {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      position: relative;
-    }
+    .featured-image { aspect-ratio: 4/3; overflow: hidden; position: relative; }
 
     .featured-image img {
       width: 100%;
@@ -253,13 +265,9 @@
       transition: filter 0.6s ease;
     }
 
-    .featured-project:hover .featured-image img {
-      filter: grayscale(0%);
-    }
+    .featured-project:hover .featured-image img { filter: grayscale(0%); }
 
-    .featured-content {
-      padding-top: 20px;
-    }
+    .featured-content { padding-top: 20px; }
 
     .featured-tag {
       font-size: 10px;
@@ -283,20 +291,10 @@
       margin-bottom: 30px;
     }
 
-    .featured-description p {
-      margin-bottom: 20px;
-    }
+    .featured-description p { margin-bottom: 20px; }
+    .featured-description strong { color: var(--fg); font-weight: 400; }
 
-    .featured-description strong {
-      color: var(--fg);
-      font-weight: 400;
-    }
-
-    .featured-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    .featured-links { display: flex; gap: 20px; flex-wrap: wrap; }
 
     .featured-link {
       font-size: 11px;
@@ -307,10 +305,7 @@
       transition: all 0.3s;
     }
 
-    .featured-link:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-    }
+    .featured-link:hover { border-color: var(--blue); color: var(--blue); }
 
     /* Project Grid */
     .projects-grid {
@@ -325,6 +320,7 @@
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
+      display: block;
     }
 
     .project-card::before {
@@ -340,14 +336,8 @@
       transition: transform 0.4s ease;
     }
 
-    .project-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .project-card:hover {
-      border-color: var(--blue);
-      background: var(--subtle);
-    }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover { border-color: var(--blue); background: var(--subtle); }
 
     .project-image-small {
       width: 100%;
@@ -358,23 +348,7 @@
       transition: filter 0.4s;
     }
 
-    .project-card:hover .project-image-small {
-      filter: grayscale(0%);
-    }
-
-    .project-pattern {
-      width: 100%;
-      aspect-ratio: 16/9;
-      margin-bottom: 25px;
-      background:
-        repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 3px,
-          var(--border) 3px,
-          var(--border) 6px
-        );
-    }
+    .project-card:hover .project-image-small { filter: grayscale(0%); }
 
     .project-tag-small {
       font-size: 9px;
@@ -398,10 +372,7 @@
       margin-bottom: 25px;
     }
 
-    .project-card-links {
-      display: flex;
-      gap: 15px;
-    }
+    .project-card-links { display: flex; gap: 15px; }
 
     .project-card-link {
       font-size: 10px;
@@ -411,9 +382,7 @@
       transition: color 0.3s;
     }
 
-    .project-card-link:hover {
-      color: var(--blue);
-    }
+    .project-card-link:hover { color: var(--blue); }
 
     /* Quote */
     .quote-section {
@@ -426,17 +395,14 @@
 
     .quote {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(24px, 4vw, 38px);
-      font-style: italic;
+      font-size: clamp(22px, 4vw, 38px);
+      font-style: normal;
       max-width: 900px;
       margin: 0 auto;
       line-height: 1.5;
     }
 
-    .quote em {
-      font-style: normal;
-      color: var(--blue);
-    }
+    .quote em { font-style: normal; color: var(--blue); }
 
     .quote-attr {
       margin-top: 30px;
@@ -446,10 +412,196 @@
       color: var(--muted);
     }
 
-    /* Connect */
-    .connect {
-      padding: 120px 40px;
+    /* Publications */
+    .publications { padding: 120px 40px; border-top: 1px solid var(--border); }
+
+    .pub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 60px;
     }
+
+    .pub-card {
+      padding: 40px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      display: block;
+    }
+
+    .pub-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-dim));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .pub-card:hover::before { transform: scaleX(1); }
+    .pub-card:hover { border-color: var(--blue); background: var(--subtle); }
+
+    .pub-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+      color: var(--blue);
+      font-family: 'Instrument Serif', serif;
+    }
+
+    .pub-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .pub-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .pub-link {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s;
+    }
+
+    .pub-link:hover { gap: 14px; }
+    .pub-link::after { content: '\2192'; }
+
+    /* Video Feature — full-width, proper 16:9 */
+    .video-feature {
+      position: relative;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .video-feature-inner {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      overflow: hidden;
+    }
+
+    .video-feature-inner iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-feature-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 40px 30px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .video-feature-caption h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .video-feature-caption p {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* Ambient Audio Player */
+    .ambient-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ambient-player.visible { transform: translateY(0); }
+
+    .ambient-player-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--blue);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ambient-player-track {
+      font-family: 'Instrument Serif', serif;
+      font-size: 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ambient-player-sc {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .ambient-player-sc iframe {
+      width: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .ambient-player-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .ambient-player-close:hover { border-color: var(--blue); color: var(--fg); }
+
+    body.player-active footer { padding-bottom: 80px; }
+    body.player-active .connect { padding-bottom: 140px; }
+
+    /* Connect */
+    .connect { padding: 120px 40px; }
 
     .connect-grid {
       display: grid;
@@ -465,9 +617,7 @@
       transition: background 0.3s;
     }
 
-    .connect-item:hover {
-      background: var(--subtle);
-    }
+    .connect-item:hover { background: var(--subtle); }
 
     .connect-label {
       font-size: 10px;
@@ -506,14 +656,8 @@
       color: var(--muted);
     }
 
-    .footer-links {
-      display: flex;
-      gap: 40px;
-    }
-
-    .footer-links a:hover {
-      color: var(--blue);
-    }
+    .footer-links { display: flex; gap: 40px; }
+    .footer-links a:hover { color: var(--blue); }
 
     /* Cursor */
     .cursor {
@@ -545,57 +689,15 @@
       mix-blend-mode: difference;
     }
 
-    /* Mobile */
-    @media (max-width: 1000px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-image {
-        height: 50vh;
-        order: -1;
-      }
-
-      .hero-content {
-        padding: 60px 20px;
-      }
-
-      .section-header {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .featured-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .connect-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        padding: 20px;
-      }
-
-      .work, .connect {
-        padding: 80px 20px;
-      }
-
-      .cursor, .cursor-dot {
-        display: none;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
+    /* Background Canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* Noise */
@@ -608,9 +710,74 @@
       pointer-events: none;
       z-index: 9998;
     }
+
+    /* ---- MOBILE ---- */
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-image { height: 50vh; order: -1; }
+      .hero-content { padding: 60px 20px; }
+      .section-header { grid-template-columns: 1fr; gap: 20px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .pub-grid { grid-template-columns: 1fr; }
+      .connect-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 15px 20px; }
+      .nav-links { gap: 20px; font-size: 10px; letter-spacing: 1px; }
+      .hero h1 { font-size: clamp(28px, 8vw, 48px); letter-spacing: -1px; }
+      .hero-bio { font-size: 13px; }
+      .work, .connect, .publications { padding: 60px 20px; }
+      .section-header { margin-bottom: 40px; }
+      .section-intro { font-size: 22px; }
+      .featured-content h2 { font-size: 30px; }
+      .featured-link { padding: 10px 18px; font-size: 10px; }
+      .project-card { padding: 25px; }
+      .pub-card { padding: 25px; }
+      .quote-section { padding: 80px 20px; }
+      .quote { font-size: clamp(18px, 5vw, 28px); }
+      .video-feature-caption { padding: 40px 20px 20px; }
+      .video-feature-caption h3 { font-size: 22px; }
+      .connect-item { padding: 25px 20px; }
+      .connect-name { font-size: 17px; }
+      .cursor, .cursor-dot { display: none; }
+      footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 30px 20px;
+      }
+      .footer-links { justify-content: center; }
+      .ambient-player {
+        padding: 10px 16px;
+        gap: 10px;
+      }
+      .ambient-player-label { display: none; }
+      .ambient-player-track { font-size: 13px; }
+      .enter-gate-text { font-size: clamp(24px, 8vw, 40px); }
+    }
+
+    @media (max-width: 480px) {
+      .hero-image { height: 35vh; }
+      .hero-content { padding: 40px 16px; }
+      .hero h1 { margin-bottom: 20px; }
+      .hero-bio { font-size: 12px; margin-bottom: 25px; }
+      .featured-description { font-size: 12px; }
+      .project-card h3 { font-size: 22px; }
+      .pub-card h3 { font-size: 20px; }
+      .connect-name { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Enter gate — click to start (enables autoplay) -->
+  <div class="enter-gate" id="enter-gate">
+    <div class="enter-gate-text"><em>samu</em>.quest</div>
+    <div class="enter-gate-hint">Click to enter</div>
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
   <div class="cursor"></div>
   <div class="cursor-dot"></div>
 
@@ -618,6 +785,7 @@
     <a href="#" class="nav-logo">samu.quest</a>
     <div class="nav-links">
       <a href="#work">Work</a>
+      <a href="#publications">Publications</a>
       <a href="#connect">Connect</a>
     </div>
   </nav>
@@ -644,9 +812,8 @@
         <p class="section-intro">I build growth systems for projects that matter. From <em>regenerative AI</em> to sacred bass music, my work lives at the edges where technology meets ecology meets culture.</p>
       </div>
 
-      <!-- Featured: GAIA AI -->
       <article class="featured-project reveal">
-        <div class="featured-grid">
+        <a href="gaia-ai.html" class="featured-grid">
           <div class="featured-image">
             <img src="images/gaia-earth.jpg" alt="Planet Earth">
           </div>
@@ -654,67 +821,86 @@
             <div class="featured-tag">Regenerative AI Infrastructure</div>
             <h2>GAIA AI / Symbiocene Labs</h2>
             <div class="featured-description">
-              <p><strong>Building the planetary environmental data legibility layer.</strong> GAIA AI (Guild of Altruistic Interoperable Agents) is a decentralized intelligence system designed to accelerate planetary regeneration through AI-driven analysis, community wisdom, and innovative financing.</p>
-              <p>We're seeding the <strong>RegenAIssance</strong>—partnering with Regen Network to deploy altruistic AI agents across 27+ domains including soil systems, biodiversity, indigenous wisdom, and regenerative finance. Our Swarm Council of specialized agents coordinates with bioregional representatives to steward knowledge commons while respecting data sovereignty.</p>
-              <p>The vision: usher in the <strong>Symbiocene</strong>—an era where biological and digital intelligence collaborate symbiotically to restore Earth's biosphere. Currently in Phase 2, deploying core MCP infrastructure for planetary intelligence.</p>
+              <p><strong>Building the planetary environmental data legibility layer.</strong> GAIA AI is a decentralized intelligence system designed to accelerate planetary regeneration through AI-driven analysis, community wisdom, and innovative financing.</p>
+              <p>We're seeding the <strong>RegenAIssance</strong>—deploying altruistic AI agents across 27+ domains including soil systems, biodiversity, indigenous wisdom, and regenerative finance.</p>
             </div>
             <div class="featured-links">
-              <a href="https://symbiocenelabs.com" target="_blank" class="featured-link">Website</a>
-              <a href="https://github.com/gaiaaiagent" target="_blank" class="featured-link">GitHub</a>
-              <a href="https://paragraph.com/@gaiaai" target="_blank" class="featured-link">Blog</a>
-              <a href="https://x.com/gaiaaixyz" target="_blank" class="featured-link">Twitter</a>
+              <span class="featured-link">Learn More</span>
             </div>
           </div>
-        </div>
+        </a>
       </article>
 
-      <!-- Other Projects Grid -->
       <div class="projects-grid">
-        <!-- Alchememes -->
-        <article class="project-card reveal">
-          <div class="project-pattern"></div>
+        <a href="alchememes.html" class="project-card reveal">
+          <img src="images/alchememes-logo.png" alt="Alchememes" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Strategic Meme Engineering</div>
           <h3>Alchememes</h3>
-          <p>Transmuting culture through strategic meme engineering for web3 and regenerative movements. Building narrative infrastructure for the ideas that matter. Because the revolution will be memed—or it won't happen at all.</p>
+          <p>Transmuting culture through strategic meme engineering for web3 and regenerative movements. The revolution will be memed.</p>
           <div class="project-card-links">
-            <a href="https://instagram.com/alchememes__" target="_blank" class="project-card-link">Instagram →</a>
+            <span class="project-card-link">Learn More &rarr;</span>
           </div>
-        </article>
+        </a>
 
-        <!-- Sun Rose -->
-        <article class="project-card reveal">
+        <a href="sun-rose.html" class="project-card reveal">
           <img src="images/sunrose.jpg" alt="Sun Rose" class="project-image-small">
           <div class="project-tag-small">Sacred Bass Music</div>
           <h3>Sun Rose</h3>
-          <p>Sacred/saucy bass music from the Pleiades via Canada. Live ceremony through frequencies—blending wubs, plant medicine energy, and chaos. 32 tracks released. Salt Spring Massif to worldwide. The drops hit different when they're in service to something bigger.</p>
+          <p>Sacred/saucy bass music from the Pleiades via Canada. Live ceremony through frequencies. 32 tracks released.</p>
           <div class="project-card-links">
-            <a href="https://soundcloud.com/djsunrose" target="_blank" class="project-card-link">SoundCloud →</a>
-            <a href="https://instagram.com/djsunrose" target="_blank" class="project-card-link">Instagram →</a>
+            <span class="project-card-link">Learn More &rarr;</span>
           </div>
-        </article>
+        </a>
 
-        <!-- White Tara Tea -->
-        <article class="project-card reveal">
+        <a href="white-tara-tea.html" class="project-card reveal">
           <img src="images/whitetara.png" alt="White Tara Tea" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Botanical Medicine</div>
           <h3>White Tara Tea</h3>
-          <p>Wildcrafted botanical medicines and alchemical tea service. Plant intelligence for human evolution. Serving ceremony at festivals and Burning Man—bridging ancient plant wisdom with modern community gathering.</p>
+          <p>Wildcrafted botanical medicines and alchemical tea service. Plant intelligence for human evolution.</p>
           <div class="project-card-links">
-            <a href="https://instagram.com/whitetaratea" target="_blank" class="project-card-link">Instagram →</a>
-            <a href="https://whitetarabotanicals.wordpress.com" target="_blank" class="project-card-link">Journal →</a>
+            <span class="project-card-link">Learn More &rarr;</span>
           </div>
-        </article>
+        </a>
 
-        <!-- Growth Practice -->
-        <article class="project-card reveal">
-          <div class="project-pattern"></div>
+        <a href="growth-practice.html" class="project-card reveal">
+          <img src="images/symbai-logo.png" alt="SymbAI Studios" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Growth Strategy</div>
           <h3>Growth Practice</h3>
-          <p>A decade of scaling startups from zero to escape velocity. User acquisition funnels, viral loop engineering, retention mechanics, community architecture. I've grown products across web3, consumer tech, and regenerative finance. If it needs to grow, I've probably grown something like it.</p>
+          <p>A decade of scaling startups from zero to escape velocity. Currently building SymbAI Studios.</p>
           <div class="project-card-links">
-            <a href="https://x.com/reslashacc" target="_blank" class="project-card-link">Twitter →</a>
+            <span class="project-card-link">Learn More &rarr;</span>
           </div>
-        </article>
+        </a>
+      </div>
+    </section>
+
+    <section class="publications" id="publications">
+      <div class="section-header reveal">
+        <div class="section-label">Publications</div>
+        <p class="section-intro">Long-form thinking on <em>regenerative futures</em>, planetary intelligence, and the emerging web of life.</p>
+      </div>
+
+      <div class="pub-grid">
+        <a href="encyclopedia-of-regeneration.html" class="pub-card reveal">
+          <span class="pub-icon">EoR</span>
+          <h3>Encyclopedia of Regeneration</h3>
+          <p>A living knowledge base mapping the full landscape of regenerative practice. The reference library for the RegenAIssance.</p>
+          <span class="pub-link">Explore</span>
+        </a>
+
+        <a href="gaian-times.html" class="pub-card reveal">
+          <span class="pub-icon">GT</span>
+          <h3>The Gaian Times</h3>
+          <p>Dispatches from the frontlines of planetary regeneration. AI-curated, human-edited reporting.</p>
+          <span class="pub-link">Read</span>
+        </a>
+
+        <a href="the-light-web.html" class="pub-card reveal">
+          <span class="pub-icon">LW</span>
+          <h3>The Light Web</h3>
+          <p>Essays on building an internet that heals. The counter-narrative to extractive tech.</p>
+          <span class="pub-link">Subscribe</span>
+        </a>
       </div>
     </section>
 
@@ -722,7 +908,17 @@
       <blockquote class="quote">
         "We stand at a pivotal moment... our technologies have never been more powerful, nor our ecological crises more dire. The Symbiocene represents <em>humanity's embrace of its role as gardeners and co-creators</em> of Earth's evolution."
       </blockquote>
-      <div class="quote-attr">— GAIA AI Greenpaper</div>
+      <div class="quote-attr">&mdash; GAIA AI Greenpaper</div>
+    </section>
+
+    <section class="video-feature reveal">
+      <div class="video-feature-inner">
+        <iframe src="https://www.youtube.com/embed/etqUCny5tCk?start=4&modestbranding=1&rel=0&color=white" title="UN Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="video-feature-caption">
+          <h3>UN Talk</h3>
+          <p>Speaking on regenerative AI and planetary intelligence at the United Nations</p>
+        </div>
+      </div>
     </section>
 
     <section class="connect" id="connect">
@@ -734,46 +930,55 @@
       <div class="connect-grid reveal">
         <a href="https://x.com/reslashacc" target="_blank" class="connect-item">
           <div class="connect-label">Twitter/X</div>
-          <div class="connect-name">@reslashacc <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">@reslashacc <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="https://x.com/gaiaaixyz" target="_blank" class="connect-item">
           <div class="connect-label">GAIA AI</div>
-          <div class="connect-name">@gaiaaixyz <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">@gaiaaixyz <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="https://soundcloud.com/djsunrose" target="_blank" class="connect-item">
           <div class="connect-label">Music</div>
-          <div class="connect-name">Sun Rose <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">Sun Rose <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://instagram.com/djsunrose" target="_blank" class="connect-item">
+        <a href="https://instagram.com/samusunrose" target="_blank" class="connect-item">
           <div class="connect-label">Instagram</div>
-          <div class="connect-name">@djsunrose <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">@samusunrose <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="https://instagram.com/alchememes__" target="_blank" class="connect-item">
           <div class="connect-label">Memes</div>
-          <div class="connect-name">@alchememes__ <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">@alchememes__ <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="https://instagram.com/whitetaratea" target="_blank" class="connect-item">
           <div class="connect-label">Botanicals</div>
-          <div class="connect-name">@whitetaratea <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">@whitetaratea <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://github.com/gaiaaiagent" target="_blank" class="connect-item">
+        <a href="https://github.com/starrybodies" target="_blank" class="connect-item">
           <div class="connect-label">Code</div>
-          <div class="connect-name">gaiaaiagent <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">starrybodies <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="https://paragraph.com/@gaiaai" target="_blank" class="connect-item">
           <div class="connect-label">Writing</div>
-          <div class="connect-name">GAIA Blog <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">GAIA Blog <span class="connect-arrow">&nearr;</span></div>
         </a>
         <a href="mailto:samu@samu.quest" class="connect-item">
           <div class="connect-label">Email</div>
-          <div class="connect-name">Get in touch <span class="connect-arrow">↗</span></div>
+          <div class="connect-name">Get in touch <span class="connect-arrow">&nearr;</span></div>
         </a>
       </div>
     </section>
   </main>
 
+  <div class="ambient-player" id="ambient-player">
+    <span class="ambient-player-label">Now Playing</span>
+    <span class="ambient-player-track">Sun Rose &mdash; Chateau</span>
+    <div class="ambient-player-sc">
+      <iframe id="sc-player" width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="about:blank"></iframe>
+    </div>
+    <button class="ambient-player-close" onclick="dismissPlayer()" aria-label="Close player">&times;</button>
+  </div>
+
   <footer>
-    <div>samu.quest — 2026</div>
+    <div>samu.quest &mdash; 2026</div>
     <div class="footer-links">
       <a href="mailto:samu@samu.quest">Contact</a>
       <a href="https://symbiocenelabs.com" target="_blank">Symbiocene Labs</a>
@@ -781,6 +986,27 @@
   </footer>
 
   <script>
+    // Enter gate — click starts music
+    const gate = document.getElementById('enter-gate');
+    const player = document.getElementById('ambient-player');
+    const scPlayer = document.getElementById('sc-player');
+
+    gate.addEventListener('click', () => {
+      gate.classList.add('hidden');
+      // Start SoundCloud after user interaction (unlocks autoplay)
+      scPlayer.src = 'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdjsunrose%2Fchateau&color=%237dd3fc&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=false';
+      setTimeout(() => {
+        player.classList.add('visible');
+        document.body.classList.add('player-active');
+      }, 800);
+    });
+
+    function dismissPlayer() {
+      player.classList.remove('visible');
+      document.body.classList.remove('player-active');
+      scPlayer.src = 'about:blank';
+    }
+
     // Cursor
     const cursor = document.querySelector('.cursor');
     const cursorDot = document.querySelector('.cursor-dot');
@@ -802,7 +1028,7 @@
     }
     animateCursor();
 
-    document.querySelectorAll('a, .project-card').forEach(el => {
+    document.querySelectorAll('a, .project-card, button').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
@@ -819,8 +1045,89 @@
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll();
 
-    // Console
-    console.log('%c\n  Growth alchemist. Culture hacker. Regenerate.\n\n  github.com/gaiaaiagent\n  soundcloud.com/djsunrose\n  paragraph.com/@gaiaai\n', 'color: #7dd3fc; font-size: 12px;');
+    // Background particles
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    const PARTICLE_COUNT = window.innerWidth < 768 ? 50 : 120;
+    const CELL_SIZE = 30;
+    let noiseZ = 0;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function noise(x, y, z) {
+      return (
+        Math.sin(x * 0.8 + z * 0.5) * 0.5 +
+        Math.sin(y * 0.6 + z * 0.3) * 0.5 +
+        Math.sin((x + y) * 0.4 + z * 0.7) * 0.3
+      ) / 1.3;
+    }
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.speed = 0.3 + Math.random() * 0.8;
+        this.life = 0;
+        this.maxLife = 200 + Math.random() * 300;
+        this.size = 0.5 + Math.random() * 1.2;
+        const pick = Math.random();
+        this.color = pick < 0.6 ? '125,211,252' : pick < 0.85 ? '14,165,233' : '255,255,255';
+      }
+      update() {
+        const col = Math.floor(this.x / CELL_SIZE);
+        const row = Math.floor(this.y / CELL_SIZE);
+        const angle = noise(col * 0.06, row * 0.06, noiseZ) * Math.PI * 4;
+        this.x += Math.cos(angle) * this.speed;
+        this.y += Math.sin(angle) * this.speed;
+        this.life++;
+        if (this.life > this.maxLife || this.x < -10 || this.x > w + 10 || this.y < -10 || this.y > h + 10) this.reset();
+      }
+      draw() {
+        const fade = Math.min(1, this.life / 40) * Math.min(1, (this.maxLife - this.life) / 40);
+        ctx.fillStyle = `rgba(${this.color},${fade * 0.35})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+    }
+
+    function drawBg() {
+      ctx.clearRect(0, 0, w, h);
+      noiseZ += 0.003;
+      particles.forEach(p => { p.update(); p.draw(); });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = dx * dx + dy * dy;
+          if (dist < 8000) {
+            ctx.strokeStyle = `rgba(125,211,252,${(1 - dist / 8000) * 0.08})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawBg);
+    }
+
+    resize();
+    initParticles();
+    drawBg();
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+
+    console.log('%c\n  Growth alchemist. Culture hacker. Regenerate.\n\n  github.com/starrybodies\n  soundcloud.com/djsunrose\n', 'color: #7dd3fc; font-size: 12px;');
   </script>
 </body>
 </html>

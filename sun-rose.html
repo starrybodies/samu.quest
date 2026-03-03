@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sun Rose — Sacred Bass Music</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --blue: #7dd3fc;
+      --bg: #000;
+      --fg: #fff;
+      --muted: #525252;
+      --border: #1a1a1a;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+
+    .back:hover {
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .hero {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tag {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.75rem;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+      border-left: 1px solid var(--border);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .description p + p {
+      margin-top: 0.75rem;
+    }
+
+    .embed-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .embed-wrap {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+
+    .embed-wrap iframe {
+      display: block;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .links-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 12px;
+    }
+
+    .link-item .link-platform {
+      color: var(--muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .link-item a {
+      color: var(--fg);
+      font-size: 12px;
+    }
+
+    .link-item a:hover {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .hero {
+        aspect-ratio: 4 / 3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="index.html">← Back</a>
+
+  <div class="hero">
+    <img src="images/sunrose.jpg" alt="Sun Rose" />
+  </div>
+
+  <div class="tag">Sacred Bass Music</div>
+  <h1>Sun Rose</h1>
+
+  <div class="description">
+    <p>Sacred/saucy bass music from the Pleiades via Canada. Live ceremony through frequencies—blending wubs, plant medicine energy, and chaos. 32 tracks released. Salt Spring Massif to worldwide.</p>
+    <p>The drops hit different when they're in service to something bigger. Sun Rose channels the frequencies of ceremony, earth medicine, and cosmic bass into a sonic experience that moves both body and spirit.</p>
+  </div>
+
+  <div class="embed-label">Featured Set — Chateau</div>
+  <div class="embed-wrap">
+    <iframe
+      src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdjsunrose%2Fchateau&color=%237dd3fc&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+      width="100%"
+      height="300"
+      scrolling="no"
+      frameborder="no"
+      allow="autoplay"
+    ></iframe>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="links-label">Find Sun Rose</div>
+  <div class="links">
+    <div class="link-item">
+      <span class="link-platform">SoundCloud</span>
+      <a href="https://soundcloud.com/djsunrose" target="_blank" rel="noopener noreferrer">soundcloud.com/djsunrose</a>
+    </div>
+    <div class="link-item">
+      <span class="link-platform">Instagram</span>
+      <a href="https://instagram.com/djsunrose" target="_blank" rel="noopener noreferrer">instagram.com/djsunrose</a>
+    </div>
+  </div>
+
+</body>
+</html>
