@@ -49,7 +49,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: opacity 1s ease, visibility 1s;
+      transition: opacity 1.5s ease, visibility 1.5s;
     }
 
     .enter-gate.hidden {
@@ -92,7 +92,7 @@
       color: var(--muted);
       margin-top: 30px;
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 1.5s ease;
     }
 
     .ascii-subtitle.visible { opacity: 1; }
@@ -110,7 +110,7 @@
       cursor: pointer;
       opacity: 0;
       transform: translateY(10px);
-      transition: all 0.4s ease;
+      transition: all 0.8s ease;
       position: relative;
       overflow: hidden;
     }
@@ -147,7 +147,7 @@
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--blue), transparent);
       opacity: 0.15;
-      animation: scanline 4s linear infinite;
+      animation: scanline 7s linear infinite;
       z-index: 2;
       pointer-events: none;
     }
@@ -1159,14 +1159,14 @@
     }
 
     function drawMatrixRain() {
-      ictx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+      ictx.fillStyle = 'rgba(0, 0, 0, 0.04)';
       ictx.fillRect(0, 0, iw, ih);
       ictx.fillStyle = 'rgba(125, 211, 252, 0.12)';
       ictx.font = '12px JetBrains Mono';
       for (let i = 0; i < drops.length; i++) {
         const char = chars[Math.floor(Math.random() * chars.length)];
         ictx.fillText(char, i * 12, drops[i] * 12);
-        if (drops[i] * 12 > ih && Math.random() > 0.975) drops[i] = 0;
+        if (drops[i] * 12 > ih && Math.random() > 0.985) drops[i] = 0;
         drops[i]++;
       }
       if (!gate.classList.contains('hidden')) requestAnimationFrame(drawMatrixRain);
@@ -1182,7 +1182,7 @@
     let asciiBuffer = '';
 
     function typeAscii() {
-      const chunkSize = 8;
+      const chunkSize = 4;
       for (let i = 0; i < chunkSize && asciiIndex < fullAscii.length; i++) {
         asciiBuffer += fullAscii[asciiIndex];
         asciiIndex++;
@@ -1192,8 +1192,8 @@
         requestAnimationFrame(typeAscii);
       } else {
         // Done typing — show subtitle and enter button
-        setTimeout(() => subtitleEl.classList.add('visible'), 300);
-        setTimeout(() => enterBtn.classList.add('visible'), 800);
+        setTimeout(() => subtitleEl.classList.add('visible'), 800);
+        setTimeout(() => enterBtn.classList.add('visible'), 1800);
       }
     }
 
@@ -1201,7 +1201,7 @@
     setTimeout(() => {
       asciiEl.classList.add('visible');
       typeAscii();
-    }, 500);
+    }, 1200);
 
     // Enter button click
     enterBtn.addEventListener('click', () => {
