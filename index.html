@@ -38,7 +38,7 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* Enter Gate — unlocks autoplay */
+    /* Enter Gate — ASCII art intro */
     .enter-gate {
       position: fixed;
       inset: 0;
@@ -48,8 +48,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: opacity 0.8s ease, visibility 0.8s;
+      overflow: hidden;
+      transition: opacity 1s ease, visibility 1s;
     }
 
     .enter-gate.hidden {
@@ -58,31 +58,155 @@
       pointer-events: none;
     }
 
-    .enter-gate-text {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 5vw, 56px);
-      letter-spacing: -1px;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.3s forwards;
+    .enter-gate canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
 
-    .enter-gate-text em {
-      font-style: normal;
+    .ascii-container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .ascii-art {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(5px, 1.1vw, 11px);
+      line-height: 1.15;
       color: var(--blue);
+      white-space: pre;
+      opacity: 0;
+      text-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
     }
 
-    .enter-gate-hint {
+    .ascii-art.visible { opacity: 1; }
+
+    .ascii-subtitle {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 4px;
+      letter-spacing: 6px;
       color: var(--muted);
+      margin-top: 30px;
       opacity: 0;
-      animation: fadeIn 1s ease 0.8s forwards, pulse 2s ease-in-out 1.8s infinite;
+      transition: opacity 0.8s ease;
+    }
+
+    .ascii-subtitle.visible { opacity: 1; }
+
+    .enter-btn {
+      margin-top: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--blue);
+      background: none;
+      border: 1px solid var(--blue);
+      padding: 14px 40px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .enter-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--blue);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+    .enter-btn:hover {
+      color: var(--bg);
+    }
+
+    .enter-btn:hover::before {
+      transform: scaleX(1);
+    }
+
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      opacity: 0.15;
+      animation: scanline 4s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes scanline {
+      0% { top: 0; }
+      100% { top: 100%; }
     }
 
     @keyframes fadeIn { to { opacity: 1; } }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Donate strip */
+    .donate-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px 40px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .donate-strip-label {
+      color: var(--muted);
+    }
+
+    .donate-strip a {
+      color: var(--blue);
+      transition: color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .donate-strip a:hover { color: var(--fg); }
+
+    .donate-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-left: 15px;
+      padding-left: 15px;
+      border-left: 1px solid var(--border);
+    }
+
+    .donate-inline a {
+      color: var(--blue);
+      transition: color 0.3s;
+    }
+
+    .donate-inline a:hover { color: var(--fg); }
 
     .reveal {
       opacity: 0;
@@ -759,6 +883,8 @@
     }
 
     @media (max-width: 480px) {
+      .ascii-art { font-size: 3.5px !important; }
+      .donate-strip { flex-direction: column; gap: 10px; padding: 16px 20px; }
       .hero-image { height: 35vh; }
       .hero-content { padding: 40px 16px; }
       .hero h1 { margin-bottom: 20px; }
@@ -771,10 +897,15 @@
   </style>
 </head>
 <body>
-  <!-- Enter gate — click to start (enables autoplay) -->
+  <!-- ASCII Art Intro -->
   <div class="enter-gate" id="enter-gate">
-    <div class="enter-gate-text"><em>samu</em>.quest</div>
-    <div class="enter-gate-hint">Click to enter</div>
+    <canvas id="intro-canvas"></canvas>
+    <div class="scanline"></div>
+    <div class="ascii-container">
+      <pre class="ascii-art" id="ascii-art"></pre>
+      <div class="ascii-subtitle" id="ascii-subtitle">growth alchemist &middot; culture hacker &middot; regenerate</div>
+      <button class="enter-btn" id="enter-btn">Enter</button>
+    </div>
   </div>
 
   <canvas id="bg-canvas"></canvas>
@@ -911,6 +1042,12 @@
       <div class="quote-attr">&mdash; GAIA AI Greenpaper</div>
     </section>
 
+    <div class="donate-strip reveal">
+      <span class="donate-strip-label">Support the work</span>
+      <a href="https://etherscan.io/name-lookup-search?id=sunrose.eth" target="_blank">sunrose.eth</a>
+      <a href="https://venmo.com/u/starrytelling" target="_blank">Venmo</a>
+    </div>
+
     <section class="video-feature reveal">
       <div class="video-feature-inner">
         <iframe src="https://www.youtube.com/embed/etqUCny5tCk?start=4&modestbranding=1&rel=0&color=white" title="UN Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -982,18 +1119,93 @@
     <div class="footer-links">
       <a href="mailto:samu@samu.quest">Contact</a>
       <a href="https://symbiocenelabs.com" target="_blank">Symbiocene Labs</a>
+      <a href="https://etherscan.io/name-lookup-search?id=sunrose.eth" target="_blank" style="color: var(--blue)">sunrose.eth</a>
+      <a href="https://venmo.com/u/starrytelling" target="_blank" style="color: var(--blue)">Donate</a>
     </div>
   </footer>
 
   <script>
-    // Enter gate — click starts music
+    // ===== ASCII ART INTRO =====
+    const ASCII_FRAMES = [
+`
+  ███████╗ █████╗ ███╗   ███╗██╗   ██╗     ██████╗ ██╗   ██╗███████╗███████╗████████╗
+  ██╔════╝██╔══██╗████╗ ████║██║   ██║    ██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝
+  ███████╗███████║██╔████╔██║██║   ██║    ██║   ██║██║   ██║█████╗  ███████╗   ██║
+  ╚════██║██╔══██║██║╚██╔╝██║██║   ██║    ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║
+  ███████║██║  ██║██║ ╚═╝ ██║╚██████╔╝ ██╗╚██████╔╝╚██████╔╝███████╗███████║   ██║
+  ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝
+`
+    ];
+
     const gate = document.getElementById('enter-gate');
+    const asciiEl = document.getElementById('ascii-art');
+    const subtitleEl = document.getElementById('ascii-subtitle');
+    const enterBtn = document.getElementById('enter-btn');
     const player = document.getElementById('ambient-player');
     const scPlayer = document.getElementById('sc-player');
 
-    gate.addEventListener('click', () => {
+    // Intro canvas — matrix rain behind ASCII
+    const introCanvas = document.getElementById('intro-canvas');
+    const ictx = introCanvas.getContext('2d');
+    let iw, ih, columns, drops;
+    const chars = 'サムクエスト再生REGENERATE01';
+
+    function initIntroCanvas() {
+      iw = introCanvas.width = window.innerWidth;
+      ih = introCanvas.height = window.innerHeight;
+      const fontSize = 12;
+      columns = Math.floor(iw / fontSize);
+      drops = Array(columns).fill(1);
+    }
+
+    function drawMatrixRain() {
+      ictx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+      ictx.fillRect(0, 0, iw, ih);
+      ictx.fillStyle = 'rgba(125, 211, 252, 0.12)';
+      ictx.font = '12px JetBrains Mono';
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ictx.fillText(char, i * 12, drops[i] * 12);
+        if (drops[i] * 12 > ih && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      if (!gate.classList.contains('hidden')) requestAnimationFrame(drawMatrixRain);
+    }
+
+    initIntroCanvas();
+    drawMatrixRain();
+    window.addEventListener('resize', initIntroCanvas);
+
+    // Typewriter reveal of ASCII art
+    const fullAscii = ASCII_FRAMES[0];
+    let asciiIndex = 0;
+    let asciiBuffer = '';
+
+    function typeAscii() {
+      const chunkSize = 8;
+      for (let i = 0; i < chunkSize && asciiIndex < fullAscii.length; i++) {
+        asciiBuffer += fullAscii[asciiIndex];
+        asciiIndex++;
+      }
+      asciiEl.textContent = asciiBuffer;
+      if (asciiIndex < fullAscii.length) {
+        requestAnimationFrame(typeAscii);
+      } else {
+        // Done typing — show subtitle and enter button
+        setTimeout(() => subtitleEl.classList.add('visible'), 300);
+        setTimeout(() => enterBtn.classList.add('visible'), 800);
+      }
+    }
+
+    // Start after a beat
+    setTimeout(() => {
+      asciiEl.classList.add('visible');
+      typeAscii();
+    }, 500);
+
+    // Enter button click
+    enterBtn.addEventListener('click', () => {
       gate.classList.add('hidden');
-      // Start SoundCloud after user interaction (unlocks autoplay)
       scPlayer.src = 'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdjsunrose%2Fchateau&color=%237dd3fc&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=false';
       setTimeout(() => {
         player.classList.add('visible');
