@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 240" width="160" height="240" fill="none" stroke="#7dd3fc">
+  <!-- Tree-of-Life as commit graph: 10 nodes, thin branch paths, one live node glowing -->
+  <g stroke-width="1.4" stroke-opacity="0.5">
+    <!-- vertical spine -->
+    <path d="M80 26 V214"/>
+    <!-- upper triad -->
+    <path d="M80 26 L44 66 M80 26 L116 66 M44 66 L116 66"/>
+    <!-- to middle -->
+    <path d="M44 66 L80 106 M116 66 L80 106 M44 66 L44 128 M116 66 L116 128"/>
+    <!-- middle triad -->
+    <path d="M80 106 L44 128 M80 106 L116 128 M44 128 L116 128"/>
+    <!-- to lower -->
+    <path d="M44 128 L80 168 M116 128 L80 168 M44 128 L44 190 M116 128 L116 190"/>
+    <!-- lower triad + base -->
+    <path d="M80 168 L44 190 M80 168 L116 190 M44 190 L116 190 M44 190 L80 214 M116 190 L80 214"/>
+  </g>
+  <!-- nodes -->
+  <g stroke-width="1.6" fill="#050505">
+    <circle cx="80" cy="26" r="9"/>
+    <circle cx="44" cy="66" r="9"/><circle cx="116" cy="66" r="9"/>
+    <circle cx="44" cy="128" r="9"/><circle cx="116" cy="128" r="9"/>
+    <circle cx="80" cy="106" r="9"/>
+    <circle cx="44" cy="190" r="9"/><circle cx="116" cy="190" r="9"/>
+    <circle cx="80" cy="168" r="9"/>
+    <circle cx="80" cy="214" r="9"/>
+  </g>
+  <!-- live node (Tiferet, center) -->
+  <circle cx="80" cy="106" r="9" fill="#7dd3fc" stroke="#7dd3fc"/>
+  <circle cx="80" cy="106" r="16" stroke="#7dd3fc" stroke-opacity="0.35" fill="none"/>
+</svg>
