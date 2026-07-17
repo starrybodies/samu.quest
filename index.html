@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>samu.quest</title>
-  <meta name="description" content="Growth alchemist. Culture hacker. Regenerate.">
+  <meta name="description" content="Growth alchemist. Culture hacker. Regenerate. Building regenerative futures through memes, music, medicine, and machines.">
+  <meta property="og:title" content="samu.quest">
+  <meta property="og:description" content="Growth alchemist. Culture hacker. Regenerate.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://samu.quest">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="canonical" href="https://samu.quest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -15,16 +20,16 @@
       --fg: #fff;
       --blue: #7dd3fc;
       --blue-dim: #0ea5e9;
+      --blue-glow: rgba(125, 211, 252, 0.3);
       --muted: #525252;
       --subtle: #0a0a0a;
       --border: #1a1a1a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     ::selection { background: var(--blue); color: var(--bg); }
-
     html { scroll-behavior: smooth; }
+    em { font-style: normal; }
 
     body {
       font-family: 'JetBrains Mono', monospace;
@@ -38,7 +43,18 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* Enter Gate — ASCII art intro */
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ===== ENTER GATE ===== */
     .enter-gate {
       position: fixed;
       inset: 0;
@@ -49,30 +65,11 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: opacity 1.5s ease, visibility 1.5s;
+      transition: opacity 1.2s ease, visibility 1.2s;
     }
-
-    .enter-gate.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .enter-gate canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    .ascii-container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 20px;
-    }
-
+    .enter-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .enter-gate canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .ascii-container { position: relative; z-index: 1; text-align: center; padding: 20px; }
     .ascii-art {
       font-family: 'JetBrains Mono', monospace;
       font-size: clamp(5px, 1.1vw, 11px);
@@ -82,9 +79,7 @@
       opacity: 0;
       text-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
     }
-
     .ascii-art.visible { opacity: 1; }
-
     .ascii-subtitle {
       font-size: 11px;
       text-transform: uppercase;
@@ -94,9 +89,7 @@
       opacity: 0;
       transition: opacity 1.5s ease;
     }
-
     .ascii-subtitle.visible { opacity: 1; }
-
     .enter-btn {
       margin-top: 40px;
       font-family: 'JetBrains Mono', monospace;
@@ -114,12 +107,7 @@
       position: relative;
       overflow: hidden;
     }
-
-    .enter-btn.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .enter-btn.visible { opacity: 1; transform: translateY(0); }
     .enter-btn::before {
       content: '';
       position: absolute;
@@ -130,20 +118,11 @@
       transition: transform 0.3s ease;
       z-index: -1;
     }
-
-    .enter-btn:hover {
-      color: var(--bg);
-    }
-
-    .enter-btn:hover::before {
-      transform: scaleX(1);
-    }
-
+    .enter-btn:hover { color: var(--bg); }
+    .enter-btn:hover::before { transform: scaleX(1); }
     .scanline {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--blue), transparent);
       opacity: 0.15;
@@ -151,16 +130,498 @@
       z-index: 2;
       pointer-events: none;
     }
+    @keyframes scanline { 0% { top: 0; } 100% { top: 100%; } }
 
-    @keyframes scanline {
-      0% { top: 0; }
-      100% { top: 100%; }
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 25px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+    .nav-logo { font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
+    .nav-right { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 40px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
+    .nav-links a { color: var(--muted); transition: color 0.3s; }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--bg);
+      background: var(--blue);
+      padding: 10px 24px;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-cta:hover { background: var(--fg); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 120px 40px 80px;
+    }
+    .hero-content { max-width: 900px; position: relative; z-index: 2; }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(44px, 8vw, 96px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -3px;
+      margin-bottom: 35px;
+    }
+    .hero h1 .line { display: block; overflow: hidden; }
+    .hero h1 .line span {
+      display: inline-block;
+      transform: translateY(110%);
+      will-change: transform;
+    }
+    .hero h1 em { color: var(--blue); }
+
+    .hero-bio {
+      font-size: 15px;
+      max-width: 580px;
+      margin: 0 auto 45px;
+      color: var(--muted);
+      line-height: 1.9;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-cta-primary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--bg);
+      background: var(--blue);
+      padding: 16px 40px;
+      transition: all 0.4s;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .hero-cta-primary:hover {
+      background: var(--fg);
+      box-shadow: 0 0 30px var(--blue-glow);
+      transform: translateY(-2px);
+    }
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--blue);
+      transition: gap 0.3s;
+    }
+    .hero-cta-secondary:hover { gap: 20px; }
+    .hero-cta-secondary::after { content: '\2192'; }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+    }
+    .hero-scroll-hint span {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--blue), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
     }
 
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    /* ===== SECTIONS ===== */
+    .section-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--muted);
+      padding-top: 8px;
+    }
+    .section-intro {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.5;
+      max-width: 700px;
+    }
+    .section-intro em { color: var(--blue); }
 
-    /* Donate strip */
+    /* ===== WORK ===== */
+    .work { padding: 120px 40px; border-top: 1px solid var(--border); }
+
+    .featured-project {
+      margin-bottom: 100px;
+      padding-bottom: 100px;
+      border-bottom: 1px solid var(--border);
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .featured-image { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter 0.6s ease, transform 0.6s ease;
+    }
+    .featured-project:hover .featured-image img { filter: grayscale(0%); transform: scale(1.03); }
+    .featured-content { padding-top: 20px; }
+    .featured-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+    .featured-content h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      letter-spacing: -1px;
+      margin-bottom: 25px;
+    }
+    .featured-description { color: var(--muted); line-height: 1.9; margin-bottom: 30px; }
+    .featured-description p { margin-bottom: 20px; }
+    .featured-description strong { color: var(--fg); font-weight: 400; }
+    .featured-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .featured-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .featured-link:hover { border-color: var(--blue); color: var(--blue); }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+
+    .project-card {
+      padding: 40px;
+      border: 1px solid var(--border);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: block;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover { border-color: var(--blue); background: var(--subtle); }
+
+    .project-image-small {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      margin-bottom: 25px;
+      filter: grayscale(100%);
+      transition: filter 0.4s, transform 0.4s;
+    }
+    .project-card:hover .project-image-small { filter: grayscale(0%); transform: scale(1.02); }
+
+    .project-tag-small {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    .project-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+    .project-card p { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 25px; }
+    .project-card-links { display: flex; gap: 15px; }
+    .project-card-link { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); transition: color 0.3s; }
+    .project-card-link:hover { color: var(--blue); }
+
+    /* ===== CTA STRIP ===== */
+    .cta-strip {
+      padding: 120px 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-strip::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 500px; height: 500px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(125, 211, 252, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-strip h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+    .cta-strip h2 em { color: var(--blue); }
+    .cta-strip p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+    .cta-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--bg);
+      background: var(--blue);
+      border: none;
+      padding: 18px 50px;
+      cursor: pointer;
+      transition: all 0.4s;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .cta-btn:hover {
+      background: var(--fg);
+      box-shadow: 0 0 40px var(--blue-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ===== VISION SECTION (scroll-pinned) ===== */
+    .vision-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .vision-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .vision-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .vision-orb-1 {
+      width: 400px; height: 400px;
+      background: var(--blue-dim);
+      top: 20%; left: 15%;
+    }
+    .vision-orb-2 {
+      width: 350px; height: 350px;
+      background: var(--blue);
+      bottom: 15%; right: 20%;
+    }
+    .vision-orb-3 {
+      width: 300px; height: 300px;
+      background: #1d4ed8;
+      top: 40%; left: 50%;
+      transform: translateX(-50%);
+    }
+    .vision-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .vision-text {
+      position: absolute;
+      text-align: center;
+      max-width: 700px;
+      padding: 0 40px;
+      opacity: 0;
+    }
+    .vision-text h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 5vw, 56px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .vision-text h2 em { color: var(--blue); }
+    .vision-text p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-section {
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 35s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      white-space: nowrap;
+      padding: 0 40px;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+    .marquee-item:hover { color: var(--blue); }
+    .marquee-sep { color: var(--blue); padding: 0; font-size: 8px; align-self: center; }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== QUOTE ===== */
+    .quote-section {
+      padding: 150px 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .quote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 4vw, 38px);
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .quote em { color: var(--blue); }
+    .quote-attr {
+      margin-top: 30px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    /* ===== PUBLICATIONS ===== */
+    .publications { padding: 120px 40px; border-top: 1px solid var(--border); }
+    .pub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+    .pub-card {
+      padding: 40px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      display: block;
+    }
+    .pub-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-dim));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .pub-card:hover::before { transform: scaleX(1); }
+    .pub-card:hover { border-color: var(--blue); background: var(--subtle); }
+    .pub-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+      color: var(--blue);
+      font-family: 'Instrument Serif', serif;
+    }
+    .pub-card h3 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; margin-bottom: 12px; }
+    .pub-card p { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+    .pub-link {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s;
+    }
+    .pub-link:hover { gap: 14px; }
+    .pub-link::after { content: '\2192'; }
+
+    /* ===== VIDEO ===== */
+    .video-feature { position: relative; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+    .video-feature-inner { position: relative; width: 100%; padding-bottom: 56.25%; overflow: hidden; }
+    .video-feature-inner iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-feature-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 60px 40px 30px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      pointer-events: none;
+      z-index: 2;
+    }
+    .video-feature-caption h3 { font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 400; margin-bottom: 4px; }
+    .video-feature-caption p { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+
+    /* ===== DONATE ===== */
     .donate-strip {
       display: flex;
       align-items: center;
@@ -173,494 +634,107 @@
       text-transform: uppercase;
       letter-spacing: 3px;
     }
-
-    .donate-strip-label {
-      color: var(--muted);
-    }
-
-    .donate-strip a {
-      color: var(--blue);
-      transition: color 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .donate-strip-label { color: var(--muted); }
+    .donate-strip a { color: var(--blue); transition: color 0.3s; display: inline-flex; align-items: center; gap: 6px; }
     .donate-strip a:hover { color: var(--fg); }
 
-    .donate-inline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-left: 15px;
-      padding-left: 15px;
-      border-left: 1px solid var(--border);
+    /* ===== CONNECT ===== */
+    .connect { padding: 120px 40px; }
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 60px;
     }
-
-    .donate-inline a {
-      color: var(--blue);
-      transition: color 0.3s;
-    }
-
-    .donate-inline a:hover { color: var(--fg); }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 25px 40px;
+    .connect-item { background: var(--bg); padding: 35px; transition: background 0.3s; }
+    .connect-item:hover { background: var(--subtle); }
+    .connect-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+    .connect-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 100;
+    }
+    .connect-arrow { color: var(--border); transition: color 0.3s, transform 0.3s; transform: rotate(-45deg); }
+    .connect-item:hover .connect-arrow { color: var(--blue); transform: rotate(0deg); }
+
+    /* ===== FOOTER CTA ===== */
+    .footer-cta {
+      padding: 160px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .footer-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 700px; height: 700px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(125, 211, 252, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-cta h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 7vw, 84px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -3px;
+      margin-bottom: 35px;
+    }
+    .footer-cta h2 em { color: var(--blue); }
+    .footer-cta .cta-btn { font-size: 14px; padding: 20px 60px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .footer-links { display: flex; gap: 40px; }
+    .footer-links a:hover { color: var(--blue); }
+
+    /* ===== CURSOR ===== */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+    .cursor.hovering { transform: scale(3); background: var(--blue); opacity: 0.3; }
+    .cursor-dot {
+      position: fixed;
+      width: 4px; height: 4px;
+      background: var(--blue);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
       mix-blend-mode: difference;
     }
 
-    .nav-logo {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover { color: var(--fg); }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-    }
-
-    .hero-content {
-      padding: 140px 60px 80px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(32px, 6vw, 72px);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 30px;
-    }
-
-    .hero h1 .line {
-      display: block;
-      overflow: hidden;
-    }
-
-    .hero h1 .line span {
-      display: inline-block;
-      transform: translateY(100%);
-      animation: slideUp 1s ease forwards;
-    }
-
-    .hero h1 .line:nth-child(2) span { animation-delay: 0.1s; }
-    .hero h1 .line:nth-child(3) span { animation-delay: 0.2s; }
-
-    @keyframes slideUp { to { transform: translateY(0); } }
-
-    .hero h1 em { font-style: normal; color: var(--blue); }
-
-    .hero-bio {
-      font-size: 14px;
-      max-width: 450px;
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 40px;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--blue);
-      transition: gap 0.3s;
-    }
-
-    .hero-cta:hover { gap: 20px; }
-    .hero-cta::after { content: '\2192'; }
-
-    .hero-image {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(30%) contrast(1.1);
-      opacity: 0.9;
-    }
-
-    .hero-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 50%);
-    }
-
-    /* Sections */
-    .work { padding: 120px 40px; border-top: 1px solid var(--border); }
-
-    .section-header {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 60px;
-      margin-bottom: 80px;
-    }
-
-    .section-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      color: var(--muted);
-      padding-top: 8px;
-    }
-
-    .section-intro {
-      font-family: 'Instrument Serif', serif;
-      font-size: 28px;
-      line-height: 1.5;
-      max-width: 700px;
-    }
-
-    .section-intro em { font-style: normal; color: var(--blue); }
-
-    /* Featured Project */
-    .featured-project {
-      margin-bottom: 100px;
-      padding-bottom: 100px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .featured-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
-    }
-
-    .featured-image { aspect-ratio: 4/3; overflow: hidden; position: relative; }
-
-    .featured-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: filter 0.6s ease;
-    }
-
-    .featured-project:hover .featured-image img { filter: grayscale(0%); }
-
-    .featured-content { padding-top: 20px; }
-
-    .featured-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--blue);
-      margin-bottom: 20px;
-    }
-
-    .featured-content h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 42px;
-      font-weight: 400;
-      letter-spacing: -1px;
-      margin-bottom: 25px;
-    }
-
-    .featured-description {
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 30px;
-    }
-
-    .featured-description p { margin-bottom: 20px; }
-    .featured-description strong { color: var(--fg); font-weight: 400; }
-
-    .featured-links { display: flex; gap: 20px; flex-wrap: wrap; }
-
-    .featured-link {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 12px 24px;
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-
-    .featured-link:hover { border-color: var(--blue); color: var(--blue); }
-
-    /* Project Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-    }
-
-    .project-card {
-      padding: 40px;
-      border: 1px solid var(--border);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      display: block;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--blue);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .project-card:hover::before { transform: scaleX(1); }
-    .project-card:hover { border-color: var(--blue); background: var(--subtle); }
-
-    .project-image-small {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      margin-bottom: 25px;
-      filter: grayscale(100%);
-      transition: filter 0.4s;
-    }
-
-    .project-card:hover .project-image-small { filter: grayscale(0%); }
-
-    .project-tag-small {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--blue);
-      margin-bottom: 12px;
-    }
-
-    .project-card h3 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 26px;
-      font-weight: 400;
-      margin-bottom: 15px;
-    }
-
-    .project-card p {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 25px;
-    }
-
-    .project-card-links { display: flex; gap: 15px; }
-
-    .project-card-link {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      transition: color 0.3s;
-    }
-
-    .project-card-link:hover { color: var(--blue); }
-
-    /* Quote */
-    .quote-section {
-      padding: 150px 40px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .quote {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(22px, 4vw, 38px);
-      font-style: normal;
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-
-    .quote em { font-style: normal; color: var(--blue); }
-
-    .quote-attr {
-      margin-top: 30px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--muted);
-    }
-
-    /* Publications */
-    .publications { padding: 120px 40px; border-top: 1px solid var(--border); }
-
-    .pub-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      margin-top: 60px;
-    }
-
-    .pub-card {
-      padding: 40px;
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      display: block;
-    }
-
-    .pub-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--blue-dim));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .pub-card:hover::before { transform: scaleX(1); }
-    .pub-card:hover { border-color: var(--blue); background: var(--subtle); }
-
-    .pub-icon {
-      font-size: 28px;
-      margin-bottom: 20px;
-      display: block;
-      color: var(--blue);
-      font-family: 'Instrument Serif', serif;
-    }
-
-    .pub-card h3 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 24px;
-      font-weight: 400;
-      margin-bottom: 12px;
-    }
-
-    .pub-card p {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .pub-link {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--blue);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: gap 0.3s;
-    }
-
-    .pub-link:hover { gap: 14px; }
-    .pub-link::after { content: '\2192'; }
-
-    /* Video Feature — full-width, proper 16:9 */
-    .video-feature {
-      position: relative;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .video-feature-inner {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      overflow: hidden;
-    }
-
-    .video-feature-inner iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-feature-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 60px 40px 30px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    /* ===== BG CANVAS ===== */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
       pointer-events: none;
-      z-index: 2;
     }
 
-    .video-feature-caption h3 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 28px;
-      font-weight: 400;
-      margin-bottom: 4px;
-    }
-
-    .video-feature-caption p {
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-    }
-
-    /* Ambient Audio Player */
+    /* ===== AMBIENT PLAYER ===== */
     .ambient-player {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       z-index: 90;
       background: rgba(0,0,0,0.92);
       backdrop-filter: blur(20px);
@@ -673,173 +747,31 @@
       transform: translateY(100%);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .ambient-player.visible { transform: translateY(0); }
-
-    .ambient-player-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--blue);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .ambient-player-track {
-      font-family: 'Instrument Serif', serif;
-      font-size: 16px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .ambient-player-sc {
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .ambient-player-sc iframe {
-      width: 100%;
-      border: 0;
-      display: block;
-    }
-
+    .ambient-player-label { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--blue); white-space: nowrap; flex-shrink: 0; }
+    .ambient-player-track { font-family: 'Instrument Serif', serif; font-size: 16px; white-space: nowrap; flex-shrink: 0; }
+    .ambient-player-sc { flex: 1; min-width: 0; overflow: hidden; }
+    .ambient-player-sc iframe { width: 100%; border: 0; display: block; }
     .ambient-player-close {
       background: none;
       border: 1px solid var(--border);
       color: var(--muted);
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       font-size: 14px;
       flex-shrink: 0;
       transition: all 0.3s;
     }
-
     .ambient-player-close:hover { border-color: var(--blue); color: var(--fg); }
-
     body.player-active footer { padding-bottom: 80px; }
     body.player-active .connect { padding-bottom: 140px; }
 
-    /* Connect */
-    .connect { padding: 120px 40px; }
+    /* ===== GSAP anim helpers ===== */
+    .gs-reveal { opacity: 0; transform: translateY(40px); }
 
-    .connect-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      margin-top: 60px;
-    }
-
-    .connect-item {
-      background: var(--bg);
-      padding: 35px;
-      transition: background 0.3s;
-    }
-
-    .connect-item:hover { background: var(--subtle); }
-
-    .connect-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .connect-name {
-      font-family: 'Instrument Serif', serif;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .connect-arrow {
-      color: var(--border);
-      transition: color 0.3s, transform 0.3s;
-      transform: rotate(-45deg);
-    }
-
-    .connect-item:hover .connect-arrow {
-      color: var(--blue);
-      transform: rotate(0deg);
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .footer-links { display: flex; gap: 40px; }
-    .footer-links a:hover { color: var(--blue); }
-
-    /* Cursor */
-    .cursor {
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      border: 1px solid var(--blue);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.15s ease;
-      mix-blend-mode: difference;
-    }
-
-    .cursor.hovering {
-      transform: scale(3);
-      background: var(--blue);
-      opacity: 0.3;
-    }
-
-    .cursor-dot {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      background: var(--blue);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: difference;
-    }
-
-    /* Background Canvas */
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    /* Noise */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 9998;
-    }
-
-    /* ---- MOBILE ---- */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 1000px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-image { height: 50vh; order: -1; }
-      .hero-content { padding: 60px 20px; }
       .section-header { grid-template-columns: 1fr; gap: 20px; }
       .featured-grid { grid-template-columns: 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
@@ -850,8 +782,12 @@
     @media (max-width: 768px) {
       nav { padding: 15px 20px; }
       .nav-links { gap: 20px; font-size: 10px; letter-spacing: 1px; }
-      .hero h1 { font-size: clamp(28px, 8vw, 48px); letter-spacing: -1px; }
+      .nav-cta { padding: 8px 16px; font-size: 9px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero h1 { font-size: clamp(32px, 9vw, 56px); letter-spacing: -1px; }
       .hero-bio { font-size: 13px; }
+      .hero-ctas { flex-direction: column; gap: 20px; }
+      .hero-cta-primary { width: 100%; text-align: center; max-width: 280px; }
       .work, .connect, .publications { padding: 60px 20px; }
       .section-header { margin-bottom: 40px; }
       .section-intro { font-size: 22px; }
@@ -859,45 +795,55 @@
       .featured-link { padding: 10px 18px; font-size: 10px; }
       .project-card { padding: 25px; }
       .pub-card { padding: 25px; }
+      .cta-strip { padding: 80px 20px; }
+      .cta-strip h2 { font-size: clamp(28px, 7vw, 48px); }
       .quote-section { padding: 80px 20px; }
       .quote { font-size: clamp(18px, 5vw, 28px); }
       .video-feature-caption { padding: 40px 20px 20px; }
       .video-feature-caption h3 { font-size: 22px; }
       .connect-item { padding: 25px 20px; }
       .connect-name { font-size: 17px; }
+      .footer-cta { padding: 80px 20px; }
+      .footer-cta h2 { font-size: clamp(32px, 8vw, 56px); }
+      .footer-cta .cta-btn { font-size: 12px; padding: 16px 40px; }
       .cursor, .cursor-dot { display: none; }
-      footer {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-        padding: 30px 20px;
-      }
-      .footer-links { justify-content: center; }
-      .ambient-player {
-        padding: 10px 16px;
-        gap: 10px;
-      }
+      footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 20px; }
+      .footer-links { justify-content: center; flex-wrap: wrap; gap: 20px; }
+      .ambient-player { padding: 10px 16px; gap: 10px; }
       .ambient-player-label { display: none; }
       .ambient-player-track { font-size: 13px; }
-      .enter-gate-text { font-size: clamp(24px, 8vw, 40px); }
+      .vision-text h2 { font-size: clamp(24px, 6vw, 40px); }
+      .vision-orb-1, .vision-orb-2, .vision-orb-3 { width: 200px; height: 200px; }
     }
 
     @media (max-width: 480px) {
       .ascii-art { font-size: 3.5px !important; }
       .donate-strip { flex-direction: column; gap: 10px; padding: 16px 20px; }
-      .hero-image { height: 35vh; }
-      .hero-content { padding: 40px 16px; }
       .hero h1 { margin-bottom: 20px; }
       .hero-bio { font-size: 12px; margin-bottom: 25px; }
       .featured-description { font-size: 12px; }
       .project-card h3 { font-size: 22px; }
       .pub-card h3 { font-size: 20px; }
       .connect-name { font-size: 16px; }
+      .marquee-item { font-size: 16px; padding: 0 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .marquee-track { animation: none; }
+      .scroll-line { animation: none; opacity: 0.5; }
+      .hero h1 .line span { transform: none; }
+      .hero-bio, .hero-ctas, .hero-scroll-hint { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-  <!-- ASCII Art Intro -->
+
+  <!-- ===== ENTER GATE ===== -->
   <div class="enter-gate" id="enter-gate">
     <canvas id="intro-canvas"></canvas>
     <div class="scanline"></div>
@@ -914,36 +860,45 @@
 
   <nav>
     <a href="#" class="nav-logo">samu.quest</a>
-    <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#publications">Publications</a>
-      <a href="#connect">Connect</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#publications">Publications</a>
+        <a href="#connect">Connect</a>
+      </div>
+      <a href="https://calendly.com/starrybodies" target="_blank" class="nav-cta">Book a Call</a>
     </div>
   </nav>
 
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>
+        <span class="line"><span>Growth alchemist.</span></span>
+        <span class="line"><span><em>Culture hacker.</em></span></span>
+        <span class="line"><span>Regenerate.</span></span>
+      </h1>
+      <p class="hero-bio">Building regenerative futures through memes, music, medicine, and machines. Scaling movements at the intersection of web3, ecology, and AI. Head of Growth by trade. Planet steward by calling.</p>
+      <div class="hero-ctas">
+        <a href="https://calendly.com/starrybodies" target="_blank" class="hero-cta-primary">Book a Call</a>
+        <a href="#work" class="hero-cta-secondary">View the work</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
   <main>
-    <section class="hero">
-      <div class="hero-content">
-        <h1>
-          <span class="line"><span>Growth alchemist.</span></span>
-          <span class="line"><span><em>Culture hacker.</em></span></span>
-          <span class="line"><span>Regenerate.</span></span>
-        </h1>
-        <p class="hero-bio">Building regenerative futures through memes, music, medicine, and machines. Scaling movements at the intersection of web3, ecology, and AI. Head of Growth by trade. Planet steward by calling.</p>
-        <a href="#work" class="hero-cta">View the work</a>
-      </div>
-      <div class="hero-image">
-        <img src="images/hero-earth.jpg" alt="Earth from space">
-      </div>
-    </section>
-
+    <!-- ===== WORK ===== -->
     <section class="work" id="work">
-      <div class="section-header reveal">
+      <div class="section-header gs-reveal">
         <div class="section-label">Selected Work</div>
-        <p class="section-intro">I build growth systems for projects that matter. From <em>regenerative AI</em> to sacred bass music, my work lives at the edges where technology meets ecology meets culture.</p>
+        <p class="section-intro">I build growth systems&mdash;and increasingly the <em>software</em> itself&mdash;for projects that matter. From <em>regenerative AI</em> to stranded-power infrastructure to sacred bass music, my work lives at the edges where technology meets ecology meets culture.</p>
       </div>
 
-      <article class="featured-project reveal">
+      <article class="featured-project gs-reveal">
         <a href="gaia-ai.html" class="featured-grid">
           <div class="featured-image">
             <img src="images/gaia-earth.jpg" alt="Planet Earth">
@@ -953,7 +908,7 @@
             <h2>GAIA AI / Symbiocene Labs</h2>
             <div class="featured-description">
               <p><strong>Building the planetary environmental data legibility layer.</strong> GAIA AI is a decentralized intelligence system designed to accelerate planetary regeneration through AI-driven analysis, community wisdom, and innovative financing.</p>
-              <p>We're seeding the <strong>RegenAIssance</strong>—deploying altruistic AI agents across 27+ domains including soil systems, biodiversity, indigenous wisdom, and regenerative finance.</p>
+              <p>We're seeding the <strong>RegenAIssance</strong>&mdash;deploying altruistic AI agents across 27+ domains including soil systems, biodiversity, indigenous wisdom, and regenerative finance.</p>
             </div>
             <div class="featured-links">
               <span class="featured-link">Learn More</span>
@@ -963,70 +918,149 @@
       </article>
 
       <div class="projects-grid">
-        <a href="alchememes.html" class="project-card reveal">
+        <a href="https://refinery-atlas.vercel.app" target="_blank" rel="noopener" class="project-card gs-reveal">
+          <img src="images/refinery-atlas.png" alt="Refinery Atlas" class="project-image-small">
+          <div class="project-tag-small">Stranded-Power Intelligence</div>
+          <h3>Refinery Atlas</h3>
+          <p>The Zillow of power. A searchable index and live map of stranded megawatts&mdash;warehouses, mills, and dead malls already holding grid service, scored for edge data centers and container BESS. 40 countries, every input cited.</p>
+          <div class="project-card-links"><span class="project-card-link">Open the Atlas &rarr;</span></div>
+        </a>
+
+        <a href="https://paredes.samu.quest" target="_blank" rel="noopener" class="project-card gs-reveal">
+          <img src="images/paredes.png" alt="Paredes AI" class="project-image-small">
+          <div class="project-tag-small">Esoteric AI</div>
+          <h3>Paredes AI</h3>
+          <p>A vessel for the transmission of authentic Kabbalistic wisdom&mdash;AI as chevruta for the living esoteric tradition. Study the Tree, one sphere at a time.</p>
+          <div class="project-card-links"><span class="project-card-link">Enter Paredes &rarr;</span></div>
+        </a>
+
+        <a href="https://github.com/starrybodies" target="_blank" rel="noopener" class="project-card gs-reveal">
+          <img src="images/software-engineering.svg" alt="Software Engineering" class="project-image-small">
+          <div class="project-tag-small">Cracked Engineering</div>
+          <h3>Software Engineering</h3>
+          <p>From growth strategist to agentic builder. Shipping real software at speed&mdash;this site, Refinery Atlas, Paredes, and a fleet of AI agents. The tools are the medium now.</p>
+          <div class="project-card-links"><span class="project-card-link">See the code &rarr;</span></div>
+        </a>
+
+        <a href="alchememes.html" class="project-card gs-reveal">
           <img src="images/alchememes-logo.png" alt="Alchememes" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Strategic Meme Engineering</div>
           <h3>Alchememes</h3>
           <p>Transmuting culture through strategic meme engineering for web3 and regenerative movements. The revolution will be memed.</p>
-          <div class="project-card-links">
-            <span class="project-card-link">Learn More &rarr;</span>
-          </div>
+          <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
 
-        <a href="sun-rose.html" class="project-card reveal">
+        <a href="sun-rose.html" class="project-card gs-reveal">
           <img src="images/sunrose.jpg" alt="Sun Rose" class="project-image-small">
           <div class="project-tag-small">Sacred Bass Music</div>
           <h3>Sun Rose</h3>
           <p>Sacred/saucy bass music from the Pleiades via Canada. Live ceremony through frequencies. 32 tracks released.</p>
-          <div class="project-card-links">
-            <span class="project-card-link">Learn More &rarr;</span>
-          </div>
+          <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
 
-        <a href="white-tara-tea.html" class="project-card reveal">
+        <a href="white-tara-tea.html" class="project-card gs-reveal">
           <img src="images/whitetara.png" alt="White Tara Tea" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Botanical Medicine</div>
           <h3>White Tara Tea</h3>
           <p>Wildcrafted botanical medicines and alchemical tea service. Plant intelligence for human evolution.</p>
-          <div class="project-card-links">
-            <span class="project-card-link">Learn More &rarr;</span>
-          </div>
+          <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
 
-        <a href="growth-practice.html" class="project-card reveal">
+        <a href="growth-practice.html" class="project-card gs-reveal">
           <img src="images/symbai-logo.png" alt="SymbAI Studios" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
           <div class="project-tag-small">Growth Strategy</div>
           <h3>Growth Practice</h3>
           <p>A decade of scaling startups from zero to escape velocity. Currently building SymbAI Studios.</p>
-          <div class="project-card-links">
-            <span class="project-card-link">Learn More &rarr;</span>
-          </div>
+          <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
       </div>
     </section>
 
+    <!-- ===== CTA STRIP ===== -->
+    <section class="cta-strip">
+      <h2 class="gs-reveal">Got a project?<br><em>Let's talk.</em></h2>
+      <p class="gs-reveal">Whether you're building regenerative tech, scaling a movement, or need growth strategy, I'd love to hear from you.</p>
+      <a href="https://calendly.com/starrybodies" target="_blank" class="cta-btn gs-reveal">Book a Call</a>
+    </section>
+
+    <!-- ===== VISION SECTION (scroll-pinned) ===== -->
+    <section class="vision-section" id="vision-section">
+      <div class="vision-bg">
+        <div class="vision-orb vision-orb-1"></div>
+        <div class="vision-orb vision-orb-2"></div>
+        <div class="vision-orb vision-orb-3"></div>
+      </div>
+      <div class="vision-overlay">
+        <div class="vision-text" id="vision-text-0">
+          <h2><em>Infinite</em> Possibilities</h2>
+          <p>The threads of regeneration weave through every domain</p>
+        </div>
+        <div class="vision-text" id="vision-text-1">
+          <h2>In the Age of <em>Abundance</em></h2>
+          <p>Nature's intelligence patterns emerging through technology</p>
+        </div>
+        <div class="vision-text" id="vision-text-2">
+          <h2>Imagination is the <em>Limit</em></h2>
+          <p>Spiraling outward from planetary consciousness</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee-section">
+      <div class="marquee-track">
+        <span class="marquee-item">Regenerative AI</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Growth Strategy</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Energy Infrastructure</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Software Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Esoteric AI</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Meme Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Sacred Bass Music</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Botanical Medicine</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Web3</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Planetary Intelligence</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Decentralized Systems</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Regenerative AI</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Growth Strategy</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Energy Infrastructure</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Software Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Esoteric AI</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Meme Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Sacred Bass Music</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Botanical Medicine</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Web3</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Planetary Intelligence</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Decentralized Systems</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
+      </div>
+    </div>
+
+    <!-- ===== PUBLICATIONS ===== -->
     <section class="publications" id="publications">
-      <div class="section-header reveal">
+      <div class="section-header gs-reveal">
         <div class="section-label">Publications</div>
         <p class="section-intro">Long-form thinking on <em>regenerative futures</em>, planetary intelligence, and the emerging web of life.</p>
       </div>
 
       <div class="pub-grid">
-        <a href="encyclopedia-of-regeneration.html" class="pub-card reveal">
+        <a href="encyclopedia-of-regeneration.html" class="pub-card gs-reveal">
           <span class="pub-icon">EoR</span>
           <h3>Encyclopedia of Regeneration</h3>
           <p>A living knowledge base mapping the full landscape of regenerative practice. The reference library for the RegenAIssance.</p>
           <span class="pub-link">Explore</span>
         </a>
 
-        <a href="gaian-times.html" class="pub-card reveal">
+        <a href="gaian-times.html" class="pub-card gs-reveal">
           <span class="pub-icon">GT</span>
           <h3>The Gaian Times</h3>
           <p>Dispatches from the frontlines of planetary regeneration. AI-curated, human-edited reporting.</p>
           <span class="pub-link">Read</span>
         </a>
 
-        <a href="the-light-web.html" class="pub-card reveal">
+        <a href="the-light-web.html" class="pub-card gs-reveal">
           <span class="pub-icon">LW</span>
           <h3>The Light Web</h3>
           <p>Essays on building an internet that heals. The counter-narrative to extractive tech.</p>
@@ -1035,20 +1069,23 @@
       </div>
     </section>
 
-    <section class="quote-section reveal">
-      <blockquote class="quote">
+    <!-- ===== QUOTE ===== -->
+    <section class="quote-section">
+      <blockquote class="quote gs-reveal">
         "We stand at a pivotal moment... our technologies have never been more powerful, nor our ecological crises more dire. The Symbiocene represents <em>humanity's embrace of its role as gardeners and co-creators</em> of Earth's evolution."
       </blockquote>
-      <div class="quote-attr">&mdash; GAIA AI Greenpaper</div>
+      <div class="quote-attr gs-reveal">&mdash; GAIA AI Greenpaper</div>
     </section>
 
-    <div class="donate-strip reveal">
+    <!-- ===== DONATE ===== -->
+    <div class="donate-strip gs-reveal">
       <span class="donate-strip-label">Support the work</span>
       <a href="https://etherscan.io/name-lookup-search?id=sunrose.eth" target="_blank">sunrose.eth</a>
       <a href="https://venmo.com/u/starrytelling" target="_blank">Venmo</a>
     </div>
 
-    <section class="video-feature reveal">
+    <!-- ===== VIDEO ===== -->
+    <section class="video-feature gs-reveal">
       <div class="video-feature-inner">
         <iframe src="https://www.youtube.com/embed/etqUCny5tCk?start=4&modestbranding=1&rel=0&color=white" title="UN Talk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="video-feature-caption">
@@ -1058,61 +1095,59 @@
       </div>
     </section>
 
+    <!-- ===== CONNECT ===== -->
     <section class="connect" id="connect">
-      <div class="section-header reveal">
+      <div class="section-header gs-reveal">
         <div class="section-label">Connect</div>
         <p class="section-intro">Find me building in the open. Always down to talk <em>regenerative systems</em>, growth strategy, or just vibe.</p>
       </div>
 
-      <div class="connect-grid reveal">
-        <a href="https://x.com/reslashacc" target="_blank" class="connect-item">
+      <div class="connect-grid">
+        <a href="https://x.com/reslashacc" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Twitter/X</div>
           <div class="connect-name">@reslashacc <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://x.com/gaiaaixyz" target="_blank" class="connect-item">
+        <a href="https://x.com/gaiaaixyz" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">GAIA AI</div>
           <div class="connect-name">@gaiaaixyz <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://soundcloud.com/djsunrose" target="_blank" class="connect-item">
+        <a href="https://soundcloud.com/djsunrose" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Music</div>
           <div class="connect-name">Sun Rose <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://instagram.com/samusunrose" target="_blank" class="connect-item">
+        <a href="https://instagram.com/samusunrose" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Instagram</div>
           <div class="connect-name">@samusunrose <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://instagram.com/alchememes__" target="_blank" class="connect-item">
+        <a href="https://instagram.com/alchememes__" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Memes</div>
           <div class="connect-name">@alchememes__ <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://instagram.com/whitetaratea" target="_blank" class="connect-item">
+        <a href="https://instagram.com/whitetaratea" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Botanicals</div>
           <div class="connect-name">@whitetaratea <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://github.com/starrybodies" target="_blank" class="connect-item">
+        <a href="https://github.com/starrybodies" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Code</div>
           <div class="connect-name">starrybodies <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="https://paragraph.com/@gaiaai" target="_blank" class="connect-item">
+        <a href="https://paragraph.com/@gaiaai" target="_blank" class="connect-item gs-reveal">
           <div class="connect-label">Writing</div>
           <div class="connect-name">GAIA Blog <span class="connect-arrow">&nearr;</span></div>
         </a>
-        <a href="mailto:samu@samu.quest" class="connect-item">
+        <a href="mailto:samu@samu.quest" class="connect-item gs-reveal">
           <div class="connect-label">Email</div>
           <div class="connect-name">Get in touch <span class="connect-arrow">&nearr;</span></div>
         </a>
       </div>
     </section>
-  </main>
 
-  <div class="ambient-player" id="ambient-player">
-    <span class="ambient-player-label">Now Playing</span>
-    <span class="ambient-player-track">Sun Rose &mdash; Chateau</span>
-    <div class="ambient-player-sc">
-      <iframe id="sc-player" width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="about:blank"></iframe>
-    </div>
-    <button class="ambient-player-close" onclick="dismissPlayer()" aria-label="Close player">&times;</button>
-  </div>
+    <!-- ===== FOOTER CTA ===== -->
+    <section class="footer-cta">
+      <h2 class="gs-reveal">Let's build something<br><em>regenerative.</em></h2>
+      <a href="https://calendly.com/starrybodies" target="_blank" class="cta-btn gs-reveal">Book a Call</a>
+    </section>
+  </main>
 
   <footer>
     <div>samu.quest &mdash; 2026</div>
@@ -1124,18 +1159,32 @@
     </div>
   </footer>
 
+  <!-- ===== AMBIENT PLAYER ===== -->
+  <div class="ambient-player" id="ambient-player">
+    <span class="ambient-player-label">Now Playing</span>
+    <span class="ambient-player-track">Sun Rose &mdash; Chateau</span>
+    <div class="ambient-player-sc">
+      <iframe id="sc-player" width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="about:blank"></iframe>
+    </div>
+    <button class="ambient-player-close" onclick="dismissPlayer()" aria-label="Close player">&times;</button>
+  </div>
+
+  <!-- ===== GSAP ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
   <script>
+    gsap.registerPlugin(ScrollTrigger);
+
     // ===== ASCII ART INTRO =====
-    const ASCII_FRAMES = [
-`
+    const ASCII_FRAMES = [`
   ███████╗ █████╗ ███╗   ███╗██╗   ██╗     ██████╗ ██╗   ██╗███████╗███████╗████████╗
   ██╔════╝██╔══██╗████╗ ████║██║   ██║    ██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝
   ███████╗███████║██╔████╔██║██║   ██║    ██║   ██║██║   ██║█████╗  ███████╗   ██║
   ╚════██║██╔══██║██║╚██╔╝██║██║   ██║    ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║
   ███████║██║  ██║██║ ╚═╝ ██║╚██████╔╝ ██╗╚██████╔╝╚██████╔╝███████╗███████║   ██║
   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝
-`
-    ];
+`];
 
     const gate = document.getElementById('enter-gate');
     const asciiEl = document.getElementById('ascii-art');
@@ -1144,7 +1193,7 @@
     const player = document.getElementById('ambient-player');
     const scPlayer = document.getElementById('sc-player');
 
-    // Intro canvas — matrix rain behind ASCII
+    // Matrix rain
     const introCanvas = document.getElementById('intro-canvas');
     const ictx = introCanvas.getContext('2d');
     let iw, ih, columns, drops;
@@ -1153,8 +1202,7 @@
     function initIntroCanvas() {
       iw = introCanvas.width = window.innerWidth;
       ih = introCanvas.height = window.innerHeight;
-      const fontSize = 12;
-      columns = Math.floor(iw / fontSize);
+      columns = Math.floor(iw / 12);
       drops = Array(columns).fill(1);
     }
 
@@ -1176,13 +1224,12 @@
     drawMatrixRain();
     window.addEventListener('resize', initIntroCanvas);
 
-    // Typewriter reveal of ASCII art
+    // Typewriter
     const fullAscii = ASCII_FRAMES[0];
-    let asciiIndex = 0;
-    let asciiBuffer = '';
+    let asciiIndex = 0, asciiBuffer = '';
 
     function typeAscii() {
-      const chunkSize = 4;
+      const chunkSize = 6;
       for (let i = 0; i < chunkSize && asciiIndex < fullAscii.length; i++) {
         asciiBuffer += fullAscii[asciiIndex];
         asciiIndex++;
@@ -1191,21 +1238,19 @@
       if (asciiIndex < fullAscii.length) {
         requestAnimationFrame(typeAscii);
       } else {
-        // Done typing — show subtitle and enter button
-        setTimeout(() => subtitleEl.classList.add('visible'), 800);
-        setTimeout(() => enterBtn.classList.add('visible'), 1800);
+        setTimeout(() => subtitleEl.classList.add('visible'), 600);
+        setTimeout(() => enterBtn.classList.add('visible'), 1400);
       }
     }
 
-    // Start after a beat
-    setTimeout(() => {
-      asciiEl.classList.add('visible');
-      typeAscii();
-    }, 1200);
+    setTimeout(() => { asciiEl.classList.add('visible'); typeAscii(); }, 800);
 
-    // Enter button click
+    // Enter
+    document.body.style.overflow = 'hidden';
     enterBtn.addEventListener('click', () => {
       gate.classList.add('hidden');
+      document.body.style.overflow = '';
+      startAnimations();
       scPlayer.src = 'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdjsunrose%2Fchateau&color=%237dd3fc&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=false';
       setTimeout(() => {
         player.classList.add('visible');
@@ -1219,19 +1264,16 @@
       scPlayer.src = 'about:blank';
     }
 
-    // Cursor
+    // ===== CURSOR =====
     const cursor = document.querySelector('.cursor');
     const cursorDot = document.querySelector('.cursor-dot');
     let cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
 
-    document.addEventListener('mousemove', e => {
-      cursorX = e.clientX;
-      cursorY = e.clientY;
-    });
+    document.addEventListener('mousemove', e => { cursorX = e.clientX; cursorY = e.clientY; });
 
     function animateCursor() {
-      dotX += (cursorX - dotX) * 0.15;
-      dotY += (cursorY - dotY) * 0.15;
+      dotX += (cursorX - dotX) * 0.12;
+      dotY += (cursorY - dotY) * 0.12;
       cursor.style.left = cursorX - 6 + 'px';
       cursor.style.top = cursorY - 6 + 'px';
       cursorDot.style.left = dotX - 2 + 'px';
@@ -1240,24 +1282,12 @@
     }
     animateCursor();
 
-    document.querySelectorAll('a, .project-card, button').forEach(el => {
+    document.querySelectorAll('a, button, .project-card, .pub-card, .connect-item').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
 
-    // Reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const revealOnScroll = () => {
-      reveals.forEach((el, i) => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
-          setTimeout(() => el.classList.add('visible'), i * 80);
-        }
-      });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
-
-    // Background particles
+    // ===== BACKGROUND PARTICLES (original — proven to work) =====
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let w, h, particles;
@@ -1265,17 +1295,10 @@
     const CELL_SIZE = 30;
     let noiseZ = 0;
 
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
+    function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
 
     function noise(x, y, z) {
-      return (
-        Math.sin(x * 0.8 + z * 0.5) * 0.5 +
-        Math.sin(y * 0.6 + z * 0.3) * 0.5 +
-        Math.sin((x + y) * 0.4 + z * 0.7) * 0.3
-      ) / 1.3;
+      return (Math.sin(x * 0.8 + z * 0.5) * 0.5 + Math.sin(y * 0.6 + z * 0.3) * 0.5 + Math.sin((x + y) * 0.4 + z * 0.7) * 0.3) / 1.3;
     }
 
     class Particle {
@@ -1308,9 +1331,7 @@
       }
     }
 
-    function initParticles() {
-      particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
-    }
+    function initParticles() { particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle()); }
 
     function drawBg() {
       ctx.clearRect(0, 0, w, h);
@@ -1334,10 +1355,121 @@
       requestAnimationFrame(drawBg);
     }
 
-    resize();
-    initParticles();
-    drawBg();
+    resize(); initParticles(); drawBg();
     window.addEventListener('resize', () => { resize(); initParticles(); });
+
+    // ===== GSAP ANIMATIONS =====
+    function startAnimations() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      // Hero text slide up
+      gsap.to('.hero h1 .line span', {
+        y: 0,
+        duration: 1.2,
+        stagger: 0.12,
+        ease: 'power4.out',
+        delay: 0.2,
+      });
+
+      // Hero bio + CTAs fade in
+      gsap.to('.hero-bio', {
+        opacity: 1, y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.8,
+      });
+      gsap.to('.hero-ctas', {
+        opacity: 1, y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 1.1,
+      });
+      gsap.to('.hero-scroll-hint', {
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 1.6,
+      });
+
+      // Scroll reveal for all gs-reveal elements
+      gsap.utils.toArray('.gs-reveal').forEach((el, i) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      });
+
+      // Vision section — scroll-pinned with orb + text transitions
+      const visionSection = document.getElementById('vision-section');
+      if (visionSection) {
+        const orbs = visionSection.querySelectorAll('.vision-orb');
+        const texts = [
+          document.getElementById('vision-text-0'),
+          document.getElementById('vision-text-1'),
+          document.getElementById('vision-text-2'),
+        ];
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: visionSection,
+            start: 'top top',
+            end: '+=400%',
+            pin: true,
+            scrub: 1,
+          },
+        });
+
+        // Orbs fade in softly
+        tl.to(orbs[0], { opacity: 0.12, duration: 0.1 }, 0);
+        tl.to(orbs[2], { opacity: 0.08, duration: 0.1 }, 0);
+
+        // Text 0
+        tl.fromTo(texts[0],
+          { opacity: 0, y: 30, filter: 'blur(6px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.12, ease: 'power2.out' }, 0.02
+        );
+        tl.to(texts[0],
+          { opacity: 0, y: -20, filter: 'blur(4px)', duration: 0.1 }, 0.22
+        );
+
+        // Orb shift
+        tl.to(orbs[0], { opacity: 0.05, x: -50, duration: 0.2 }, 0.2);
+        tl.to(orbs[1], { opacity: 0.15, duration: 0.15 }, 0.25);
+
+        // Text 1
+        tl.fromTo(texts[1],
+          { opacity: 0, y: 30, filter: 'blur(6px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.12, ease: 'power2.out' }, 0.35
+        );
+        tl.to(texts[1],
+          { opacity: 0, y: -20, filter: 'blur(4px)', duration: 0.1 }, 0.55
+        );
+
+        // Orb shift
+        tl.to(orbs[1], { opacity: 0.08, y: -30, duration: 0.15 }, 0.5);
+        tl.to(orbs[2], { opacity: 0.15, scale: 1.2, duration: 0.15 }, 0.55);
+
+        // Text 2
+        tl.fromTo(texts[2],
+          { opacity: 0, y: 30, filter: 'blur(6px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.12, ease: 'power2.out' }, 0.68
+        );
+        tl.to(texts[2],
+          { opacity: 0, y: -20, filter: 'blur(4px)', duration: 0.1 }, 0.88
+        );
+
+        // All orbs fade out
+        tl.to(orbs, { opacity: 0, duration: 0.1 }, 0.92);
+      }
+    }
 
     console.log('%c\n  Growth alchemist. Culture hacker. Regenerate.\n\n  github.com/starrybodies\n  soundcloud.com/djsunrose\n', 'color: #7dd3fc; font-size: 12px;');
   </script>
