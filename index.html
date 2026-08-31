@@ -1540,6 +1540,19 @@
         // All orbs fade out
         tl.to(orbs, { opacity: 0, duration: 0.1 }, 0.92);
       }
+
+      // Gate opens before remote fonts and project art are guaranteed to have
+      // settled. Re-measure pinned sections once final layout is available so
+      // the vision sequence cannot cover or intercept project cards.
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => ScrollTrigger.refresh());
+      }
+      document.querySelectorAll('img').forEach(image => {
+        if (!image.complete) {
+          image.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+        }
+      });
     }
 
     console.log('%c\n  Growth alchemist. Culture hacker. Regenerate.\n\n  github.com/starrybodies\n  soundcloud.com/djsunrose\n', 'color: #7dd3fc; font-size: 12px;');
