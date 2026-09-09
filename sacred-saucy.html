@@ -3,70 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#ffd6a0" />
-  <title>Sacred/Saucy — Events, Production &amp; Rentals</title>
-  <meta name="description" content="Upcoming Sacred/Saucy events, full-service event production, and equipment rentals on Salt Spring Island." />
+  <meta name="theme-color" content="#f4b27d" />
+  <title>Sacred/Saucy Productions — Salt Spring Island</title>
+  <meta name="description" content="Sacred/Saucy events, event production, and equipment rentals on Salt Spring Island. Moonbeat tickets are live." />
   <meta property="og:title" content="Sacred/Saucy Productions" />
-  <meta property="og:description" content="Events, production, and equipment rentals on Salt Spring Island." />
+  <meta property="og:description" content="Moonbeat is live. September 11 on Salt Spring Island." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://saucy.samu.quest/" />
+  <meta property="og:image" content="https://saucy.samu.quest/images/moonbeat-2026.webp" />
+  <link rel="canonical" href="https://saucy.samu.quest/" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <script>
     try {
-      const savedTheme = localStorage.getItem('sacred-saucy-theme');
-      document.documentElement.dataset.theme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const savedTheme = localStorage.getItem('sacred-saucy-theme-v2');
+      document.documentElement.dataset.theme = savedTheme || 'light';
     } catch {
       document.documentElement.dataset.theme = 'light';
     }
   </script>
   <style>
+    @font-face {
+      font-family: 'Aesthetic';
+      src: url('fonts/Aesthetic-Regular.otf') format('opentype');
+      font-display: swap;
+      font-style: normal;
+      font-weight: 400;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       color-scheme: light;
-      --bg: #ffd6a0;
-      --bg-deep: #f1a36f;
-      --surface: rgba(255, 246, 226, 0.44);
-      --surface-strong: rgba(255, 247, 232, 0.68);
-      --ink: #4b174a;
-      --ink-soft: rgba(75, 23, 74, 0.72);
-      --line: rgba(75, 23, 74, 0.18);
-      --shine: rgba(255, 255, 255, 0.72);
-      --ember: #ff6a14;
-      --flame: #ed286b;
-      --orchid: #84247c;
-      --violet: #b765ff;
-      --moon: #fff3dc;
-      --shadow: 0 30px 90px rgba(114, 45, 60, 0.16);
+      --cream: #fff4dc;
+      --peach: #f4b27d;
+      --coral: #ef655f;
+      --hot: #ef246f;
+      --plum: #5a164f;
+      --night: #100719;
+      --bg: #f4b27d;
+      --bg-deep: #f07863;
+      --ink: #2a102c;
+      --ink-soft: rgba(42, 16, 44, 0.7);
+      --surface: rgba(255, 245, 225, 0.38);
+      --surface-strong: rgba(255, 247, 231, 0.64);
+      --line: rgba(58, 18, 56, 0.18);
+      --shine: rgba(255, 255, 255, 0.78);
+      --shadow: 0 36px 100px rgba(93, 28, 51, 0.2);
       --mx: 50vw;
-      --my: 36vh;
-      --label: 0.7rem;
-      --body: 0.94rem;
-      --lead: clamp(1.18rem, 2vw, 1.52rem);
-      --head: clamp(3.25rem, 7vw, 6.6rem);
-      --hero: clamp(3.25rem, 10.5vw, 9.5rem);
-      --fast: 140ms;
-      --base: 240ms;
-      --slow: 600ms;
+      --my: 38vh;
+      --display: clamp(3.7rem, 8vw, 8rem);
+      --label: 0.69rem;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --fast: 150ms;
+      --base: 300ms;
+      --slow: 700ms;
     }
 
     html[data-theme="dark"] {
       color-scheme: dark;
-      --bg: #090612;
-      --bg-deep: #170b28;
-      --surface: rgba(30, 18, 45, 0.5);
-      --surface-strong: rgba(41, 23, 58, 0.72);
-      --ink: #fff3dc;
-      --ink-soft: rgba(255, 243, 220, 0.68);
-      --line: rgba(255, 236, 210, 0.16);
-      --shine: rgba(255, 255, 255, 0.18);
-      --ember: #ff8b3d;
-      --flame: #ff4d88;
-      --orchid: #d064db;
-      --shadow: 0 35px 110px rgba(0, 0, 0, 0.46);
+      --bg: #09050f;
+      --bg-deep: #1b0928;
+      --ink: #fff0d7;
+      --ink-soft: rgba(255, 240, 215, 0.68);
+      --surface: rgba(32, 16, 45, 0.48);
+      --surface-strong: rgba(47, 22, 60, 0.72);
+      --line: rgba(255, 226, 199, 0.16);
+      --shine: rgba(255, 255, 255, 0.2);
+      --shadow: 0 42px 120px rgba(0, 0, 0, 0.52);
     }
 
     html { scroll-behavior: smooth; background: var(--bg); }
@@ -76,12 +82,12 @@
       overflow-x: hidden;
       color: var(--ink);
       background:
-        radial-gradient(1000px 760px at 8% -8%, color-mix(in srgb, var(--moon) 76%, transparent), transparent 62%),
-        radial-gradient(1000px 820px at 96% 4%, color-mix(in srgb, var(--ember) 30%, transparent), transparent 64%),
+        radial-gradient(950px 720px at 4% -4%, color-mix(in srgb, var(--cream) 72%, transparent), transparent 66%),
+        radial-gradient(820px 740px at 98% 8%, color-mix(in srgb, var(--hot) 28%, transparent), transparent 68%),
         linear-gradient(145deg, var(--bg), var(--bg-deep));
-      font-family: 'JetBrains Mono', monospace;
-      font-size: var(--body);
-      line-height: 1.7;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      line-height: 1.62;
       transition: color var(--slow) var(--ease), background var(--slow) var(--ease);
     }
     body::before {
@@ -89,27 +95,28 @@
       position: fixed;
       inset: 0;
       z-index: 50;
-      opacity: 0.13;
+      opacity: 0.11;
       pointer-events: none;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitchTiles'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     a { color: inherit; text-decoration: none; }
     button { color: inherit; font: inherit; }
-    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; text-wrap: balance; }
+    img { max-width: 100%; }
+    h1, h2, h3 { font-weight: 400; text-wrap: balance; }
     p { text-wrap: pretty; }
-    ::selection { background: var(--orchid); color: var(--moon); }
-    :focus-visible { outline: 2px solid var(--flame); outline-offset: 5px; }
+    ::selection { color: var(--cream); background: var(--plum); }
+    :focus-visible { outline: 2px solid var(--hot); outline-offset: 5px; }
 
     .skip-link {
       position: fixed;
       top: 0.75rem;
       left: 50%;
       z-index: 100;
-      padding: 0.75rem 1rem;
-      background: var(--ink);
-      color: var(--bg);
+      padding: 0.7rem 1rem;
+      color: var(--cream);
+      background: var(--night);
       transform: translate(-50%, -180%);
       transition: transform var(--fast) var(--ease);
     }
@@ -120,25 +127,25 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(480px circle at var(--mx) var(--my), color-mix(in srgb, var(--moon) 26%, transparent), transparent 70%);
+      background: radial-gradient(520px circle at var(--mx) var(--my), color-mix(in srgb, var(--cream) 26%, transparent), transparent 72%);
     }
     .blob {
       position: absolute;
-      width: min(58vw, 760px);
+      width: min(56vw, 780px);
       aspect-ratio: 1;
-      border-radius: 42% 58% 63% 37% / 54% 36% 64% 46%;
-      filter: blur(38px);
-      opacity: 0.62;
+      border-radius: 46% 54% 66% 34% / 54% 38% 62% 46%;
+      filter: blur(44px);
+      opacity: 0.54;
       mix-blend-mode: multiply;
       will-change: transform, border-radius;
     }
-    html[data-theme="dark"] .blob { mix-blend-mode: screen; opacity: 0.34; }
-    .blob-a { top: -22%; right: -13%; background: var(--ember); animation: drift-a 18s ease-in-out infinite alternate; }
-    .blob-b { top: 34%; left: -24%; background: var(--orchid); animation: drift-b 22s ease-in-out infinite alternate; }
-    .blob-c { bottom: -24%; right: 8%; background: var(--flame); animation: drift-c 26s ease-in-out infinite alternate; }
-    @keyframes drift-a { to { transform: translate(-18vw, 18vh) rotate(38deg) scale(1.18); border-radius: 64% 36% 43% 57% / 36% 62% 38% 64%; } }
-    @keyframes drift-b { to { transform: translate(26vw, -15vh) rotate(-44deg) scale(0.86); border-radius: 34% 66% 60% 40% / 62% 42% 58% 38%; } }
-    @keyframes drift-c { to { transform: translate(-20vw, -22vh) rotate(55deg) scale(1.12); } }
+    html[data-theme="dark"] .blob { opacity: 0.32; mix-blend-mode: screen; }
+    .blob-a { top: -20%; right: -12%; background: #ff7528; animation: drift-a 20s ease-in-out infinite alternate; }
+    .blob-b { top: 40%; left: -26%; background: #8a2a91; animation: drift-b 24s ease-in-out infinite alternate; }
+    .blob-c { bottom: -26%; right: 5%; background: #f12c75; animation: drift-c 28s ease-in-out infinite alternate; }
+    @keyframes drift-a { to { transform: translate(-18vw, 18vh) rotate(34deg) scale(1.14); border-radius: 65% 35% 40% 60% / 38% 64% 36% 62%; } }
+    @keyframes drift-b { to { transform: translate(28vw, -14vh) rotate(-42deg) scale(0.88); border-radius: 35% 65% 60% 40% / 62% 40% 60% 38%; } }
+    @keyframes drift-c { to { transform: translate(-18vw, -24vh) rotate(52deg) scale(1.1); } }
 
     .hero, main, footer { position: relative; z-index: 1; }
     .topbar {
@@ -146,180 +153,240 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 10;
-      display: flex;
+      z-index: 12;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem clamp(1rem, 3vw, 2.5rem);
+      gap: 1rem;
+      padding: 1.15rem clamp(1rem, 3vw, 2.5rem);
     }
+    .nav-links { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 3vw, 2rem); }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: var(--label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      transition: color var(--fast) ease;
+    }
+    .nav-links a:hover { color: var(--ink); }
     .back, .theme-toggle {
       min-height: 44px;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.58rem;
+      width: max-content;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: var(--surface);
       box-shadow: inset 0 1px 0 var(--shine);
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      font-family: 'Syne', sans-serif;
       font-size: var(--label);
-      letter-spacing: 0.14em;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
       transition: transform var(--fast) var(--ease), background var(--fast) var(--ease);
     }
-    .back { padding: 0.65rem 1rem; }
+    .back { justify-self: start; padding: 0.65rem 1rem; }
     .back svg { width: 10px; height: 10px; }
-    .theme-toggle { cursor: pointer; padding: 0.65rem 0.9rem; }
+    .theme-toggle { justify-self: end; cursor: pointer; padding: 0.65rem 0.9rem; }
     .back:hover, .theme-toggle:hover { transform: translateY(-2px); background: var(--surface-strong); }
     .theme-orb {
-      width: 0.8rem;
-      height: 0.8rem;
+      width: 0.78rem;
+      height: 0.78rem;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--ember), var(--orchid));
-      box-shadow: 0 0 18px color-mix(in srgb, var(--flame) 66%, transparent);
+      background: linear-gradient(135deg, #ff9a49, #ef246f 55%, #7a2492);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--hot) 64%, transparent);
     }
 
     .hero {
+      height: 100svh;
       min-height: 100svh;
       display: grid;
       place-items: center;
-      padding: 6.5rem 1.25rem 8rem;
+      padding: 4.25rem 1rem 5rem;
       overflow: hidden;
       isolation: isolate;
       border-bottom: 1px solid var(--line);
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: min(78vw, 900px);
-      aspect-ratio: 1;
-      border-radius: 44% 56% 65% 35% / 55% 38% 62% 45%;
-      z-index: -1;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--moon) 34%, transparent), transparent 48%), var(--surface-strong);
-      border: 1px solid var(--shine);
-      box-shadow: inset 0 1px 0 var(--shine), inset 0 -30px 80px color-mix(in srgb, var(--orchid) 12%, transparent), var(--shadow);
-      backdrop-filter: blur(28px) saturate(165%);
-      -webkit-backdrop-filter: blur(28px) saturate(165%);
-      animation: lens-breathe 11s ease-in-out infinite alternate;
     }
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
       z-index: -2;
-      background: repeating-conic-gradient(from 10deg at 50% 48%, transparent 0 7deg, color-mix(in srgb, var(--moon) 14%, transparent) 7deg 8deg);
-      mask-image: radial-gradient(circle at center, black, transparent 68%);
-      opacity: 0.64;
-      animation: star-turn 50s linear infinite;
+      background: repeating-conic-gradient(from 0deg at 50% 45%, transparent 0 9deg, color-mix(in srgb, var(--cream) 13%, transparent) 9deg 10deg);
+      mask-image: radial-gradient(circle at 50% 45%, black, transparent 69%);
+      opacity: 0.5;
+      animation: star-turn 64s linear infinite;
     }
-    @keyframes lens-breathe { to { transform: rotate(7deg) scale(1.05); border-radius: 62% 38% 42% 58% / 38% 61% 39% 62%; } }
     @keyframes star-turn { to { transform: rotate(360deg) scale(1.08); } }
 
-    .hero-inner { width: min(1120px, 100%); min-width: 0; text-align: center; }
-    .mark-shell {
-      width: clamp(132px, 18vw, 210px);
-      margin: 0 auto 1.15rem;
-      filter: drop-shadow(0 18px 26px color-mix(in srgb, var(--orchid) 22%, transparent));
+    .identity-stage {
+      position: relative;
+      width: min(1050px, 96vw);
+      min-height: min(74vh, 570px);
+      margin-top: -1.5rem;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      z-index: 1;
       opacity: 0;
+      transform: translateY(16px) scale(0.99);
     }
-    .hero-mark { display: block; width: 100%; }
-    .wordmark { opacity: 0; }
-    .wordmark h1 {
-      font-size: var(--hero);
-      line-height: 0.88;
-      letter-spacing: 0.015em;
-      background: linear-gradient(100deg, var(--ember), var(--flame) 52%, var(--orchid));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .identity-stage::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: 5%;
+      left: 50%;
+      width: min(58vw, 560px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--cream) 42%, transparent), color-mix(in srgb, var(--hot) 10%, transparent) 50%, transparent 72%);
+      filter: blur(8px);
+      transform: translateX(-50%);
     }
-    html[data-theme="dark"] .wordmark h1 { background-image: linear-gradient(100deg, #ff9f52, #ff4d88 48%, #c778ff); }
-    .slash { padding: 0 0.04em; }
-    .hero-label {
-      margin-top: 1.4rem;
-      font-size: var(--label);
-      letter-spacing: 0.42em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
+
+    .identity-mark-wrap {
+      position: relative;
+      width: clamp(230px, 28vw, 320px);
+      margin-bottom: clamp(-2.8rem, -4vw, -1.6rem);
+    }
+    .identity-mark { display: block; width: 100%; filter: drop-shadow(0 28px 42px rgba(73, 7, 57, 0.28)); }
+
+    .identity-wordmark-frame {
+      position: relative;
+      width: min(760px, 80vw);
+      aspect-ratio: 3.75 / 1;
+      overflow: hidden;
+      filter: drop-shadow(0 18px 24px rgba(44, 3, 40, 0.28));
+    }
+    .identity-wordmark {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: auto;
+      display: block;
+      transform: translateY(-50%);
+    }
+    .identity-wordmark-frame::after {
+      content: '';
+      position: absolute;
+      inset: -20% auto -20% -35%;
+      width: 9%;
+      transform: translateX(0) skewX(-18deg);
       opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+      mix-blend-mode: screen;
+      filter: blur(9px);
     }
+    .hero.is-ready .identity-wordmark-frame::after { animation: wordmark-prism 900ms var(--ease) 650ms both; }
+    @keyframes wordmark-prism {
+      0% { opacity: 0; transform: translateX(0) skewX(-18deg); }
+      22% { opacity: 0.34; }
+      100% { opacity: 0; transform: translateX(1700%) skewX(-18deg); }
+    }
+
     .hero-copy {
       max-width: 720px;
-      margin: 1.5rem auto 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: var(--lead);
-      line-height: 1.45;
-      opacity: 0;
+      margin-top: 0.25rem;
+      text-align: center;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
     }
-    .hero-actions { margin-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; opacity: 0; }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.35rem; }
+    .hero-actions .button { min-width: 220px; }
+    .hero.is-ready .identity-stage { animation: identity-in var(--slow) var(--ease) both; }
+    @keyframes identity-in { to { opacity: 1; transform: none; } }
 
-    .button {
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7rem;
-      padding: 0.8rem 1.15rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      font-size: var(--label);
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      transition: transform var(--fast) var(--ease), background var(--fast) var(--ease), border-color var(--fast) var(--ease);
-    }
-    .button-primary {
-      color: var(--moon);
-      background: linear-gradient(110deg, var(--ember), var(--flame), var(--orchid));
-      border-color: transparent;
-      box-shadow: 0 14px 36px color-mix(in srgb, var(--flame) 24%, transparent);
-    }
-    .button-glass { background: var(--surface); box-shadow: inset 0 1px 0 var(--shine); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); }
-    .button:hover { transform: translateY(-3px); }
-    .button-glass:hover { background: var(--surface-strong); }
-
-    .hero.is-ready .mark-shell { animation: rise 760ms var(--ease) both 80ms; }
-    .hero.is-ready .wordmark { animation: rise 800ms var(--ease) both 160ms; }
-    .hero.is-ready .hero-label { animation: fade 600ms var(--ease) both 520ms; }
-    .hero.is-ready .hero-copy { animation: rise 700ms var(--ease) both 600ms; }
-    .hero.is-ready .hero-actions { animation: rise 700ms var(--ease) both 720ms; }
-    @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
-    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-
-    .marquee {
+    .hero-links {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--line);
       background: var(--surface);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
     }
-    .marquee-track {
-      width: max-content;
+    .hero-link {
+      min-height: 64px;
       display: flex;
       align-items: center;
-      gap: 2.5rem;
-      padding: 0.9rem 0;
-      animation: marquee 28s linear infinite;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.8rem 1rem;
+      border-right: 1px solid var(--line);
+      font-family: 'Syne', sans-serif;
       font-size: var(--label);
-      letter-spacing: 0.2em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--ink-soft);
+      transition: background var(--fast) ease, color var(--fast) ease;
     }
-    .marquee-track span::after { content: '✦'; margin-left: 2.5rem; color: var(--flame); }
-    @keyframes marquee { to { transform: translateX(-50%); } }
+    .hero-link:last-child { border-right: 0; }
+    .hero-link:hover { color: var(--hot); background: var(--surface-strong); }
 
-    .section { width: min(1180px, 100%); margin: 0 auto; padding: clamp(5.5rem, 11vw, 9rem) 1.25rem; }
+    .button {
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.68rem;
+      padding: 0.92rem 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-family: 'Syne', sans-serif;
+      font-size: var(--label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: transform var(--fast) var(--ease), background var(--fast) var(--ease), background-position var(--base) var(--ease), border-color var(--fast) var(--ease), box-shadow var(--base) var(--ease);
+    }
+    .button-primary {
+      color: var(--cream);
+      background: linear-gradient(110deg, #ff792e, var(--hot) 54%, #7e258e);
+      background-size: 140% 100%;
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 18px 48px color-mix(in srgb, var(--hot) 36%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    .button-glass {
+      background: var(--surface);
+      box-shadow: inset 0 1px 0 var(--shine);
+      backdrop-filter: blur(20px) saturate(155%);
+      -webkit-backdrop-filter: blur(20px) saturate(155%);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .button:hover { transform: translateY(-2px); }
+      .button-primary:hover { background-position: 100% 0; box-shadow: 0 22px 56px color-mix(in srgb, var(--hot) 44%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.34); }
+      .button-glass:hover { background: var(--surface-strong); }
+    }
+
+    .section { width: min(1200px, 100%); margin: 0 auto; padding: clamp(5.5rem, 11vw, 9rem) 1.25rem; }
     .section + .section { border-top: 1px solid var(--line); }
-    .section-heading { max-width: 920px; }
-    .kicker { margin-bottom: 1.1rem; color: var(--flame); font-size: var(--label); letter-spacing: 0.3em; text-transform: uppercase; }
-    .kicker::before { content: ''; display: inline-block; width: 34px; height: 1px; margin-right: 0.75rem; vertical-align: middle; background: currentColor; }
-    .head { font-size: var(--head); line-height: 0.94; letter-spacing: -0.02em; }
-    .head em { font-style: italic; }
-    .intro { max-width: 690px; margin-top: 1.5rem; color: var(--ink-soft); }
+    .section-heading { max-width: 900px; }
+    .kicker {
+      margin-bottom: 1rem;
+      color: var(--hot);
+      font-family: 'Syne', sans-serif;
+      font-size: var(--label);
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+    }
+    .kicker::before { content: ''; display: inline-block; width: 36px; height: 1px; margin-right: 0.8rem; vertical-align: middle; background: currentColor; }
+    .display {
+      font-family: 'Aesthetic', 'Syne', sans-serif;
+      font-size: var(--display);
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+    }
+    .intro { max-width: 720px; margin-top: 1.4rem; color: var(--ink-soft); font-size: 1.04rem; }
 
     .glass {
       --gx: 50%;
@@ -329,103 +396,308 @@
       border: 1px solid var(--line);
       background: var(--surface);
       box-shadow: inset 0 1px 0 var(--shine), var(--shadow);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      backdrop-filter: blur(28px) saturate(165%);
+      -webkit-backdrop-filter: blur(28px) saturate(165%);
     }
     .glass::after {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 3;
       pointer-events: none;
-      opacity: 0.72;
-      background: radial-gradient(420px circle at var(--gx) var(--gy), var(--shine), transparent 48%);
+      opacity: 0.68;
+      background: radial-gradient(440px circle at var(--gx) var(--gy), var(--shine), transparent 48%);
       mix-blend-mode: soft-light;
     }
 
-    .event-card { margin-top: 3.5rem; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); min-height: 430px; border-radius: 36px; }
-    .event-main { padding: clamp(2rem, 6vw, 4.5rem); position: relative; z-index: 1; }
-    .event-status { display: flex; align-items: center; gap: 0.65rem; color: var(--flame); font-size: var(--label); letter-spacing: 0.18em; text-transform: uppercase; }
-    .pulse { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--flame); box-shadow: 0 0 0 0 color-mix(in srgb, var(--flame) 40%, transparent); animation: pulse 2.2s ease-out infinite; }
+    .event-shell {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(330px, 0.68fr);
+      border-radius: 34px;
+      min-height: 560px;
+    }
+    .event-poster { position: relative; z-index: 1; min-width: 0; overflow: hidden; background: var(--night); }
+    .event-poster img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter 1.1s var(--ease); }
+    .event-shell:hover .event-poster img { transform: scale(1.025); filter: saturate(1.08) contrast(1.03); }
+    .event-panel { position: relative; z-index: 2; padding: clamp(2rem, 4vw, 3.2rem); display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid var(--line); }
+    .live-label { display: flex; align-items: center; gap: 0.65rem; color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .pulse { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--hot); box-shadow: 0 0 0 0 color-mix(in srgb, var(--hot) 42%, transparent); animation: pulse 2.1s ease-out infinite; }
     @keyframes pulse { 70%, 100% { box-shadow: 0 0 0 14px transparent; } }
-    .event-main h3 { max-width: 10ch; margin-top: 1.6rem; font-size: clamp(3.1rem, 7vw, 6.8rem); line-height: 0.88; }
-    .event-main p { max-width: 580px; margin-top: 1.5rem; color: var(--ink-soft); }
-    .event-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-    .event-meta { position: relative; z-index: 1; display: grid; align-content: space-between; padding: clamp(2rem, 4vw, 3rem); border-left: 1px solid var(--line); background: linear-gradient(160deg, color-mix(in srgb, var(--ember) 18%, transparent), color-mix(in srgb, var(--orchid) 18%, transparent)); }
-    .event-meta-row { padding: 1rem 0; border-bottom: 1px solid var(--line); }
-    .event-meta-row span { display: block; font-size: var(--label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
-    .event-meta-row strong { display: block; margin-top: 0.35rem; font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; }
-    .event-note { font-size: 0.78rem; color: var(--ink-soft); }
+    .event-panel h3 { margin-top: 1.25rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(4rem, 7vw, 7rem); line-height: 0.82; }
+    .event-panel-copy { margin-top: 1.2rem; color: var(--ink-soft); }
+    .event-facts { margin-top: 1.5rem; border-top: 1px solid var(--line); }
+    .event-fact { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+    .event-fact span { font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+    .event-fact strong { font-weight: 600; }
+    .event-panel .button { width: 100%; margin-top: 1.7rem; }
 
-    .service-grid { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .service { min-height: 290px; padding: clamp(1.7rem, 4vw, 3rem); border-radius: 28px; transition: transform var(--base) var(--ease), background var(--base) var(--ease); }
+    .service-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .service { min-height: 270px; padding: clamp(1.7rem, 4vw, 2.8rem); border-radius: 28px; transition: transform var(--base) var(--ease), background var(--base) var(--ease); }
     .service:hover { transform: translateY(-6px); background: var(--surface-strong); }
-    .service-tag { color: var(--flame); font-size: var(--label); letter-spacing: 0.2em; text-transform: uppercase; }
-    .service h3 { margin-top: 2.2rem; font-size: clamp(2.2rem, 4vw, 3.7rem); line-height: 0.95; }
+    .service-tag { color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+    .service h3 { margin-top: 2rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 0.88; }
     .service p { max-width: 52ch; margin-top: 1rem; color: var(--ink-soft); }
 
-    .rental-shell { margin-top: 3.5rem; display: grid; grid-template-columns: 0.72fr 1.28fr; border-radius: 34px; }
-    .rental-intro { padding: clamp(2rem, 5vw, 4rem); border-right: 1px solid var(--line); background: linear-gradient(145deg, color-mix(in srgb, var(--orchid) 18%, transparent), transparent); }
-    .rental-intro h3 { font-size: clamp(2.8rem, 5vw, 5rem); line-height: 0.9; }
-    .rental-intro p { margin-top: 1.4rem; color: var(--ink-soft); }
-    .rental-intro .button { margin-top: 2rem; }
+    .tea-house {
+      margin-top: 1rem;
+      min-height: 360px;
+      display: grid;
+      grid-template-columns: minmax(220px, 0.55fr) 1fr;
+      align-items: center;
+      border-radius: 28px;
+    }
+    .tea-visual {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      padding: clamp(2rem, 5vw, 4rem);
+      border-right: 1px solid var(--line);
+      background: radial-gradient(circle, color-mix(in srgb, #fff 58%, transparent), color-mix(in srgb, #1b9d94 15%, transparent) 48%, transparent 72%);
+    }
+    .tea-visual img { width: min(240px, 72%); filter: drop-shadow(0 22px 34px rgba(14, 48, 52, 0.26)); }
+    .tea-copy { position: relative; z-index: 1; padding: clamp(2rem, 5vw, 4rem); }
+    .tea-copy h3 { margin-top: 1rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(3.4rem, 7vw, 6rem); line-height: 0.84; }
+    .tea-copy p { max-width: 58ch; margin-top: 1rem; color: var(--ink-soft); }
+    .tea-copy .button { margin-top: 1.6rem; }
+
+    .rental-shell { margin-top: 3rem; display: grid; grid-template-columns: 0.8fr 1.2fr; border-radius: 32px; }
+    .rental-lead { position: relative; z-index: 1; padding: clamp(2rem, 5vw, 3.8rem); border-right: 1px solid var(--line); background: linear-gradient(150deg, color-mix(in srgb, var(--plum) 18%, transparent), transparent); }
+    .rental-lead h3 { font-family: 'Aesthetic', sans-serif; font-size: clamp(3.3rem, 6vw, 5.8rem); line-height: 0.86; }
+    .rental-lead p { margin-top: 1.25rem; color: var(--ink-soft); }
+    .rental-lead .button { margin-top: 1.8rem; }
     .rental-list { position: relative; z-index: 1; padding: 1rem clamp(1.5rem, 4vw, 3rem); }
-    .rental-row { display: grid; grid-template-columns: 0.65fr 1.35fr; gap: 1.5rem; padding: 1.65rem 0; border-bottom: 1px solid var(--line); }
+    .rental-row { display: grid; grid-template-columns: 0.62fr 1.38fr; gap: 1.4rem; padding: 1.45rem 0; border-bottom: 1px solid var(--line); }
     .rental-row:last-child { border-bottom: 0; }
-    .rental-row h3 { font-size: 1.65rem; }
+    .rental-row h3 { font-family: 'Aesthetic', sans-serif; font-size: 2rem; line-height: 1; }
     .rental-row p { color: var(--ink-soft); }
 
-    .archive-grid { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
-    .memory { min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem; border-radius: 28px; transition: transform var(--base) var(--ease); }
-    .memory:hover { transform: translateY(-5px) rotate(-0.4deg); }
-    .memory-feature { grid-column: span 7; min-height: 520px; background: linear-gradient(145deg, color-mix(in srgb, var(--ember) 35%, var(--surface)), color-mix(in srgb, var(--orchid) 28%, var(--surface))); }
-    .memory-wide { grid-column: span 5; }
-    .memory-small { grid-column: span 4; }
-    .memory:nth-child(2) { background: linear-gradient(160deg, color-mix(in srgb, var(--violet) 24%, var(--surface)), var(--surface)); }
-    .memory:nth-child(3) { background: linear-gradient(120deg, color-mix(in srgb, var(--flame) 22%, var(--surface)), var(--surface)); }
-    .memory:nth-child(4) { background: linear-gradient(160deg, color-mix(in srgb, var(--ember) 22%, var(--surface)), var(--surface)); }
-    .memory:nth-child(5) { background: linear-gradient(140deg, color-mix(in srgb, var(--orchid) 24%, var(--surface)), var(--surface)); }
-    .memory-label { font-size: var(--label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
-    .memory h3 { position: relative; z-index: 1; max-width: 8ch; font-size: clamp(2.4rem, 5vw, 5.5rem); line-height: 0.9; }
-    .memory p { position: relative; z-index: 1; max-width: 44ch; color: var(--ink-soft); }
+    .media-shell { margin-top: 3rem; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr); gap: 1rem; }
+    .media-film { position: relative; min-height: 720px; border-radius: 30px; background: #09050f; }
+    .media-film video { display: block; width: 100%; height: 100%; min-height: 720px; object-fit: cover; background: #09050f; }
+    .media-film figcaption {
+      position: absolute;
+      z-index: 4;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      color: #fff5e8;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 18px;
+      background: rgba(16, 7, 25, 0.48);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+    }
+    .media-film strong { display: block; font-size: 1.15rem; }
+    .media-film small { display: block; margin-top: 0.2rem; color: rgba(255, 245, 232, 0.72); }
+    .media-source { flex: 0 0 auto; font-size: var(--label); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .photo-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .event-photo { position: relative; min-height: 350px; border-radius: 26px; }
+    .event-photo:nth-child(3) { grid-column: span 2; }
+    .event-photo img { display: block; width: 100%; height: 100%; min-height: 350px; object-fit: cover; transition: transform 800ms var(--ease); }
+    .event-photo:nth-child(3) img { aspect-ratio: 16 / 10; }
+    .event-photo:hover img { transform: scale(1.035); }
+    .event-photo span {
+      position: absolute;
+      z-index: 4;
+      left: 0.8rem;
+      bottom: 0.8rem;
+      padding: 0.55rem 0.72rem;
+      color: #fff5e8;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      background: rgba(16, 7, 25, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: var(--label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .event-index { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); border-radius: 28px; overflow: hidden; background: var(--surface); }
+    .event-index a, .event-index article { min-height: 150px; padding: 1.35rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background var(--fast) ease; }
+    .event-index a:hover { background: var(--surface-strong); }
+    .event-index > :nth-child(2n) { border-right: 0; }
+    .event-index > :nth-last-child(-n + 2) { border-bottom: 0; }
+    .event-index span { color: var(--hot); font-size: var(--label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .event-index h3 { margin-top: 1.8rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 0.9; }
 
-    .contact-card { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 3rem; padding: clamp(2rem, 6vw, 4.5rem); border-radius: 36px; }
-    .contact-card h2 { max-width: 10ch; font-size: var(--head); line-height: 0.92; }
-    .contact-card p { max-width: 640px; margin-top: 1.3rem; color: var(--ink-soft); }
-    .contact-actions { display: grid; gap: 0.75rem; min-width: min(280px, 100%); }
+    .join-card { display: grid; grid-template-columns: 1fr minmax(260px, 0.45fr); align-items: end; gap: 3rem; padding: clamp(2rem, 6vw, 4.5rem); border-radius: 36px; }
+    .join-card h2 { max-width: 9ch; font-family: 'Aesthetic', sans-serif; font-size: var(--display); line-height: 0.86; }
+    .join-card p { max-width: 620px; margin-top: 1.2rem; color: var(--ink-soft); }
+    .join-actions { display: grid; gap: 0.75rem; }
 
-    footer { width: min(1180px, 100%); margin: 0 auto; padding: 2rem 1.25rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: var(--label); letter-spacing: 0.14em; text-transform: uppercase; }
+    .connect-trigger {
+      position: fixed;
+      z-index: 60;
+      top: 50%;
+      right: 0;
+      min-width: 50px;
+      min-height: 190px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 0.72rem;
+      color: var(--cream);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-right: 0;
+      border-radius: 18px 0 0 18px;
+      background: linear-gradient(160deg, #ff792e, var(--hot) 52%, #7e258e);
+      box-shadow: -12px 18px 42px color-mix(in srgb, var(--hot) 32%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      font-size: var(--label);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: translateY(-50%);
+      transition: transform var(--fast) var(--ease), box-shadow var(--base) var(--ease);
+    }
+    .connect-trigger span:last-child { font-size: 1rem; }
+
+    .connect-popout {
+      position: fixed;
+      inset: 50% 4.5rem auto auto;
+      width: min(340px, calc(100vw - 6rem));
+      margin: 0;
+      padding: 0;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--surface-strong);
+      box-shadow: inset 0 1px 0 var(--shine), 0 32px 90px rgba(54, 9, 49, 0.3);
+      backdrop-filter: blur(32px) saturate(175%);
+      -webkit-backdrop-filter: blur(32px) saturate(175%);
+      opacity: 0;
+      overflow: hidden;
+      transform: translate(16px, -50%) scale(0.98);
+      transition: opacity var(--fast) var(--ease), transform var(--base) var(--ease), display var(--base) allow-discrete, overlay var(--base) allow-discrete;
+    }
+    html[data-theme="dark"] .connect-popout { box-shadow: inset 0 1px 0 var(--shine), 0 36px 100px rgba(0, 0, 0, 0.6); }
+    .connect-popout:popover-open { opacity: 1; transform: translate(0, -50%) scale(1); }
+    @starting-style {
+      .connect-popout:popover-open { opacity: 0; transform: translate(16px, -50%) scale(0.98); }
+    }
+    .connect-popout::backdrop { background: transparent; }
+    .connect-popout-inner { position: relative; padding: 1.4rem; }
+    .connect-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 1.25rem;
+      line-height: 1;
+      transition: transform var(--fast) var(--ease), background var(--fast) var(--ease);
+    }
+    .connect-brand { display: flex; align-items: center; gap: 0.8rem; padding-right: 3rem; }
+    .connect-brand img { width: 48px; height: 48px; object-fit: contain; filter: drop-shadow(0 10px 18px rgba(73, 7, 57, 0.22)); }
+    .connect-eyebrow { color: var(--hot); font-size: var(--label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .connect-popout h2 { margin-top: 1.1rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2.85rem, 4.4vw, 3.75rem); line-height: 0.86; }
+    .connect-copy { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.94rem; }
+    .connect-actions { display: grid; gap: 0.7rem; margin-top: 1.35rem; }
+    .connect-actions .button { width: 100%; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .connect-trigger:hover { transform: translate(-4px, -50%); box-shadow: -18px 22px 54px color-mix(in srgb, var(--hot) 42%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.34); }
+      .connect-close:hover { transform: rotate(8deg); background: var(--surface-strong); }
+    }
+
+    footer {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-family: 'Syne', sans-serif;
+      font-size: var(--label);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
     .reveal { opacity: 1; transform: none; transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
     .reveal.is-hidden { opacity: 0; transform: translateY(34px) scale(0.985); }
 
-    @media (max-width: 840px) {
-      .hero { padding-top: 7.5rem; }
-      .hero::before { width: 130vw; }
-      .topbar { align-items: flex-start; }
-      .theme-name { display: none; }
-      .wordmark h1 { line-height: 0.92; }
-      .event-card, .rental-shell, .contact-card { grid-template-columns: 1fr; }
-      .event-meta, .rental-intro { border-left: 0; border-right: 0; border-top: 1px solid var(--line); }
-      .service-grid { grid-template-columns: 1fr; }
-      .memory-feature, .memory-wide, .memory-small { grid-column: span 12; min-height: 310px; }
-      .contact-actions { min-width: 0; }
+    @media (max-width: 900px) {
+      .topbar { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .identity-stage { min-height: min(72vh, 680px); }
+      .event-shell, .rental-shell, .join-card, .tea-house, .media-shell { grid-template-columns: 1fr; }
+      .event-poster { min-height: 360px; }
+      .event-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .rental-lead, .tea-visual { border-right: 0; border-bottom: 1px solid var(--line); }
+      .media-film, .media-film video { min-height: 680px; }
     }
-    @media (max-width: 560px) {
-      :root { --body: 0.9rem; --head: clamp(3rem, 17vw, 4.8rem); }
-      .back { padding-inline: 0.8rem; }
-      .wordmark h1 { display: flex; flex-wrap: wrap; justify-content: center; font-size: clamp(3.7rem, 19vw, 4.8rem); line-height: 0.78; }
-      .wordmark h1 > span:first-child::after { content: '/'; margin-left: 0.05em; }
-      .wordmark .slash { display: none; }
-      .wordmark h1 > span:last-child { flex-basis: 100%; }
-      .event-card, .rental-shell, .contact-card { border-radius: 24px; }
-      .rental-row { grid-template-columns: 1fr; gap: 0.45rem; }
+
+    @media (max-width: 620px) {
+      :root { --display: clamp(3.4rem, 18vw, 5rem); }
+      .hero { height: auto; min-height: 940px; padding-top: 6.5rem; padding-bottom: 12.5rem; }
+      .theme-name { display: none; }
+      .identity-stage { min-height: 650px; margin-top: 0; }
+      .identity-mark-wrap { width: min(86vw, 390px); margin-bottom: -1.8rem; }
+      .identity-wordmark-frame { width: 98vw; }
+      .hero-copy { max-width: 92%; font-size: 0.96rem; }
+      .hero-actions { width: 100%; }
+      .hero-actions .button { flex: 1 1 100%; }
+      .hero-links { grid-template-columns: 1fr; }
+      .hero-link { min-height: 48px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .hero-link:last-child { border-bottom: 0; }
+      .event-shell, .rental-shell, .join-card { border-radius: 24px; }
+      .event-poster { min-height: 250px; }
+      .service-grid { grid-template-columns: 1fr; }
+      .rental-row, .event-fact { grid-template-columns: 1fr; gap: 0.35rem; }
+      .photo-stack { grid-template-columns: 1fr; }
+      .event-photo:nth-child(3) { grid-column: auto; }
+      .event-index { grid-template-columns: 1fr; }
+      .event-index a, .event-index article, .event-index > :nth-child(2n), .event-index > :nth-last-child(-n + 2) { border-right: 0; border-bottom: 1px solid var(--line); }
+      .event-index > :last-child { border-bottom: 0; }
+      .connect-trigger {
+        top: auto;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        min-width: 0;
+        min-height: 50px;
+        padding: 0.75rem 1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 999px;
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+      .connect-popout {
+        inset: auto 0.75rem 5rem 0.75rem;
+        width: auto;
+        border-radius: 24px;
+        transform: translateY(14px) scale(0.98);
+      }
+      .connect-popout:popover-open { transform: translateY(0) scale(1); }
+      @starting-style {
+        .connect-popout:popover-open { opacity: 0; transform: translateY(14px) scale(0.98); }
+      }
       footer { align-items: flex-start; flex-direction: column; }
     }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      .mark-shell, .wordmark, .hero-label, .hero-copy, .hero-actions, .reveal { opacity: 1 !important; transform: none !important; }
-      .marquee-track { animation: none; }
+      .identity-stage, .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -434,146 +706,193 @@
   <div class="ambient" aria-hidden="true"><div class="blob blob-a"></div><div class="blob blob-b"></div><div class="blob blob-c"></div></div>
 
   <header class="hero" id="top">
-    <nav class="topbar" aria-label="Page controls">
-      <a class="back" href="index.html" aria-label="Back to samu.quest">
+    <nav class="topbar" aria-label="Primary navigation">
+      <a class="back" href="https://samu.quest" aria-label="Back to samu.quest">
         <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M7 1 2 5l5 4" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
         samu.quest
       </a>
+      <div class="nav-links">
+        <a href="#moonbeat">Moonbeat</a>
+        <a href="#services">Services</a>
+        <a href="#recaps">Recaps</a>
+      </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
         <span class="theme-orb" aria-hidden="true"></span><span class="theme-name">Dark mode</span>
       </button>
     </nav>
 
-    <div class="hero-inner">
-      <div class="mark-shell">
-        <svg class="hero-mark" viewBox="0 0 220 220" role="img" aria-label="Sacred/Saucy flower-sun emblem">
-          <defs>
-            <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7cd7e" /><stop offset="1" stop-color="#d48836" /></linearGradient>
-            <linearGradient id="petals" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f47e7f" /><stop offset="0.55" stop-color="#a8327a" /><stop offset="1" stop-color="#6e1a6b" /></linearGradient>
-            <radialGradient id="sun" cx=".5" cy=".45" r=".7"><stop offset="0" stop-color="#ffb56b" /><stop offset="1" stop-color="#f2701c" /></radialGradient>
-          </defs>
-          <path d="M41 88A80 80 0 0 1 110 18a80 80 0 0 1 70 72" fill="none" stroke="url(#gold)" stroke-width="4.5" stroke-linecap="round" />
-          <g stroke="#f3cd6d" stroke-width="3.5" stroke-linejoin="round">
-            <path d="M110 118C76 124 34 122 8 96c22-20 54-26 76-10" fill="url(#petals)" />
-            <path d="M110 118c34 6 76 4 102-22-22-20-54-26-76-10" fill="url(#petals)" />
-            <path d="M110 124c-20 8-46 12-66 26 16 16 44 22 64 14" fill="url(#petals)" opacity=".94" />
-            <path d="M110 124c20 8 46 12 66 26-16 16-44 22-64 14" fill="url(#petals)" opacity=".94" />
-            <path d="M110 164c-10 6-22 14-30 24 8 10 20 16 30 20 10-4 22-10 30-20-8-10-20-18-30-24" fill="url(#petals)" />
-          </g>
-          <path d="M110 212v-4" stroke="#f3cd6d" stroke-width="4" />
-          <circle cx="110" cy="96" r="36" fill="url(#sun)" />
-          <path d="M110 68c2 14 12 22 26 26-14 4-24 12-26 26-2-14-12-22-26-26 14-4 24-12 26-26Z" fill="#fff4de" opacity=".94" />
-        </svg>
+    <div class="identity-stage">
+      <div class="identity-mark-wrap">
+        <img class="identity-mark" src="assets/sacred-saucy-mark.svg" alt="Sacred/Saucy Productions emblem" />
       </div>
-      <div class="wordmark"><h1><span>SACRED</span><span class="slash">/</span><span>SAUCY</span></h1></div>
-      <p class="hero-label">Events · Production · Equipment Rentals</p>
-      <p class="hero-copy">Sacred/Saucy produces concerts, parties, and community events on Salt Spring Island. Hire us to plan and run your event, or rent sound, lighting, and event equipment.</p>
+      <h1 class="identity-wordmark-frame">
+        <img class="identity-wordmark" src="assets/sacred-saucy-wordmark.svg" alt="Sacred/Saucy Productions" />
+      </h1>
+      <p class="hero-copy">Musical ritual, community culture, and events for Salt Spring Island.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#events">See what’s next <span aria-hidden="true">↓</span></a>
-        <a class="button button-glass" href="mailto:hi@samu.quest?subject=Event%20production%20inquiry">Plan an event <span aria-hidden="true">→</span></a>
+        <a class="button button-primary" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer">Moonbeat tickets <span aria-hidden="true">↗</span></a>
+        <a class="button button-glass" href="#services">Produce an event <span aria-hidden="true">↓</span></a>
       </div>
     </div>
 
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span>Event production</span><span>Sound systems</span><span>Equipment rental</span><span>Concerts</span><span>Dance floors</span><span>Salt Spring Island</span>
-        <span>Event production</span><span>Sound systems</span><span>Equipment rental</span><span>Concerts</span><span>Dance floors</span><span>Salt Spring Island</span>
-      </div>
+    <div class="hero-links">
+      <a class="hero-link" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+      <a class="hero-link" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
+      <a class="hero-link" href="mailto:hi@samu.quest">hi@samu.quest <span aria-hidden="true">→</span></a>
     </div>
   </header>
 
   <main id="content">
-    <section class="section" id="events">
+    <section class="section" id="moonbeat">
       <div class="section-heading reveal">
-        <p class="kicker">Upcoming events</p>
-        <h2 class="head">Next event announcement <em>coming soon.</em></h2>
-        <p class="intro">The date, location, lineup, and ticket link for our next event will be posted here.</p>
+        <p class="kicker">Next event · Tickets live</p>
+        <h2 class="display">Moonbeat is on.</h2>
+        <p class="intro">A new moon dance for Salt Spring Island. Friday, September 11 at Soulstice Farm.</p>
       </div>
-      <article class="event-card glass reveal">
-        <div class="event-main">
-          <div class="event-status"><span class="pulse" aria-hidden="true"></span> Next event</div>
-          <h3>New event coming soon.</h3>
-          <p>We are planning the next Sacred/Saucy event on Salt Spring Island. Join the email list to receive the date, location, lineup, and ticket link when they are announced.</p>
-          <div class="event-actions">
-            <a class="button button-primary" href="mailto:hi@samu.quest?subject=Add%20me%20to%20Sacred%2FSaucy%20event%20updates">Get event updates <span aria-hidden="true">→</span></a>
-            <a class="button button-glass" href="mailto:hi@samu.quest?subject=Sacred%2FSaucy%20event%20question">Ask about the event</a>
-          </div>
-        </div>
-        <div class="event-meta">
+
+      <article class="event-shell glass reveal">
+        <a class="event-poster" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer" aria-label="Get tickets for Moonbeat on Humanitix">
+          <img src="images/moonbeat-2026.webp" alt="Moonbeat poster: September 11, 2026, with Sweeto and Syd Del" />
+        </a>
+        <div class="event-panel">
           <div>
-            <div class="event-meta-row"><span>Date</span><strong>To be announced</strong></div>
-            <div class="event-meta-row"><span>Location</span><strong>Salt Spring Island</strong></div>
-            <div class="event-meta-row"><span>Format</span><strong>Concert and dance event</strong></div>
+            <p class="live-label"><span class="pulse" aria-hidden="true"></span> Tickets live</p>
+            <h3>Moonbeat</h3>
+            <p class="event-panel-copy">Opening song circle with Sweeto, followed by DJ and live drums from Syd Del. Family-friendly and alcohol-free.</p>
+            <div class="event-facts">
+              <div class="event-fact"><span>Date</span><strong><time datetime="2026-09-11">Friday, September 11</time></strong></div>
+              <div class="event-fact"><span>Time</span><strong>6:00–10:30pm</strong></div>
+              <div class="event-fact"><span>Place</span><strong>Soulstice Farm · RSVP for address</strong></div>
+            </div>
           </div>
-          <p class="event-note">No spam. Event announcements and ticket drops only.</p>
+          <a class="button button-primary" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer">Get Moonbeat tickets <span aria-hidden="true">↗</span></a>
         </div>
       </article>
     </section>
 
-    <section class="section" id="production">
+    <section class="section" id="services">
       <div class="section-heading reveal">
         <p class="kicker">Event production</p>
-        <h2 class="head">Event production from planning <em>through cleanup.</em></h2>
-        <p class="intro">We can manage your entire event or handle specific parts such as sound, lighting, staffing, schedules, or vendor coordination.</p>
+        <h2 class="display">Bring the idea. We run the event.</h2>
+        <p class="intro">Hire Sacred/Saucy for the whole production or for the parts your event is missing.</p>
       </div>
       <div class="service-grid">
-        <article class="service glass reveal"><p class="service-tag">Planning</p><h3>Full event production</h3><p>We plan budgets and schedules, coordinate venues, artists, staff, and vendors, and manage the event from setup through cleanup.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Technical</p><h3>Sound and lighting</h3><p>We plan and set up sound systems, DJ gear, live-music equipment, stages, lighting, and power. Technicians are available during the event.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Operations</p><h3>Site and guest services</h3><p>We plan entrances, bars, vendor areas, green rooms, signs, staff schedules, and other details needed to run the site.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Design</p><h3>Creative direction</h3><p>We design event branding, decor, lighting, stage appearance, installations, and opening or closing moments.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Plan + run</p><h3>Full production</h3><p>Budgets, schedules, venues, artists, vendors, crew, setup, show management, and cleanup.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Sound + light</p><h3>Technical production</h3><p>PA, DJ and live-music systems, lighting, staging, power, soundcheck, and onsite technicians.</p></article>
+        <article class="service glass reveal"><p class="service-tag">People + place</p><h3>Site operations</h3><p>Entrances, bars, vendor zones, artist areas, signs, staffing, guest flow, and safety planning.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Look + feel</p><h3>Creative direction</h3><p>Event identity, posters, decor, stage design, lighting direction, installations, and special moments.</p></article>
       </div>
+      <article class="tea-house glass reveal">
+        <div class="tea-visual"><img src="images/whitetara.png" alt="White Tara Tea House lotus emblem" /></div>
+        <div class="tea-copy">
+          <p class="service-tag">Hospitality + ceremony</p>
+          <h3>White Tara Tea House</h3>
+          <p>Our tea house travels with us. Add a warm, alcohol-free place for botanical tea, quiet conversation, and a softer pace inside your event.</p>
+          <a class="button button-glass" href="white-tara-tea.html">Meet White Tara Tea <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
     </section>
 
     <section class="section" id="rentals">
       <div class="section-heading reveal">
-        <p class="kicker">Equipment rentals</p>
-        <h2 class="head">Sound, lighting, and event <em>equipment rentals.</em></h2>
-        <p class="intro">Tell us your date, venue, guest count, and music format. We’ll confirm available equipment, delivery, setup, and whether your show needs a technician.</p>
+        <p class="kicker">Equipment rental</p>
+        <h2 class="display">Rent the rig. Add an operator.</h2>
+        <p class="intro">Send the date, venue, guest count, and music format. We’ll match the equipment and crew to the job.</p>
       </div>
       <div class="rental-shell glass reveal">
-        <div class="rental-intro">
-          <h3>Choose equipment and support.</h3>
-          <p>Rent equipment alone when setup is simple, or add delivery, setup, pickup, and an onsite technician.</p>
-          <a class="button button-primary" href="mailto:hi@samu.quest?subject=Equipment%20rental%20quote&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AMusic%20format%3A%0AEquipment%20needed%3A">Request a rental quote <span aria-hidden="true">→</span></a>
+        <div class="rental-lead">
+          <h3>Gear that arrives ready.</h3>
+          <p>Rent equipment alone, or add delivery, setup, soundcheck, onsite operation, strike, and pickup.</p>
+          <a class="button button-primary" href="mailto:hi@samu.quest?subject=Equipment%20rental%20quote&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AMusic%20format%3A%0AEquipment%20needed%3A">Request a quote <span aria-hidden="true">→</span></a>
         </div>
         <div class="rental-list">
-          <article class="rental-row"><h3>Sound</h3><p>PA systems, subwoofers, monitors, mixers, microphones, DJ setups, stands, cabling, and system tuning.</p></article>
-          <article class="rental-row"><h3>Lighting</h3><p>Room wash, stage lighting, LED fixtures, atmospheric effects, control, stands, and safe installation.</p></article>
-          <article class="rental-row"><h3>Event essentials</h3><p>Power and signal distribution, staging support, cable management, communications, and practical show infrastructure.</p></article>
-          <article class="rental-row"><h3>Crew</h3><p>Delivery, setup, soundcheck, onsite operation, changeovers, troubleshooting, strike, and pickup.</p></article>
+          <article class="rental-row"><h3>Sound</h3><p>PA systems, subs, monitors, mixers, microphones, DJ setups, stands, cabling, and system tuning.</p></article>
+          <article class="rental-row"><h3>Lighting</h3><p>Room wash, stage lighting, LED fixtures, atmospheric effects, stands, control, and installation.</p></article>
+          <article class="rental-row"><h3>Infrastructure</h3><p>Power and signal distribution, cable management, communications, and show essentials.</p></article>
+          <article class="rental-row"><h3>Crew</h3><p>Delivery, setup, soundcheck, operation, changeovers, troubleshooting, strike, and pickup.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="archive">
+    <section class="section" id="recaps">
       <div class="section-heading reveal">
         <p class="kicker">Past gatherings</p>
-        <h2 class="head">Past concerts and <em>gatherings.</em></h2>
-        <p class="intro">Sacred/Saucy launched in 2026 after years of producing concerts, parties, outdoor events, and community gatherings on Salt Spring Island. Photos, videos, posters, and event details will be added here.</p>
+        <h2 class="display">Proof we know how to gather.</h2>
+        <p class="intro">Watch the Soar film here. Open any photo for its original post, then scan the full archive below.</p>
       </div>
-      <div class="archive-grid">
-        <article class="memory memory-feature glass reveal"><span class="memory-label">Photos and video coming soon</span><div><h3>Past event archive</h3><p>We are gathering photos and videos from previous events for this section.</p></div></article>
-        <article class="memory memory-wide glass reveal"><span class="memory-label">Past work</span><h3>Concerts</h3></article>
-        <article class="memory memory-small glass reveal"><span class="memory-label">Past work</span><h3>Dance events</h3></article>
-        <article class="memory memory-small glass reveal"><span class="memory-label">Past work</span><h3>Community events</h3></article>
-        <article class="memory memory-small glass reveal"><span class="memory-label">Past work</span><h3>Outdoor events</h3></article>
+      <div class="media-shell">
+        <figure class="media-film glass reveal">
+          <video controls playsinline preload="metadata" poster="images/events/soar-aftermovie-poster.webp">
+            <source src="images/events/soar-aftermovie.mp4" type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+          <figcaption>
+            <span><strong>Soar Equinox Gathering</strong><small>Aftermovie by @divinera.art · 2024</small></span>
+            <a class="media-source" href="https://www.instagram.com/sacredsaucy/reel/DA_2yMhRkL7/" target="_blank" rel="noopener noreferrer">Original ↗</a>
+          </figcaption>
+        </figure>
+        <div class="photo-stack">
+          <a class="event-photo glass reveal" href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer">
+            <img src="images/events/very-sacred.webp" alt="Samu, Kimmy, and baby Rhythm behind the DJ booth at Very Sacred Very Saucy" loading="lazy" />
+            <span>Very Sacred Very Saucy ↗</span>
+          </a>
+          <a class="event-photo glass reveal" href="https://www.instagram.com/sacredsaucy/p/DASLm-9Pqcn/" target="_blank" rel="noopener noreferrer">
+            <img src="images/events/soar-fire.webp" alt="Fire ceremony at Soar Equinox Gathering" loading="lazy" />
+            <span>Soar · Fire ↗</span>
+          </a>
+          <a class="event-photo glass reveal" href="https://www.instagram.com/sacredsaucy/p/DAT1f3wSeNB/" target="_blank" rel="noopener noreferrer">
+            <img src="images/events/soar-nectar.webp" alt="Sun Rose DJing in the forest at Soar Equinox Gathering" loading="lazy" />
+            <span>Soar · Dance floor ↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="event-index reveal" aria-label="Past event archive">
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · I ↗</span><h3>Sacred / Saucy I</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · II · Aug 2025 ↗</span><h3>Sacred Saucy Summer</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · III · Dec 2025 ↗</span><h3>Sacred Saucy Spice</h3></a>
+        <a href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · IV · Aug 2026 ↗</span><h3>Very Sacred Very Saucy</h3></a>
+        <a href="https://www.instagram.com/sacredsaucy/reel/DA_2yMhRkL7/" target="_blank" rel="noopener noreferrer"><span>Equinox 2024 ↗</span><h3>Soar Equinox Gathering</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2024-10-31">Halloween 2024</time> ↗</span><h3>Feral Feast</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2025-10-31">Halloween 2025</time> ↗</span><h3>Arcana Ascent</h3></a>
+        <article><span>At our events</span><h3>White Tara Tea House</h3></article>
       </div>
     </section>
 
-    <section class="section" id="contact">
-      <div class="contact-card glass reveal">
+    <section class="section" id="join">
+      <div class="join-card glass reveal">
         <div>
-          <p class="kicker">Start a project</p>
-          <h2>Tell us about <em>your event.</em></h2>
-          <p>Send your date, venue, expected guest count, event format, and what you need help with. We’ll reply with availability and the next useful questions.</p>
+          <p class="kicker">Stay connected</p>
+          <h2>Get the next date first.</h2>
+          <p>Join the mailing list for event announcements and ticket drops. Follow Instagram for posters, recaps, and production updates.</p>
         </div>
-        <div class="contact-actions">
-          <a class="button button-primary" href="mailto:hi@samu.quest?subject=Event%20production%20inquiry&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AEvent%20format%3A%0AProduction%20needs%3A">hi@samu.quest <span aria-hidden="true">→</span></a>
-          <a class="button button-glass" href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+        <div class="join-actions">
+          <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+          <a class="button button-glass" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
+          <a class="button button-glass" href="mailto:hi@samu.quest?subject=Event%20production%20inquiry">hi@samu.quest <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
   </main>
+
+  <button class="connect-trigger" type="button" popovertarget="connect-popout" aria-label="Open follow and subscribe options">
+    <span>Follow + subscribe</span><span aria-hidden="true">✦</span>
+  </button>
+
+  <aside class="connect-popout" id="connect-popout" popover="auto" aria-labelledby="connect-popout-title">
+    <div class="connect-popout-inner">
+      <button class="connect-close" type="button" popovertarget="connect-popout" popovertargetaction="hide" aria-label="Close follow and subscribe options">×</button>
+      <div class="connect-brand">
+        <img src="assets/sacred-saucy-mark.svg" alt="" aria-hidden="true" />
+        <p class="connect-eyebrow">Next dates + photos</p>
+      </div>
+      <h2 id="connect-popout-title">Don’t miss the next one.</h2>
+      <p class="connect-copy">Get event announcements by email, or follow Sacred/Saucy on Instagram.</p>
+      <div class="connect-actions">
+        <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+        <a class="button button-glass" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </aside>
 
   <footer><span>Sacred/Saucy Productions · 2026</span><span>Salt Spring Island, BC</span></footer>
 
@@ -589,21 +908,20 @@
       themeToggle.setAttribute('aria-pressed', String(dark));
       themeName.textContent = dark ? 'Light mode' : 'Dark mode';
       themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-      themeMeta.setAttribute('content', dark ? '#090612' : '#ffd6a0');
+      themeMeta.setAttribute('content', dark ? '#09050f' : '#f4b27d');
     }
 
     syncThemeControl();
     themeToggle.addEventListener('click', () => {
       root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('sacred-saucy-theme', root.dataset.theme); } catch {}
+      try { localStorage.setItem('sacred-saucy-theme-v2', root.dataset.theme); } catch {}
       syncThemeControl();
     });
 
     const hero = document.querySelector('.hero');
-    if (reducedMotion) {
-      hero.classList.add('is-ready');
-    } else {
-      requestAnimationFrame(() => hero.classList.add('is-ready'));
+    requestAnimationFrame(() => hero.classList.add('is-ready'));
+
+    if (!reducedMotion) {
       let frameRequested = false;
       window.addEventListener('pointermove', event => {
         if (frameRequested) return;
@@ -614,6 +932,7 @@
           frameRequested = false;
         });
       }, { passive: true });
+
       document.querySelectorAll('.glass').forEach(panel => {
         panel.addEventListener('pointermove', event => {
           const bounds = panel.getBoundingClientRect();
@@ -636,8 +955,8 @@
         });
       }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
       reveals.forEach(element => { if (element.classList.contains('is-hidden')) observer.observe(element); });
-      setTimeout(() => reveals.forEach(element => element.classList.remove('is-hidden')), 1600);
     }
+
   </script>
 </body>
 </html>

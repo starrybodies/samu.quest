@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "^/$",
+      "has": [
+        {
+          "type": "host",
+          "value": "saucy.samu.quest"
+        }
+      ],
+      "dest": "/sacred-saucy.html"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}

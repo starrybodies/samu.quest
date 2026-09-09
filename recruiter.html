@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>samu.quest</title>
-  <meta name="description" content="Samuel Barnes — growth operator and product builder. Ten years of growth for climate, AI, and web3 teams, now shipping full-stack products in the open.">
-  <meta property="og:title" content="Samuel Barnes — Growth & Product Builder | samu.quest">
+  <title>Samuel Barnes — Growth & Product Builder | samu.quest</title>
+  <meta name="description" content="Samuel Barnes is a growth and product builder helping ambitious teams turn emerging technology into products, communities, and repeatable growth.">
+  <meta property="og:title" content="Samuel Barnes — Growth & Product Builder">
   <meta property="og:description" content="Growth, product, and go-to-market systems for AI, climate, and web3 teams.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://samu.quest">
@@ -53,6 +53,120 @@
       pointer-events: none;
       z-index: 9998;
     }
+
+    /* ===== ENTER GATE ===== */
+    .enter-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity 1.2s ease, visibility 1.2s;
+    }
+    .enter-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .enter-gate canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .ascii-container { position: relative; z-index: 1; text-align: center; padding: 20px; }
+    .ascii-art {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(5px, 1.1vw, 11px);
+      line-height: 1.15;
+      color: var(--blue);
+      white-space: pre;
+      opacity: 0;
+      text-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
+    }
+    .ascii-art.visible { opacity: 1; }
+    .ascii-subtitle {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      color: var(--muted);
+      margin-top: 30px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    .ascii-subtitle.visible { opacity: 1; }
+    .enter-btn {
+      margin-top: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--blue);
+      background: none;
+      border: 1px solid var(--blue);
+      padding: 14px 40px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .enter-btn.visible { opacity: 1; transform: translateY(0); }
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--blue);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .enter-btn:hover { color: var(--bg); }
+    .enter-btn:hover::before { transform: scaleX(1); }
+    .scanline {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      opacity: 0.15;
+      animation: scanline 7s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes scanline { 0% { top: 0; } 100% { top: 100%; } }
+
+    /* ===== AMBIENT PLAYER ===== */
+    .ambient-player {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 90;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ambient-player.visible { transform: translateY(0); }
+    .ambient-player-label { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--blue); white-space: nowrap; flex-shrink: 0; }
+    .ambient-player-track { font-family: 'Instrument Serif', serif; font-size: 16px; white-space: nowrap; flex-shrink: 0; }
+    .ambient-player-sc { flex: 1; min-width: 0; overflow: hidden; }
+    .ambient-player-sc iframe { width: 100%; border: 0; display: block; }
+    .ambient-player-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .ambient-player-close:hover { border-color: var(--blue); color: var(--fg); }
+    body.player-active footer { padding-bottom: 80px; }
+    body.player-active .connect { padding-bottom: 140px; }
 
     /* ===== RECRUITER SNAPSHOT ===== */
     .recruiter-snapshot {
@@ -126,6 +240,7 @@
       transition: all 0.3s;
       text-decoration: none;
       display: inline-block;
+      white-space: nowrap;
     }
     .nav-cta:hover { background: var(--fg); }
 
@@ -203,6 +318,14 @@
     }
     .hero-cta-secondary:hover { gap: 20px; }
     .hero-cta-secondary::after { content: '\2192'; }
+    .hero-meta {
+      margin-top: 30px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+    .hero-meta strong { color: var(--blue); font-weight: 400; }
 
     .hero-scroll-hint {
       position: absolute;
@@ -708,22 +831,22 @@
       .projects-grid { grid-template-columns: 1fr; }
       .pub-grid { grid-template-columns: 1fr; }
       .connect-grid { grid-template-columns: 1fr; }
-      .snapshot-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
-      nav { padding: 15px 20px; }
-      .nav-links { gap: 20px; font-size: 10px; letter-spacing: 1px; }
+      nav { padding: 15px 20px; flex-wrap: wrap; row-gap: 10px; }
+      .nav-right { gap: 12px; flex-wrap: wrap; }
+      .nav-links { gap: 14px; font-size: 10px; letter-spacing: 1px; }
       .nav-cta { padding: 8px 16px; font-size: 9px; }
       .hero { padding: 100px 20px 60px; }
       .hero h1 { font-size: clamp(32px, 9vw, 56px); letter-spacing: -1px; }
       .hero-bio { font-size: 13px; }
       .hero-ctas { flex-direction: column; gap: 20px; }
       .hero-cta-primary { width: 100%; text-align: center; max-width: 280px; }
-      .work, .connect, .publications { padding: 60px 20px; }
-      .recruiter-snapshot { padding: 60px 20px; }
+      .work, .connect, .publications, .recruiter-snapshot { padding: 60px 20px; }
       .snapshot-header { display: block; }
       .snapshot-note { margin-top: 18px; }
+      .snapshot-grid { grid-template-columns: repeat(2, 1fr); }
       .snapshot-footer { display: block; }
       .snapshot-link { display: inline-block; margin-top: 16px; }
       .section-header { margin-bottom: 40px; }
@@ -746,12 +869,15 @@
       .cursor, .cursor-dot { display: none; }
       footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 20px; }
       .footer-links { justify-content: center; flex-wrap: wrap; gap: 20px; }
+      .ambient-player { padding: 10px 16px; gap: 10px; }
+      .ambient-player-label { display: none; }
+      .ambient-player-track { font-size: 13px; }
       .vision-text h2 { font-size: clamp(24px, 6vw, 40px); }
       .vision-orb-1, .vision-orb-2, .vision-orb-3 { width: 200px; height: 200px; }
     }
 
     @media (max-width: 480px) {
-      .snapshot-grid { grid-template-columns: 1fr; }
+      .ascii-art { font-size: 3.5px !important; }
       .donate-strip { flex-direction: column; gap: 10px; padding: 16px 20px; }
       .hero h1 { margin-bottom: 20px; }
       .hero-bio { font-size: 12px; margin-bottom: 25px; }
@@ -773,24 +899,35 @@
       .hero h1 .line span { transform: none; }
       .hero-bio, .hero-ctas, .hero-scroll-hint { opacity: 1; transform: none; }
     }
-  </style>
+</style>
 </head>
 <body>
+
+  <!-- ===== ENTER GATE ===== -->
+  <div class="enter-gate" id="enter-gate">
+    <canvas id="intro-canvas"></canvas>
+    <div class="scanline"></div>
+    <div class="ascii-container">
+      <pre class="ascii-art" id="ascii-art"></pre>
+      <div class="ascii-subtitle" id="ascii-subtitle">growth operator &middot; product builder &middot; planet-minded</div>
+      <button class="enter-btn" id="enter-btn">Enter</button>
+    </div>
+  </div>
 
   <canvas id="bg-canvas"></canvas>
   <div class="cursor"></div>
   <div class="cursor-dot"></div>
 
   <nav>
-    <a href="#" class="nav-logo">samu.quest</a>
+    <a href="index.html" class="nav-logo">samu.quest</a>
     <div class="nav-right">
       <div class="nav-links">
+        <a href="#snapshot">Experience</a>
         <a href="#work">Work</a>
-        <a href="#software">Software</a>
-        <a href="#publications">Publications</a>
-        <a href="#connect">Connect</a>
+        <a href="#publications">Writing</a>
+        <a href="#connect">Contact</a>
       </div>
-      <a href="https://calendly.com/starrybodies" target="_blank" class="nav-cta">Book a Call</a>
+      <a href="samuel-barnes-cv.pdf" target="_blank" class="nav-cta">Download CV</a>
     </div>
   </nav>
 
@@ -804,10 +941,10 @@
       </h1>
       <p class="hero-bio">I help ambitious teams turn emerging technology into products, communities, and repeatable growth. Ten years across acquisition, positioning, retention, and community — now shipping full-stack AI products in the open.</p>
       <div class="hero-ctas">
-        <a href="https://calendly.com/starrybodies" target="_blank" class="hero-cta-primary">Book a Call</a>
-        <a href="#work" class="hero-cta-secondary">View the work</a>
+        <a href="samuel-barnes-cv.pdf" target="_blank" class="hero-cta-primary">Download CV</a>
+        <a href="#work" class="hero-cta-secondary">See selected work</a>
       </div>
-      <p class="hero-meta" style="margin-top:30px; font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted);"><strong style="color:var(--blue); font-weight:400;">Best fit:</strong> growth, product, and founding-team roles in AI, climate, and web3.</p>
+      <p class="hero-meta"><strong>Best fit:</strong> growth, product, and founding-team roles in AI, climate, and web3.</p>
     </div>
     <div class="hero-scroll-hint">
       <span>Scroll</span>
@@ -816,11 +953,12 @@
   </section>
 
   <main>
+    <!-- ===== RECRUITER SNAPSHOT ===== -->
     <section class="recruiter-snapshot" id="snapshot">
       <div class="snapshot-inner">
         <div class="snapshot-header gs-reveal">
           <h2 class="snapshot-title">The short version: I make<br><em>good work move.</em></h2>
-          <p class="snapshot-note">A hybrid growth and product profile for teams that need someone who can find the signal, tell the story, and build the system behind it. <a href="recruiter.html" style="color:var(--blue); text-decoration:underline;">Recruiter version here.</a></p>
+          <p class="snapshot-note">A hybrid growth and product profile for teams that need someone who can find the signal, tell the story, and build the system behind it.</p>
         </div>
         <div class="snapshot-grid">
           <div class="snapshot-card gs-reveal">
@@ -855,7 +993,7 @@
     <section class="work" id="work">
       <div class="section-header gs-reveal">
         <div class="section-label">Selected Work</div>
-        <p class="section-intro">I build growth systems for teams that matter, and lately <em>the software itself.</em> Different rooms, same job: make useful things easier to understand, easier to find, and harder to ignore.</p>
+        <p class="section-intro">Selected work across <em>growth</em>, product, and narrative. Different rooms, same job: make useful things easier to understand, easier to find, and harder to ignore.</p>
       </div>
 
       <article class="featured-project gs-reveal">
@@ -867,8 +1005,8 @@
             <div class="featured-tag">Regenerative AI Infrastructure</div>
             <h2>GAIA AI / Symbiocene Labs</h2>
             <div class="featured-description">
-              <p><strong>Co-founding GAIA AI: a planetary environmental data layer.</strong> A decentralized intelligence system that combines AI-driven analysis, community-held knowledge, and new financing models to make Earth-system data usable at every scale.</p>
-              <p>Agents coordinate across 27+ domains — soil, biodiversity, water, energy — with data sovereignty and community stewardship built in from day one.</p>
+              <p><strong>Building the planetary environmental data legibility layer.</strong> GAIA AI is a decentralized intelligence system designed to accelerate planetary regeneration through AI-driven analysis, community wisdom, and innovative financing.</p>
+              <p>AI agents put to work for the living world, coordinated with communities and stewarded with care for data sovereignty.</p>
             </div>
             <div class="featured-links">
               <span class="featured-link">Learn More</span>
@@ -882,71 +1020,31 @@
           <img src="images/refinery-atlas.png" alt="Refinery Atlas" class="project-image-small">
           <div class="project-tag-small">Stranded-Power Intelligence</div>
           <h3>Refinery Atlas</h3>
-          <p>The Zillow of power. A searchable index and live map of stranded megawatts: warehouses, mills, and dead malls already holding grid service, scored for edge data centers and container BESS. 40 countries, every input cited.</p>
+          <p>Energy infrastructure intelligence: a searchable map of stranded power and underused sites, scored for the next generation of data centers and storage.</p>
           <div class="project-card-links"><span class="project-card-link">Open the Atlas &rarr;</span></div>
         </a>
 
-        <a href="https://paredes.samu.quest" target="_blank" rel="noopener" class="project-card gs-reveal">
-          <img src="images/paredes.png" alt="Paredes AI" class="project-image-small">
-          <div class="project-tag-small">Vertical AI Product</div>
-          <h3>Paredes AI</h3>
-          <p>An AI study companion for Kabbalah, built with the source material it teaches from. A vertical AI product shipped end to end: content, retrieval, tutor experience.</p>
-          <div class="project-card-links"><span class="project-card-link">Open Paredes &rarr;</span></div>
-        </a>
-
-
         <a href="alchememes.html" class="project-card gs-reveal">
           <img src="images/alchememes-logo.png" alt="Alchememes" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
-          <div class="project-tag-small">Content Strategy</div>
+          <div class="project-tag-small">Strategic Meme Engineering</div>
           <h3>Alchememes</h3>
-          <p>Meme-driven content strategy for web3 and climate communities. Built social channels from zero with format experiments, not ad spend.</p>
+          <p>Transmuting culture through strategic meme engineering for web3 and regenerative movements. The revolution will be memed.</p>
           <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
 
         <a href="sun-rose.html" class="project-card gs-reveal">
           <img src="images/sunrose.jpg" alt="Sun Rose" class="project-image-small">
-          <div class="project-tag-small">Music &amp; Community</div>
+          <div class="project-tag-small">Sacred Bass Music</div>
           <h3>Sun Rose</h3>
-          <p>Music project and community: 32 tracks released, live sets booked independently, audience built through direct channels. Had to learn distribution, licensing, and release ops the hard way.</p>
+          <p>Sacred/saucy bass music from the Pleiades via Canada. Live ceremony through frequencies. 32 tracks released.</p>
           <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
-        </a>
-
-        <a href="sacred-saucy.html" class="project-card gs-reveal">
-          <svg viewBox="0 0 220 220" class="project-image-small" style="aspect-ratio:unset; background:#f9d8a8; object-fit:contain; padding:20px;" aria-label="Sacred/Saucy emblem">
-            <defs>
-              <linearGradient id="ss-gold" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#f7cd7e" />
-                <stop offset="1" stop-color="#d48836" />
-              </linearGradient>
-              <linearGradient id="ss-petals" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#f47e7f" />
-                <stop offset="1" stop-color="#6e1a6b" />
-              </linearGradient>
-              <radialGradient id="ss-sun" cx="0.5" cy="0.4" r="0.7">
-                <stop offset="0" stop-color="#ffb56b" />
-                <stop offset="1" stop-color="#f2701c" />
-              </radialGradient>
-            </defs>
-            <path d="M41 88 A80 80 0 0 1 110 18 A80 80 0 0 1 180 90" fill="none" stroke="url(#ss-gold)" stroke-width="4.5" stroke-linecap="round" />
-            <g stroke="#f3cd6d" stroke-width="3.5" stroke-linejoin="round" fill="url(#ss-petals)">
-              <path d="M110 118 C76 124 34 122 8 96 C30 76 62 70 84 86" />
-              <path d="M110 118 C144 124 186 122 212 96 C190 76 158 70 136 86" />
-              <path d="M110 164 C100 170 88 178 80 188 C88 198 100 204 110 208 C120 204 132 198 140 188 C132 178 120 170 110 164" />
-            </g>
-            <circle cx="110" cy="96" r="36" fill="url(#ss-sun)" />
-            <path d="M110 68 C 112 82 122 90 136 94 C 122 98 112 106 110 120 C 108 106 98 98 84 94 C 98 90 108 82 110 68 Z" fill="#fff4de" />
-          </svg>
-          <div class="project-tag-small">Event Production</div>
-          <h3>Sacred/Saucy Productions</h3>
-          <p>Event production company: community gatherings and venue bookings on Salt Spring Island, plus sound and lighting rentals.</p>
-          <div class="project-card-links"><span class="project-card-link">Events &amp; Services &rarr;</span></div>
         </a>
 
         <a href="white-tara-tea.html" class="project-card gs-reveal">
           <img src="images/whitetara.png" alt="White Tara Tea" class="project-image-small" style="object-fit: contain; background: #050505; padding: 20px;">
-          <div class="project-tag-small">Direct Product Business</div>
+          <div class="project-tag-small">Botanical Medicine</div>
           <h3>White Tara Tea</h3>
-          <p>Wildcrafted tea line: sourcing, product, brand, and direct-to-customer sales run solo. A small business from door to shelf.</p>
+          <p>Wildcrafted botanical medicines and alchemical tea service. Plant intelligence for human evolution.</p>
           <div class="project-card-links"><span class="project-card-link">Learn More &rarr;</span></div>
         </a>
 
@@ -963,7 +1061,7 @@
     <!-- ===== CTA STRIP ===== -->
     <section class="cta-strip">
       <h2 class="gs-reveal">Got a project?<br><em>Let's talk.</em></h2>
-      <p class="gs-reveal">Roles, products, growth problems — if there's real work involved, I want to hear about it.</p>
+      <p class="gs-reveal">Whether you're building regenerative tech, scaling a movement, or need growth strategy, I'd love to hear from you.</p>
       <a href="https://calendly.com/starrybodies" target="_blank" class="cta-btn gs-reveal">Book a Call</a>
     </section>
 
@@ -975,9 +1073,6 @@
       .software-body h2 { font-family: 'Instrument Serif', serif; font-size: clamp(38px, 5vw, 60px); font-weight: 400; line-height: 1.05; margin-bottom: 24px; }
       .software-body h2 em { color: var(--blue); font-style: italic; }
       .software-body > p { color: var(--muted); font-size: 16px; line-height: 1.8; max-width: 58ch; margin-bottom: 34px; }
-      .software-list { list-style: none; display: grid; gap: 14px; margin-bottom: 40px; }
-      .software-list li { font-size: 14px; color: #d4d4d4; padding-left: 26px; position: relative; line-height: 1.5; }
-      .software-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border: 1px solid var(--blue); border-radius: 50%; }
       .software-link { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
       .software-link:hover { border-color: var(--blue); }
       @media (max-width: 800px) {
@@ -993,15 +1088,8 @@
       <div class="software-inner gs-reveal">
         <div class="software-visual"><img src="images/software.svg" alt="Tree of Life as a commit graph" class="software-icon"></div>
         <div class="software-body">
-          <h2>Then I learned to <em>build the thing.</em></h2>
-          <p>Ten years of growth work, then agentic development changed the math. Now I ship: this site, Refinery Atlas, Paredes AI, and a small fleet of agents that work while I sleep.</p>
-          <ul class="software-list">
-            <li>Full-stack apps in days, not quarters</li>
-            <li>Agent fleets that research, enrich, and deploy on their own</li>
-            <li>Live data products like Refinery Atlas, 40 countries deep</li>
-            <li>Vertical AI products like Paredes AI, shipped end to end</li>
-            <li>This site. Hand-built, no template.</li>
-          </ul>
+          <h2>I build the <em>thing</em> now.</h2>
+          <p>Ten years of growth work, then agentic development cracked something open. Now I ship: full-stack products, live data tools, and a small fleet of agents that work while I sleep.</p>
           <a href="https://github.com/starrybodies" target="_blank" rel="noopener" class="software-link">See the code &rarr;</a>
         </div>
       </div>
@@ -1016,16 +1104,16 @@
       </div>
       <div class="vision-overlay">
         <div class="vision-text" id="vision-text-0">
-          <h2><em>Range</em> with receipts</h2>
-          <p>Growth, product, and narrative — the same operating system in every domain</p>
+          <h2><em>Infinite</em> Possibilities</h2>
+          <p>The threads of regeneration weave through every domain</p>
         </div>
         <div class="vision-text" id="vision-text-1">
-          <h2>AI-native, <em>by default</em></h2>
-          <p>Building with agents daily, not just talking about them</p>
+          <h2>In the Age of <em>Abundance</em></h2>
+          <p>Nature's intelligence patterns emerging through technology</p>
         </div>
         <div class="vision-text" id="vision-text-2">
-          <h2>Builders who <em>ship</em></h2>
-          <p>The projects on this page are live. Click through.</p>
+          <h2>Imagination is the <em>Limit</em></h2>
+          <p>Spiraling outward from planetary consciousness</p>
         </div>
       </div>
     </section>
@@ -1033,30 +1121,30 @@
     <!-- ===== MARQUEE ===== -->
     <div class="marquee-section">
       <div class="marquee-track">
+        <span class="marquee-item">Regenerative AI</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Growth Strategy</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">AI Products</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Energy Infrastructure</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Software Engineering</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Meme Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Sacred Bass Music</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Botanical Medicine</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Web3</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Climate Tech</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Music</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Event Production</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">E-commerce</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Agentic Workflows</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Planetary Intelligence</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Decentralized Systems</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Regenerative AI</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Growth Strategy</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">AI Products</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Energy Infrastructure</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Software Engineering</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Meme Engineering</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Sacred Bass Music</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Botanical Medicine</span><span class="marquee-sep">&bull;</span>
         <span class="marquee-item">Web3</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Climate Tech</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Music</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Event Production</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">E-commerce</span><span class="marquee-sep">&bull;</span>
-        <span class="marquee-item">Agentic Workflows</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Planetary Intelligence</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Community Building</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Decentralized Systems</span><span class="marquee-sep">&bull;</span>
+        <span class="marquee-item">Content Strategy</span><span class="marquee-sep">&bull;</span>
       </div>
     </div>
 
@@ -1075,14 +1163,14 @@
     <section class="publications" id="publications">
       <div class="section-header gs-reveal">
         <div class="section-label">Publications</div>
-        <p class="section-intro">Writing on regeneration, AI systems, and the future of climate infrastructure. Written to still be useful in ten years.</p>
+        <p class="section-intro">Long reads on <em>regeneration</em> and planetary intelligence. Written to still be useful in ten years.</p>
       </div>
 
       <div class="pub-grid">
         <a href="encyclopedia-of-regeneration.html" class="pub-card gs-reveal">
           <span class="pub-icon">EoR</span>
           <h3>Encyclopedia of Regeneration</h3>
-          <p>A living reference for regenerative practice, AI-curated and human-edited. Built for the people building the next economy.</p>
+          <p>A living reference for regenerative practice, AI-curated and human-edited. The library the RegenAIssance reads from.</p>
           <span class="pub-link">Explore</span>
         </a>
 
@@ -1110,16 +1198,24 @@
       <div class="quote-attr gs-reveal">GAIA AI Greenpaper</div>
     </section>
 
+    <!-- ===== DONATE ===== -->
+    <div class="donate-strip gs-reveal">
+      <span class="donate-strip-label">Support the work</span>
+      <a href="https://etherscan.io/name-lookup-search?id=sunrose.eth" target="_blank">sunrose.eth</a>
+      <a href="https://venmo.com/u/starrytelling" target="_blank">Venmo</a>
+    </div>
+
+
     <!-- ===== CONNECT ===== -->
     <section class="connect" id="connect">
       <div class="section-header gs-reveal">
         <div class="section-label">Connect</div>
-        <p class="section-intro">Find me building in the open. Want to compare notes on a role, a product, or a growth problem? <em>Email is fastest.</em> The CV is here too.</p>
+        <p class="section-intro">Want to compare notes on a role, a product, or a growth problem? <em>Email is fastest.</em> The CV is here too.</p>
       </div>
 
       <div class="connect-grid">
         <a href="samuel-barnes-cv.pdf" target="_blank" class="connect-item gs-reveal">
-          <div class="connect-label">CV</div>
+          <div class="connect-label">Resume / CV</div>
           <div class="connect-name">Samuel Barnes (PDF) <span class="connect-arrow">&darr;</span></div>
         </a>
         <a href="https://x.com/reslashacc" target="_blank" class="connect-item gs-reveal">
@@ -1163,7 +1259,7 @@
 
     <!-- ===== FOOTER CTA ===== -->
     <section class="footer-cta">
-      <h2 class="gs-reveal">Let's build something<br><em>that matters.</em></h2>
+      <h2 class="gs-reveal">Let's build something<br><em>regenerative.</em></h2>
       <a href="https://calendly.com/starrybodies" target="_blank" class="cta-btn gs-reveal">Book a Call</a>
     </section>
   </main>
@@ -1172,10 +1268,23 @@
     <div>samu.quest &middot; 2026</div>
     <div class="footer-links">
       <a href="mailto:samu@samu.quest">Contact</a>
-      <a href="recruiter.html">Recruiter Version</a>
+      <a href="samuel-barnes-cv.pdf" target="_blank">CV</a>
+      <a href="https://samu.quest">Main Site</a>
       <a href="https://symbiocenelabs.com" target="_blank">Symbiocene Labs</a>
+      <a href="https://etherscan.io/name-lookup-search?id=sunrose.eth" target="_blank" style="color: var(--blue)">sunrose.eth</a>
+      <a href="https://venmo.com/u/starrytelling" target="_blank" style="color: var(--blue)">Donate</a>
     </div>
   </footer>
+
+  <!-- ===== AMBIENT PLAYER ===== -->
+  <div class="ambient-player" id="ambient-player">
+    <span class="ambient-player-label">Now Playing</span>
+    <span class="ambient-player-track">Sun Rose &middot; Chateau</span>
+    <div class="ambient-player-sc">
+      <iframe id="sc-player" width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="about:blank"></iframe>
+    </div>
+    <button class="ambient-player-close" onclick="dismissPlayer()" aria-label="Close player">&times;</button>
+  </div>
 
   <!-- ===== GSAP ===== -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -1183,6 +1292,94 @@
 
   <script>
     gsap.registerPlugin(ScrollTrigger);
+
+    // ===== ASCII ART INTRO =====
+    const ASCII_FRAMES = [`
+  ███████╗ █████╗ ███╗   ███╗██╗   ██╗     ██████╗ ██╗   ██╗███████╗███████╗████████╗
+  ██╔════╝██╔══██╗████╗ ████║██║   ██║    ██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝
+  ███████╗███████║██╔████╔██║██║   ██║    ██║   ██║██║   ██║█████╗  ███████╗   ██║
+  ╚════██║██╔══██║██║╚██╔╝██║██║   ██║    ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║
+  ███████║██║  ██║██║ ╚═╝ ██║╚██████╔╝ ██╗╚██████╔╝╚██████╔╝███████╗███████║   ██║
+  ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝
+`];
+
+    const gate = document.getElementById('enter-gate');
+    const asciiEl = document.getElementById('ascii-art');
+    const subtitleEl = document.getElementById('ascii-subtitle');
+    const enterBtn = document.getElementById('enter-btn');
+    const player = document.getElementById('ambient-player');
+    const scPlayer = document.getElementById('sc-player');
+
+    // Matrix rain
+    const introCanvas = document.getElementById('intro-canvas');
+    const ictx = introCanvas.getContext('2d');
+    let iw, ih, columns, drops;
+    const chars = 'サムクエスト再生REGENERATE01';
+
+    function initIntroCanvas() {
+      iw = introCanvas.width = window.innerWidth;
+      ih = introCanvas.height = window.innerHeight;
+      columns = Math.floor(iw / 12);
+      drops = Array(columns).fill(1);
+    }
+
+    function drawMatrixRain() {
+      ictx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      ictx.fillRect(0, 0, iw, ih);
+      ictx.fillStyle = 'rgba(125, 211, 252, 0.12)';
+      ictx.font = '12px JetBrains Mono';
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ictx.fillText(char, i * 12, drops[i] * 12);
+        if (drops[i] * 12 > ih && Math.random() > 0.985) drops[i] = 0;
+        drops[i]++;
+      }
+      if (!gate.classList.contains('hidden')) requestAnimationFrame(drawMatrixRain);
+    }
+
+    initIntroCanvas();
+    drawMatrixRain();
+    window.addEventListener('resize', initIntroCanvas);
+
+    // Typewriter
+    const fullAscii = ASCII_FRAMES[0];
+    let asciiIndex = 0, asciiBuffer = '';
+
+    function typeAscii() {
+      const chunkSize = 6;
+      for (let i = 0; i < chunkSize && asciiIndex < fullAscii.length; i++) {
+        asciiBuffer += fullAscii[asciiIndex];
+        asciiIndex++;
+      }
+      asciiEl.textContent = asciiBuffer;
+      if (asciiIndex < fullAscii.length) {
+        requestAnimationFrame(typeAscii);
+      } else {
+        setTimeout(() => subtitleEl.classList.add('visible'), 600);
+        setTimeout(() => enterBtn.classList.add('visible'), 1400);
+      }
+    }
+
+    setTimeout(() => { asciiEl.classList.add('visible'); typeAscii(); }, 800);
+
+    // Enter
+    document.body.style.overflow = 'hidden';
+    enterBtn.addEventListener('click', () => {
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+      startAnimations();
+      scPlayer.src = 'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdjsunrose%2Fchateau&color=%237dd3fc&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&show_artwork=false';
+      setTimeout(() => {
+        player.classList.add('visible');
+        document.body.classList.add('player-active');
+      }, 800);
+    });
+
+    function dismissPlayer() {
+      player.classList.remove('visible');
+      document.body.classList.remove('player-active');
+      scPlayer.src = 'about:blank';
+    }
 
     // ===== CURSOR =====
     const cursor = document.querySelector('.cursor');
@@ -1282,7 +1479,6 @@
     function startAnimations() {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) return;
-
       // Hero text slide up
       gsap.to('.hero h1 .line span', {
         y: 0,
@@ -1389,23 +1585,9 @@
         // All orbs fade out
         tl.to(orbs, { opacity: 0, duration: 0.1 }, 0.92);
       }
-
-      // Gate opens before remote fonts and project art are guaranteed to have
-      // settled. Re-measure pinned sections once final layout is available so
-      // the vision sequence cannot cover or intercept project cards.
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-      if (document.fonts?.ready) {
-        document.fonts.ready.then(() => ScrollTrigger.refresh());
-      }
-      document.querySelectorAll('img').forEach(image => {
-        if (!image.complete) {
-          image.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
-        }
-      });
     }
-    startAnimations();
 
-    console.log('%c\n  Growth operator. Product builder. Planet-minded.\n\n  github.com/starrybodies\n', 'color: #7dd3fc; font-size: 12px;');
+    console.log('%c\n  Growth operator. Product builder. Planet-minded.\n\n  github.com/starrybodies\n  samu.quest\n', 'color: #7dd3fc; font-size: 12px;');
   </script>
 </body>
 </html>
