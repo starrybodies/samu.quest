@@ -57,14 +57,12 @@
       --line: rgba(58, 18, 56, 0.18);
       --shine: rgba(255, 255, 255, 0.78);
       --shadow: 0 36px 100px rgba(93, 28, 51, 0.2);
-      --mx: 50vw;
-      --my: 38vh;
       --display: clamp(3.7rem, 8vw, 8rem);
       --label: 0.69rem;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --fast: 150ms;
-      --base: 300ms;
-      --slow: 700ms;
+      --fast: 120ms;
+      --base: 200ms;
+      --slow: 400ms;
     }
 
     html[data-theme="dark"] {
@@ -93,7 +91,7 @@
       font-family: 'Syne', sans-serif;
       font-size: 1rem;
       line-height: 1.62;
-      transition: color var(--slow) var(--ease), background var(--slow) var(--ease);
+      transition: color var(--slow) var(--ease), background-color var(--slow) var(--ease);
     }
     body::before {
       content: '';
@@ -128,12 +126,6 @@
     .skip-link:focus { transform: translate(-50%, 0); }
 
     .ambient { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-    .ambient::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(520px circle at var(--mx) var(--my), color-mix(in srgb, var(--cream) 26%, transparent), transparent 72%);
-    }
     .blob {
       position: absolute;
       width: min(56vw, 780px);
@@ -142,15 +134,11 @@
       filter: blur(44px);
       opacity: 0.54;
       mix-blend-mode: multiply;
-      will-change: transform, border-radius;
     }
     html[data-theme="dark"] .blob { opacity: 0.32; mix-blend-mode: screen; }
-    .blob-a { top: -20%; right: -12%; background: #ff7528; animation: drift-a 20s ease-in-out infinite alternate; }
-    .blob-b { top: 40%; left: -26%; background: #8a2a91; animation: drift-b 24s ease-in-out infinite alternate; }
-    .blob-c { bottom: -26%; right: 5%; background: #f12c75; animation: drift-c 28s ease-in-out infinite alternate; }
-    @keyframes drift-a { to { transform: translate(-18vw, 18vh) rotate(34deg) scale(1.14); border-radius: 65% 35% 40% 60% / 38% 64% 36% 62%; } }
-    @keyframes drift-b { to { transform: translate(28vw, -14vh) rotate(-42deg) scale(0.88); border-radius: 35% 65% 60% 40% / 62% 40% 60% 38%; } }
-    @keyframes drift-c { to { transform: translate(-18vw, -24vh) rotate(52deg) scale(1.1); } }
+    .blob-a { top: -20%; right: -12%; background: #ff7528; }
+    .blob-b { top: 40%; left: -26%; background: #8a2a91; }
+    .blob-c { bottom: -26%; right: 5%; background: #f12c75; }
 
     .hero, main, footer { position: relative; z-index: 1; }
     .topbar {
@@ -167,6 +155,7 @@
     }
     .nav-links { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 3vw, 2rem); }
     .nav-links a {
+      position: relative;
       font-family: 'Syne', sans-serif;
       font-size: var(--label);
       letter-spacing: 0.12em;
@@ -175,6 +164,19 @@
       transition: color var(--fast) ease;
     }
     .nav-links a:hover { color: var(--ink); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -0.35rem;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--base) var(--ease);
+    }
+    .nav-links a:hover::after, .nav-links a:focus-visible::after { transform: scaleX(1); }
     .back, .theme-toggle {
       min-height: 44px;
       display: inline-flex;
@@ -196,14 +198,22 @@
     .back { justify-self: start; padding: 0.65rem 1rem; }
     .back svg { width: 10px; height: 10px; }
     .theme-toggle { justify-self: end; cursor: pointer; padding: 0.65rem 0.9rem; }
-    .back:hover, .theme-toggle:hover { transform: translateY(-2px); background: var(--surface-strong); }
+    @media (hover: hover) and (pointer: fine) {
+      .back:hover, .theme-toggle:hover { transform: translateY(-2px); background: var(--surface-strong); }
+    }
     .theme-orb {
+      position: relative;
+      overflow: hidden;
       width: 0.78rem;
       height: 0.78rem;
       border-radius: 50%;
       background: linear-gradient(135deg, #ff9a49, #ef246f 55%, #7a2492);
       box-shadow: 0 0 18px color-mix(in srgb, var(--hot) 64%, transparent);
+      transition: background-color var(--base) var(--ease), box-shadow var(--base) var(--ease);
     }
+    .theme-orb::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #171024; opacity: 0; transform: translate(50%, -50%); transition: opacity var(--base) var(--ease), transform var(--base) var(--ease); }
+    html[data-theme="dark"] .theme-orb { background: #fff3da; box-shadow: 0 0 16px rgba(255, 243, 218, 0.52); }
+    html[data-theme="dark"] .theme-orb::after { opacity: 1; transform: translate(38%, -28%); }
 
     .hero {
       height: 100svh;
@@ -236,8 +246,6 @@
       align-content: center;
       justify-items: center;
       z-index: 1;
-      opacity: 0;
-      transform: translateY(16px) scale(0.99);
     }
     .identity-stage::after {
       content: '';
@@ -276,24 +284,6 @@
       display: block;
       transform: translateY(-50%);
     }
-    .identity-wordmark-frame::after {
-      content: '';
-      position: absolute;
-      inset: -20% auto -20% -35%;
-      width: 9%;
-      transform: translateX(0) skewX(-18deg);
-      opacity: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
-      mix-blend-mode: screen;
-      filter: blur(9px);
-    }
-    .hero.is-ready .identity-wordmark-frame::after { animation: wordmark-prism 900ms var(--ease) 650ms both; }
-    @keyframes wordmark-prism {
-      0% { opacity: 0; transform: translateX(0) skewX(-18deg); }
-      22% { opacity: 0.34; }
-      100% { opacity: 0; transform: translateX(1700%) skewX(-18deg); }
-    }
-
     .hero-copy {
       max-width: 720px;
       margin-top: 0.25rem;
@@ -305,8 +295,14 @@
     }
     .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.35rem; }
     .hero-actions .button { min-width: 220px; }
-    .hero.is-ready .identity-stage { animation: identity-in var(--slow) var(--ease) both; }
-    @keyframes identity-in { to { opacity: 1; transform: none; } }
+    .hero.is-ready .identity-mark-wrap { animation: hero-arrive 600ms var(--ease) both; }
+    .hero.is-ready .identity-wordmark-frame { animation: hero-arrive 600ms var(--ease) 70ms both; }
+    .hero.is-ready .hero-copy { animation: hero-arrive var(--slow) var(--ease) 150ms both; }
+    .hero.is-ready .hero-actions { animation: hero-arrive var(--slow) var(--ease) 220ms both; }
+    @keyframes hero-arrive {
+      from { opacity: 0; transform: translateY(16px) scale(0.985); }
+      to { opacity: 1; transform: none; }
+    }
 
     .hero-links {
       position: absolute;
@@ -354,6 +350,7 @@
       text-transform: uppercase;
       transition: transform var(--fast) var(--ease), background var(--fast) var(--ease), background-position var(--base) var(--ease), border-color var(--fast) var(--ease), box-shadow var(--base) var(--ease);
     }
+    .button span[aria-hidden="true"] { display: inline-block; transition: transform var(--base) var(--ease); }
     .button-primary {
       color: var(--cream);
       background: linear-gradient(110deg, #ff792e, var(--hot) 54%, #7e258e);
@@ -369,11 +366,13 @@
     }
     @media (hover: hover) and (pointer: fine) {
       .button:hover { transform: translateY(-2px); }
+      .button:hover span[aria-hidden="true"] { transform: translate(3px, -2px); }
       .button-primary:hover { background-position: 100% 0; box-shadow: 0 22px 56px color-mix(in srgb, var(--hot) 44%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.34); }
       .button-glass:hover { background: var(--surface-strong); }
     }
+    .button:active { transform: scale(0.98); }
 
-    .section { width: min(1200px, 100%); margin: 0 auto; padding: clamp(5.5rem, 11vw, 9rem) 1.25rem; }
+    .section { width: min(1200px, 100%); margin: 0 auto; padding: clamp(5.5rem, 9vw, 8rem) 1.25rem; }
     .section + .section { border-top: 1px solid var(--line); }
     .section-heading { max-width: 900px; }
     .kicker {
@@ -394,8 +393,6 @@
     .intro { max-width: 720px; margin-top: 1.4rem; color: var(--ink-soft); font-size: 1.04rem; }
 
     .glass {
-      --gx: 50%;
-      --gy: 20%;
       position: relative;
       overflow: hidden;
       border: 1px solid var(--line);
@@ -411,7 +408,7 @@
       z-index: 3;
       pointer-events: none;
       opacity: 0.68;
-      background: radial-gradient(440px circle at var(--gx) var(--gy), var(--shine), transparent 48%);
+      background: radial-gradient(440px circle at 50% 20%, var(--shine), transparent 48%);
       mix-blend-mode: soft-light;
     }
 
@@ -421,25 +418,38 @@
       grid-template-columns: minmax(0, 0.82fr) minmax(330px, 1.18fr);
       border-radius: 34px;
       min-height: 660px;
+      border-color: rgba(255, 240, 215, 0.22);
+      background: #21132d;
+      box-shadow: 0 36px 90px rgba(42, 11, 39, 0.3);
     }
+    .event-shell::after { display: none; }
     .event-poster { position: relative; z-index: 1; min-width: 0; aspect-ratio: 2 / 3; overflow: hidden; background: var(--night); }
-    .event-poster img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter 1.1s var(--ease); }
-    .event-shell:hover .event-poster img { transform: scale(1.025); filter: saturate(1.08) contrast(1.03); }
-    .event-panel { position: relative; z-index: 2; padding: clamp(2rem, 4vw, 3.2rem); display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid var(--line); }
-    .live-label { display: flex; align-items: center; gap: 0.65rem; color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-    .pulse { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--hot); box-shadow: 0 0 0 0 color-mix(in srgb, var(--hot) 42%, transparent); animation: pulse 2.1s ease-out infinite; }
-    @keyframes pulse { 70%, 100% { box-shadow: 0 0 0 14px transparent; } }
+    .event-poster img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: transform var(--slow) var(--ease); }
+    .event-panel { position: relative; z-index: 2; padding: clamp(2rem, 4vw, 3.2rem); display: flex; flex-direction: column; justify-content: space-between; color: var(--cream); border-left: 1px solid rgba(255, 240, 215, 0.18); background: radial-gradient(circle at 90% 0%, rgba(239, 36, 111, 0.2), transparent 48%), #21132d; }
+    .live-label { display: flex; align-items: center; gap: 0.65rem; color: #ffb184; font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .pulse { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: #ff9a66; box-shadow: 0 0 0 4px rgba(255, 154, 102, 0.16); }
     .event-panel h3 { margin-top: 1.25rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(4rem, 7vw, 7rem); line-height: 0.82; }
-    .event-panel-copy { margin-top: 1.2rem; color: var(--ink-soft); }
-    .event-facts { margin-top: 1.5rem; border-top: 1px solid var(--line); }
-    .event-fact { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
-    .event-fact span { font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+    .event-panel-copy { margin-top: 1.2rem; color: rgba(255, 244, 220, 0.75); }
+    .event-facts { margin-top: 1.5rem; border-top: 1px solid rgba(255, 240, 215, 0.18); }
+    .event-fact { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid rgba(255, 240, 215, 0.18); }
+    .event-fact span { font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 244, 220, 0.58); }
     .event-fact strong { font-weight: 600; }
     .event-panel .button { width: 100%; margin-top: 1.7rem; }
+    @media (hover: hover) and (pointer: fine) {
+      .event-poster:hover img { transform: scale(1.035); }
+    }
 
-    .service-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .service { min-height: 270px; padding: clamp(1.7rem, 4vw, 2.8rem); border-radius: 28px; transition: transform var(--base) var(--ease), background var(--base) var(--ease); }
-    .service:hover { transform: translateY(-6px); background: var(--surface-strong); }
+    #services .section-heading { max-width: none; display: grid; grid-template-columns: 1.2fr 0.8fr; column-gap: 4rem; align-items: end; }
+    #services .section-heading .kicker { grid-column: 1 / -1; }
+    #services .section-heading .intro { margin-top: 0; padding-bottom: 0.35rem; }
+    .service-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .service { min-height: 300px; padding: clamp(1.7rem, 4vw, 2.8rem); border-radius: 28px; transition: transform var(--base) var(--ease), background-color var(--base) var(--ease), box-shadow var(--base) var(--ease); }
+    .service:nth-child(1), .service:nth-child(4) { grid-column: span 7; }
+    .service:nth-child(2), .service:nth-child(3) { grid-column: span 5; }
+    .service:first-child { background: color-mix(in srgb, var(--surface-strong) 82%, transparent); }
+    @media (hover: hover) and (pointer: fine) {
+      .service:hover { transform: translateY(-3px); background-color: var(--surface-strong); box-shadow: inset 0 1px 0 var(--shine), 0 30px 70px rgba(93, 28, 51, 0.22); }
+    }
     .service-tag { color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
     .service-rate, .rental-rate { display: block; margin-top: 1rem; color: var(--ink); font-size: 1.1rem; font-weight: 700; }
     .service h3 { margin-top: 2rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 0.88; }
@@ -469,9 +479,9 @@
     .tea-copy .button { margin-top: 1.6rem; }
 
     .rental-shell { margin-top: 3rem; display: grid; grid-template-columns: 0.8fr 1.2fr; border-radius: 32px; }
-    .rental-lead { position: relative; z-index: 1; padding: clamp(2rem, 5vw, 3.8rem); border-right: 1px solid var(--line); background: linear-gradient(150deg, color-mix(in srgb, var(--plum) 18%, transparent), transparent); }
+    .rental-lead { position: relative; z-index: 1; padding: clamp(2rem, 5vw, 3.8rem); color: var(--cream); border-right: 1px solid rgba(255, 240, 215, 0.18); background: radial-gradient(circle at 0% 100%, rgba(239, 36, 111, 0.25), transparent 58%), #2c163b; }
     .rental-lead h3 { font-family: 'Aesthetic', sans-serif; font-size: clamp(3.3rem, 6vw, 5.8rem); line-height: 0.86; }
-    .rental-lead p { margin-top: 1.25rem; color: var(--ink-soft); }
+    .rental-lead p { margin-top: 1.25rem; color: rgba(255, 244, 220, 0.75); }
     .rental-lead .button { margin-top: 1.8rem; }
     .rental-list { position: relative; z-index: 1; padding: 1rem clamp(1.5rem, 4vw, 3rem); }
     .rental-row { display: grid; grid-template-columns: 0.62fr 1.38fr; gap: 1.4rem; padding: 1.45rem 0; border-bottom: 1px solid var(--line); }
@@ -507,9 +517,11 @@
     .photo-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .event-photo { position: relative; min-height: 350px; border-radius: 26px; }
     .event-photo:nth-child(3) { grid-column: span 2; }
-    .event-photo img { display: block; width: 100%; height: 100%; min-height: 350px; object-fit: cover; transition: transform 800ms var(--ease); }
+    .event-photo img { display: block; width: 100%; height: 100%; min-height: 350px; object-fit: cover; transition: transform var(--slow) var(--ease); }
     .event-photo:nth-child(3) img { aspect-ratio: 16 / 10; }
-    .event-photo:hover img { transform: scale(1.035); }
+    @media (hover: hover) and (pointer: fine) {
+      .event-photo:hover img { transform: scale(1.035); }
+    }
     .event-photo span {
       position: absolute;
       z-index: 4;
@@ -527,18 +539,27 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .event-index { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); border-radius: 28px; overflow: hidden; background: var(--surface); }
-    .event-index a, .event-index article { min-height: 150px; padding: 1.35rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background var(--fast) ease; }
-    .event-index a:hover { background: var(--surface-strong); }
-    .event-index > :nth-child(2n) { border-right: 0; }
-    .event-index > :nth-last-child(-n + 2) { border-bottom: 0; }
+    #recaps .section-heading { margin-left: auto; text-align: right; }
+    .event-index { margin-top: 1rem; border: 1px solid var(--line); border-radius: 28px; overflow: hidden; background: var(--surface); }
+    .event-index a { min-height: 116px; display: grid; grid-template-columns: minmax(13rem, 0.38fr) 1fr 2rem; align-items: center; gap: 1.25rem; padding: 1.25rem 2rem; border-bottom: 1px solid var(--line); transition: background-color var(--fast) var(--ease); }
+    .event-index a:last-child { border-bottom: 0; }
+    .event-index a::after { content: '↗'; justify-self: end; font-size: 1.4rem; line-height: 1; transition: transform var(--base) var(--ease); }
+    @media (hover: hover) and (pointer: fine) {
+      .event-index a:hover { background-color: var(--surface-strong); }
+      .event-index a:hover::after { transform: translate(3px, -3px); }
+    }
     .event-index span { color: var(--hot); font-size: var(--label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-    .event-index h3 { margin-top: 1.8rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 0.9; }
+    .event-index h3 { font-family: 'Aesthetic', sans-serif; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 0.9; }
 
-    .join-card { display: grid; grid-template-columns: 1fr minmax(260px, 0.45fr); align-items: end; gap: 3rem; padding: clamp(2rem, 6vw, 4.5rem); border-radius: 36px; }
+    .join-card { display: grid; grid-template-columns: 1fr minmax(260px, 0.45fr); align-items: end; gap: 3rem; padding: clamp(2rem, 6vw, 4.5rem); color: var(--cream); border-color: rgba(255, 240, 215, 0.2); border-radius: 36px; background: radial-gradient(circle at 100% 0%, rgba(239, 36, 111, 0.42), transparent 45%), #261237; }
+    .join-card .kicker { color: #ffb184; }
     .join-card h2 { max-width: 9ch; font-family: 'Aesthetic', sans-serif; font-size: var(--display); line-height: 0.86; }
-    .join-card p { max-width: 620px; margin-top: 1.2rem; color: var(--ink-soft); }
+    .join-card p { max-width: 620px; margin-top: 1.2rem; color: rgba(255, 244, 220, 0.76); }
     .join-actions { display: grid; gap: 0.75rem; }
+    .join-actions .button-glass { color: var(--cream); border-color: rgba(255, 240, 215, 0.22); background: rgba(255, 244, 220, 0.1); }
+    @media (hover: hover) and (pointer: fine) {
+      .join-actions .button-glass:hover { background: rgba(255, 244, 220, 0.18); }
+    }
 
     .connect-trigger {
       position: fixed;
@@ -570,6 +591,7 @@
       transition: transform var(--fast) var(--ease), box-shadow var(--base) var(--ease);
     }
     .connect-trigger span:last-child { font-size: 1rem; }
+    .connect-label-mobile { display: none; }
 
     .connect-popout {
       position: fixed;
@@ -641,17 +663,23 @@
       text-transform: uppercase;
     }
 
-    .reveal { opacity: 1; transform: none; transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
-    .reveal.is-hidden { opacity: 0; transform: translateY(34px) scale(0.985); }
+    .reveal, .reveal-group { opacity: 1; transform: none; transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+    .reveal.is-hidden, .reveal-group.is-hidden { opacity: 0; transform: translateY(20px); }
+    #services .reveal-group.is-hidden { transform: translateX(-20px); }
+    #recaps .reveal-group.is-hidden { transform: translateX(20px); }
 
     @media (max-width: 900px) {
       .topbar { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
       .identity-stage { min-height: min(72vh, 680px); }
+      #services .section-heading { display: block; }
+      #services .section-heading .intro { margin-top: 1.4rem; padding-bottom: 0; }
       .event-shell, .rental-shell, .join-card, .tea-house, .media-shell { grid-template-columns: 1fr; }
       .event-poster { min-height: 360px; }
-      .event-panel { border-left: 0; border-top: 1px solid var(--line); }
-      .rental-lead, .tea-visual { border-right: 0; border-bottom: 1px solid var(--line); }
+      .event-panel { border-left: 0; border-top: 1px solid rgba(255, 240, 215, 0.18); }
+      .rental-lead { border-right: 0; border-bottom: 1px solid rgba(255, 240, 215, 0.18); }
+      .tea-visual { border-right: 0; border-bottom: 1px solid var(--line); }
+      .service-grid .service { grid-column: span 6; }
       .media-film, .media-film video { min-height: 680px; }
     }
 
@@ -659,9 +687,9 @@
       :root { --display: clamp(3.4rem, 18vw, 5rem); }
       .hero { height: auto; min-height: 940px; padding-top: 6.5rem; padding-bottom: 12.5rem; }
       .theme-name { display: none; }
-      .identity-stage { min-height: 650px; margin-top: 0; }
+      .identity-stage { width: 100%; min-height: 650px; margin-top: 0; }
       .identity-mark-wrap { width: min(86vw, 390px); margin-bottom: -1.8rem; }
-      .identity-wordmark-frame { width: 98vw; }
+      .identity-wordmark-frame { width: 100%; }
       .hero-copy { max-width: 92%; font-size: 0.96rem; }
       .hero-actions { width: 100%; }
       .hero-actions .button { flex: 1 1 100%; }
@@ -672,12 +700,14 @@
       .event-poster { min-height: 250px; }
       .event-panel h3 { font-size: clamp(2.6rem, 11.5vw, 3.6rem); }
       .service-grid { grid-template-columns: 1fr; }
+      .service-grid .service { grid-column: auto; min-height: 0; }
       .rental-row, .event-fact { grid-template-columns: 1fr; gap: 0.35rem; }
       .photo-stack { grid-template-columns: 1fr; }
       .event-photo:nth-child(3) { grid-column: auto; }
-      .event-index { grid-template-columns: 1fr; }
-      .event-index a, .event-index article, .event-index > :nth-child(2n), .event-index > :nth-last-child(-n + 2) { border-right: 0; border-bottom: 1px solid var(--line); }
-      .event-index > :last-child { border-bottom: 0; }
+      #recaps .section-heading { text-align: left; }
+      .event-index a { min-height: 112px; grid-template-columns: 1fr 2rem; gap: 0.55rem; padding: 1.1rem 1.25rem; }
+      .event-index a span { grid-column: 1 / -1; }
+      .event-index h3 { font-size: clamp(2rem, 11vw, 3.1rem); }
       .connect-trigger {
         top: auto;
         right: 0.75rem;
@@ -690,6 +720,8 @@
         writing-mode: horizontal-tb;
         transform: none;
       }
+      .connect-label-desktop { display: none; }
+      .connect-label-mobile { display: inline; }
       .connect-popout {
         inset: auto 0.75rem 5rem 0.75rem;
         width: auto;
@@ -702,11 +734,14 @@
       }
       footer { align-items: flex-start; flex-direction: column; }
     }
+    @media (hover: hover) and (pointer: fine) and (max-width: 620px) {
+      .connect-trigger:hover { transform: translateY(-2px); }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      .identity-stage, .reveal { opacity: 1 !important; transform: none !important; }
+      .identity-stage, .reveal, .reveal-group { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -737,7 +772,7 @@
       <h1 class="identity-wordmark-frame">
         <img class="identity-wordmark" src="assets/sacred-saucy-wordmark.svg" alt="Sacred/Saucy Productions" />
       </h1>
-      <p class="hero-copy">Musical ritual, community culture, and events for Salt Spring Island.</p>
+      <p class="hero-copy">Music, ritual, community, culture and events for Salt Spring Island.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer">October Moonbeat tickets <span aria-hidden="true">↗</span></a>
         <a class="button button-glass" href="#services">Produce an event <span aria-hidden="true">↓</span></a>
@@ -753,7 +788,7 @@
 
   <main id="content">
     <section class="section" id="moonbeat">
-      <div class="section-heading reveal">
+      <div class="section-heading">
         <p class="kicker">Next event · Tickets live</p>
         <h2 class="display">Moonbeat at MATEADA.</h2>
         <p class="intro">Full moon music, art, poetry, and dance. Sunday, October 25 in Ganges.</p>
@@ -780,16 +815,16 @@
     </section>
 
     <section class="section" id="services">
-      <div class="section-heading reveal">
+      <div class="section-heading">
         <p class="kicker">Event production</p>
         <h2 class="display">Bring the idea. We run the event.</h2>
         <p class="intro">Book a producer for the day or bring us in from the first plan through load-out. Prices below are starting fees in CAD.</p>
       </div>
-      <div class="service-grid">
-        <article class="service glass reveal"><p class="service-tag">Plan + run</p><h3>Full production</h3><span class="service-rate">From CA$2,500 / event</span><p>Budget, schedule, run of show, artist and vendor coordination, and one producer onsite. Venue, artists, gear, and additional crew quoted separately.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Sound + light</p><h3>Technical production</h3><span class="service-rate">From CA$750 / day</span><p>One production lead for up to eight onsite hours: technical plan, load-in, soundcheck, show, and load-out. Equipment and additional crew quoted separately.</p></article>
-        <article class="service glass reveal"><p class="service-tag">People + place</p><h3>Site operations</h3><span class="service-rate">Scoped quote</span><p>Entrances, bars, vendor zones, artist areas, signs, staffing, guest flow, and safety planning.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Look + feel</p><h3>Creative direction</h3><span class="service-rate">Scoped quote</span><p>Event identity, posters, decor, stage design, lighting direction, installations, and special moments.</p></article>
+      <div class="service-grid reveal-group">
+        <article class="service glass"><p class="service-tag">Plan + run</p><h3>Full production</h3><span class="service-rate">From CA$2,500 / event</span><p>Budget, schedule, run of show, artist and vendor coordination, and one producer onsite. Venue, artists, gear, and additional crew quoted separately.</p></article>
+        <article class="service glass"><p class="service-tag">Sound + light</p><h3>Technical production</h3><span class="service-rate">From CA$750 / day</span><p>One production lead for up to eight onsite hours: technical plan, load-in, soundcheck, show, and load-out. Equipment and additional crew quoted separately.</p></article>
+        <article class="service glass"><p class="service-tag">People + place</p><h3>Site operations</h3><span class="service-rate">Scoped quote</span><p>Entrances, bars, vendor zones, artist areas, signs, staffing, guest flow, and safety planning.</p></article>
+        <article class="service glass"><p class="service-tag">Look + feel</p><h3>Creative direction</h3><span class="service-rate">Scoped quote</span><p>Event identity, posters, decor, stage design, lighting direction, installations, and special moments.</p></article>
       </div>
       <a class="button button-primary service-quote" href="mailto:hi@samu.quest?subject=Event%20production%20quote&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AWhat%20you%20need%20us%20to%20handle%3A">Ask for a production quote <span aria-hidden="true">→</span></a>
       <article class="tea-house glass reveal">
@@ -804,7 +839,7 @@
     </section>
 
     <section class="section" id="rentals">
-      <div class="section-heading reveal">
+      <div class="section-heading">
         <p class="kicker">Equipment rental</p>
         <h2 class="display">Rent the rig. Add an operator.</h2>
         <p class="intro">Two sound options, priced by event day. Tell us the room, crowd, and music format; we’ll confirm the exact gear in your quote.</p>
@@ -825,13 +860,13 @@
     </section>
 
     <section class="section" id="recaps">
-      <div class="section-heading reveal">
+      <div class="section-heading">
         <p class="kicker">Past gatherings</p>
         <h2 class="display">Proof we know how to gather.</h2>
         <p class="intro">Watch the Soar film here. Open any photo for its original post, then scan the full archive below.</p>
       </div>
-      <div class="media-shell">
-        <figure class="media-film glass reveal">
+      <div class="media-shell reveal-group">
+        <figure class="media-film glass">
           <video controls playsinline preload="metadata" poster="images/events/soar-aftermovie-poster.webp">
             <source src="images/events/soar-aftermovie.mp4" type="video/mp4" />
             Your browser does not support embedded video.
@@ -842,29 +877,29 @@
           </figcaption>
         </figure>
         <div class="photo-stack">
-          <a class="event-photo glass reveal" href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer">
+          <a class="event-photo glass" href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer">
             <img src="images/events/very-sacred.webp" alt="Samu, Kimmy, and baby Rhythm behind the DJ booth at Very Sacred Very Saucy" loading="lazy" />
             <span>Very Sacred Very Saucy ↗</span>
           </a>
-          <a class="event-photo glass reveal" href="https://www.instagram.com/sacredsaucy/p/DASLm-9Pqcn/" target="_blank" rel="noopener noreferrer">
+          <a class="event-photo glass" href="https://www.instagram.com/sacredsaucy/p/DASLm-9Pqcn/" target="_blank" rel="noopener noreferrer">
             <img src="images/events/soar-fire.webp" alt="Fire ceremony at Soar Equinox Gathering" loading="lazy" />
             <span>Soar · Fire ↗</span>
           </a>
-          <a class="event-photo glass reveal" href="https://www.instagram.com/sacredsaucy/p/DAT1f3wSeNB/" target="_blank" rel="noopener noreferrer">
+          <a class="event-photo glass" href="https://www.instagram.com/sacredsaucy/p/DAT1f3wSeNB/" target="_blank" rel="noopener noreferrer">
             <img src="images/events/soar-nectar.webp" alt="Sun Rose DJing in the forest at Soar Equinox Gathering" loading="lazy" />
             <span>Soar · Dance floor ↗</span>
           </a>
         </div>
       </div>
       <div class="event-index reveal" aria-label="Past event archive">
-        <a href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer"><span><time datetime="2026-09-11">September 11, 2026</time> ↗</span><h3>Moonbeat at Soulstice Farm</h3></a>
-        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · I ↗</span><h3>Sacred / Saucy I</h3></a>
-        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · II · Aug 2025 ↗</span><h3>Sacred Saucy Summer</h3></a>
-        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · III · Dec 2025 ↗</span><h3>Sacred Saucy Spice</h3></a>
-        <a href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · IV · Aug 2026 ↗</span><h3>Very Sacred Very Saucy</h3></a>
-        <a href="https://www.instagram.com/sacredsaucy/reel/DA_2yMhRkL7/" target="_blank" rel="noopener noreferrer"><span>Equinox 2024 ↗</span><h3>Soar Equinox Gathering</h3></a>
-        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2024-10-31">Halloween 2024</time> ↗</span><h3>Feral Feast</h3></a>
-        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2025-10-31">Halloween 2025</time> ↗</span><h3>Arcana Ascent</h3></a>
+        <a href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer"><span><time datetime="2026-09-11">September 11, 2026</time></span><h3>Moonbeat at Soulstice Farm</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · I</span><h3>Sacred / Saucy I</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · II · Aug 2025</span><h3>Sacred Saucy Summer</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · III · Dec 2025</span><h3>Sacred Saucy Spice</h3></a>
+        <a href="https://www.instagram.com/samusunrose/p/DcrEXBNmiGn/" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · IV · Aug 2026</span><h3>Very Sacred Very Saucy</h3></a>
+        <a href="https://www.instagram.com/sacredsaucy/reel/DA_2yMhRkL7/" target="_blank" rel="noopener noreferrer"><span>Equinox 2024</span><h3>Soar Equinox Gathering</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2024-10-31">Halloween 2024</time></span><h3>Feral Feast</h3></a>
+        <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2025-10-31">Halloween 2025</time></span><h3>Arcana Ascent</h3></a>
       </div>
     </section>
 
@@ -885,7 +920,7 @@
   </main>
 
   <button class="connect-trigger" type="button" popovertarget="connect-popout" aria-label="Open follow and subscribe options">
-    <span>Follow + subscribe</span><span aria-hidden="true">✦</span>
+    <span class="connect-label-desktop">Follow + subscribe</span><span class="connect-label-mobile">Follow</span><span aria-hidden="true">✦</span>
   </button>
 
   <aside class="connect-popout" id="connect-popout" popover="auto" aria-labelledby="connect-popout-title">
@@ -931,28 +966,7 @@
     const hero = document.querySelector('.hero');
     requestAnimationFrame(() => hero.classList.add('is-ready'));
 
-    if (!reducedMotion) {
-      let frameRequested = false;
-      window.addEventListener('pointermove', event => {
-        if (frameRequested) return;
-        frameRequested = true;
-        requestAnimationFrame(() => {
-          root.style.setProperty('--mx', `${event.clientX}px`);
-          root.style.setProperty('--my', `${event.clientY}px`);
-          frameRequested = false;
-        });
-      }, { passive: true });
-
-      document.querySelectorAll('.glass').forEach(panel => {
-        panel.addEventListener('pointermove', event => {
-          const bounds = panel.getBoundingClientRect();
-          panel.style.setProperty('--gx', `${event.clientX - bounds.left}px`);
-          panel.style.setProperty('--gy', `${event.clientY - bounds.top}px`);
-        }, { passive: true });
-      });
-    }
-
-    const reveals = document.querySelectorAll('.reveal');
+    const reveals = document.querySelectorAll('.reveal, .reveal-group');
     if (!reducedMotion && 'IntersectionObserver' in window) {
       reveals.forEach(element => {
         if (element.getBoundingClientRect().top > innerHeight * 0.9) element.classList.add('is-hidden');
