@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f4b27d" />
   <title>Sacred/Saucy Productions — Salt Spring Island</title>
-  <meta name="description" content="Sacred/Saucy events, event production, and equipment rentals on Salt Spring Island. Moonbeat tickets are live." />
+  <meta name="description" content="Moonbeat at MATEADA on October 25. Tickets, event production, and sound system rentals on Salt Spring Island." />
   <meta property="og:title" content="Sacred/Saucy Productions" />
-  <meta property="og:description" content="Moonbeat is live. September 11 on Salt Spring Island." />
+  <meta property="og:description" content="Moonbeat at MATEADA · October 25, 2026. Music, art, poetry, and dance on Salt Spring Island." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://saucy.samu.quest/" />
-  <meta property="og:image" content="https://saucy.samu.quest/images/moonbeat-2026.webp" />
+  <meta property="og:image" content="https://saucy.samu.quest/assets/sacred-saucy-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Sacred/Saucy Productions emblem" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://saucy.samu.quest/assets/sacred-saucy-card.png" />
   <link rel="canonical" href="https://saucy.samu.quest/" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="assets/sacred-saucy-mark.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -413,12 +418,12 @@
     .event-shell {
       margin-top: 3rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.32fr) minmax(330px, 0.68fr);
+      grid-template-columns: minmax(0, 0.82fr) minmax(330px, 1.18fr);
       border-radius: 34px;
-      min-height: 560px;
+      min-height: 660px;
     }
-    .event-poster { position: relative; z-index: 1; min-width: 0; overflow: hidden; background: var(--night); }
-    .event-poster img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter 1.1s var(--ease); }
+    .event-poster { position: relative; z-index: 1; min-width: 0; aspect-ratio: 2 / 3; overflow: hidden; background: var(--night); }
+    .event-poster img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter 1.1s var(--ease); }
     .event-shell:hover .event-poster img { transform: scale(1.025); filter: saturate(1.08) contrast(1.03); }
     .event-panel { position: relative; z-index: 2; padding: clamp(2rem, 4vw, 3.2rem); display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid var(--line); }
     .live-label { display: flex; align-items: center; gap: 0.65rem; color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
@@ -436,8 +441,10 @@
     .service { min-height: 270px; padding: clamp(1.7rem, 4vw, 2.8rem); border-radius: 28px; transition: transform var(--base) var(--ease), background var(--base) var(--ease); }
     .service:hover { transform: translateY(-6px); background: var(--surface-strong); }
     .service-tag { color: var(--hot); font-family: 'Syne', sans-serif; font-size: var(--label); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+    .service-rate, .rental-rate { display: block; margin-top: 1rem; color: var(--ink); font-size: 1.1rem; font-weight: 700; }
     .service h3 { margin-top: 2rem; font-family: 'Aesthetic', sans-serif; font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 0.88; }
     .service p { max-width: 52ch; margin-top: 1rem; color: var(--ink-soft); }
+    .service-quote { display: inline-flex; margin-top: 1.5rem; }
 
     .tea-house {
       margin-top: 1rem;
@@ -471,6 +478,7 @@
     .rental-row:last-child { border-bottom: 0; }
     .rental-row h3 { font-family: 'Aesthetic', sans-serif; font-size: 2rem; line-height: 1; }
     .rental-row p { color: var(--ink-soft); }
+    .rental-rate { margin-top: 0.5rem; }
 
     .media-shell { margin-top: 3rem; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr); gap: 1rem; }
     .media-film { position: relative; min-height: 720px; border-radius: 30px; background: #09050f; }
@@ -662,6 +670,7 @@
       .hero-link:last-child { border-bottom: 0; }
       .event-shell, .rental-shell, .join-card { border-radius: 24px; }
       .event-poster { min-height: 250px; }
+      .event-panel h3 { font-size: clamp(2.6rem, 11.5vw, 3.6rem); }
       .service-grid { grid-template-columns: 1fr; }
       .rental-row, .event-fact { grid-template-columns: 1fr; gap: 0.35rem; }
       .photo-stack { grid-template-columns: 1fr; }
@@ -730,7 +739,7 @@
       </h1>
       <p class="hero-copy">Musical ritual, community culture, and events for Salt Spring Island.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer">Moonbeat tickets <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer">October Moonbeat tickets <span aria-hidden="true">↗</span></a>
         <a class="button button-glass" href="#services">Produce an event <span aria-hidden="true">↓</span></a>
       </div>
     </div>
@@ -746,26 +755,26 @@
     <section class="section" id="moonbeat">
       <div class="section-heading reveal">
         <p class="kicker">Next event · Tickets live</p>
-        <h2 class="display">Moonbeat is on.</h2>
-        <p class="intro">A new moon dance for Salt Spring Island. Friday, September 11 at Soulstice Farm.</p>
+        <h2 class="display">Moonbeat at MATEADA.</h2>
+        <p class="intro">Full moon music, art, poetry, and dance. Sunday, October 25 in Ganges.</p>
       </div>
 
       <article class="event-shell glass reveal">
-        <a class="event-poster" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer" aria-label="Get tickets for Moonbeat on Humanitix">
-          <img src="images/moonbeat-2026.webp" alt="Moonbeat poster: September 11, 2026, with Sweeto and Syd Del" />
+        <a class="event-poster" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer" aria-label="Get tickets for Moonbeat at MATEADA on Humanitix">
+          <img src="images/mateada-moonbeat-2026.webp" alt="Moonbeat poster: Sunday, October 25, 2026, 7pm to 1am at MATEADA on Salt Spring Island" />
         </a>
         <div class="event-panel">
           <div>
             <p class="live-label"><span class="pulse" aria-hidden="true"></span> Tickets live</p>
             <h3>Moonbeat</h3>
-            <p class="event-panel-copy">Opening song circle with Sweeto, followed by DJ and live drums from Syd Del. Family-friendly and alcohol-free.</p>
+            <p class="event-panel-copy">Start with cacao and an acoustic song circle. Stay for Sun Rose's dance music journey, live painting, poetry, and performance.</p>
             <div class="event-facts">
-              <div class="event-fact"><span>Date</span><strong><time datetime="2026-09-11">Friday, September 11</time></strong></div>
-              <div class="event-fact"><span>Time</span><strong>6:00–10:30pm</strong></div>
-              <div class="event-fact"><span>Place</span><strong>Soulstice Farm · RSVP for address</strong></div>
+              <div class="event-fact"><span>Date</span><strong><time datetime="2026-10-25">Sunday, October 25</time></strong></div>
+              <div class="event-fact"><span>Time</span><strong>7pm–1am</strong></div>
+              <div class="event-fact"><span>Place</span><strong>MATEADA · 150 Fulford-Ganges Rd</strong></div>
             </div>
           </div>
-          <a class="button button-primary" href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer">Get Moonbeat tickets <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer">Get October tickets <span aria-hidden="true">↗</span></a>
         </div>
       </article>
     </section>
@@ -774,14 +783,15 @@
       <div class="section-heading reveal">
         <p class="kicker">Event production</p>
         <h2 class="display">Bring the idea. We run the event.</h2>
-        <p class="intro">Hire Sacred/Saucy for the whole production or for the parts your event is missing.</p>
+        <p class="intro">Book a producer for the day or bring us in from the first plan through load-out. Prices below are starting fees in CAD.</p>
       </div>
       <div class="service-grid">
-        <article class="service glass reveal"><p class="service-tag">Plan + run</p><h3>Full production</h3><p>Budgets, schedules, venues, artists, vendors, crew, setup, show management, and cleanup.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Sound + light</p><h3>Technical production</h3><p>PA, DJ and live-music systems, lighting, staging, power, soundcheck, and onsite technicians.</p></article>
-        <article class="service glass reveal"><p class="service-tag">People + place</p><h3>Site operations</h3><p>Entrances, bars, vendor zones, artist areas, signs, staffing, guest flow, and safety planning.</p></article>
-        <article class="service glass reveal"><p class="service-tag">Look + feel</p><h3>Creative direction</h3><p>Event identity, posters, decor, stage design, lighting direction, installations, and special moments.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Plan + run</p><h3>Full production</h3><span class="service-rate">From CA$2,500 / event</span><p>Budget, schedule, run of show, artist and vendor coordination, and one producer onsite. Venue, artists, gear, and additional crew quoted separately.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Sound + light</p><h3>Technical production</h3><span class="service-rate">From CA$750 / day</span><p>One production lead for up to eight onsite hours: technical plan, load-in, soundcheck, show, and load-out. Equipment and additional crew quoted separately.</p></article>
+        <article class="service glass reveal"><p class="service-tag">People + place</p><h3>Site operations</h3><span class="service-rate">Scoped quote</span><p>Entrances, bars, vendor zones, artist areas, signs, staffing, guest flow, and safety planning.</p></article>
+        <article class="service glass reveal"><p class="service-tag">Look + feel</p><h3>Creative direction</h3><span class="service-rate">Scoped quote</span><p>Event identity, posters, decor, stage design, lighting direction, installations, and special moments.</p></article>
       </div>
+      <a class="button button-primary service-quote" href="mailto:hi@samu.quest?subject=Event%20production%20quote&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AWhat%20you%20need%20us%20to%20handle%3A">Ask for a production quote <span aria-hidden="true">→</span></a>
       <article class="tea-house glass reveal">
         <div class="tea-visual"><img src="images/whitetara.png" alt="White Tara Tea House lotus emblem" /></div>
         <div class="tea-copy">
@@ -797,19 +807,19 @@
       <div class="section-heading reveal">
         <p class="kicker">Equipment rental</p>
         <h2 class="display">Rent the rig. Add an operator.</h2>
-        <p class="intro">Send the date, venue, guest count, and music format. We’ll match the equipment and crew to the job.</p>
+        <p class="intro">Two sound options, priced by event day. Tell us the room, crowd, and music format; we’ll confirm the exact gear in your quote.</p>
       </div>
       <div class="rental-shell glass reveal">
         <div class="rental-lead">
-          <h3>Gear that arrives ready.</h3>
-          <p>Rent equipment alone, or add delivery, setup, soundcheck, onsite operation, strike, and pickup.</p>
+          <h3>Sound for the room.</h3>
+          <p>Equipment rates cover one event day. Delivery, setup, strike, extra crew, and off-island travel are quoted separately.</p>
           <a class="button button-primary" href="mailto:hi@samu.quest?subject=Equipment%20rental%20quote&body=Event%20date%3A%0AVenue%3A%0AGuest%20count%3A%0AMusic%20format%3A%0AEquipment%20needed%3A">Request a quote <span aria-hidden="true">→</span></a>
         </div>
         <div class="rental-list">
-          <article class="rental-row"><h3>Sound</h3><p>PA systems, subs, monitors, mixers, microphones, DJ setups, stands, cabling, and system tuning.</p></article>
-          <article class="rental-row"><h3>Lighting</h3><p>Room wash, stage lighting, LED fixtures, atmospheric effects, stands, control, and installation.</p></article>
-          <article class="rental-row"><h3>Infrastructure</h3><p>Power and signal distribution, cable management, communications, and show essentials.</p></article>
-          <article class="rental-row"><h3>Crew</h3><p>Delivery, setup, soundcheck, operation, changeovers, troubleshooting, strike, and pickup.</p></article>
+          <article class="rental-row"><h3>Small PA</h3><div><p>Speaker pair, basic mixer or input, microphone, stands, and cabling for speech or a small acoustic set.</p><span class="rental-rate">From CA$250 / day</span></div></article>
+          <article class="rental-row"><h3>Dance system</h3><div><p>Full-range speakers with sub-bass and DJ input for a dance floor. Final configuration depends on venue and audience.</p><span class="rental-rate">From CA$500 / day</span></div></article>
+          <article class="rental-row"><h3>Sound operator</h3><div><p>Soundcheck, levels, changeovers, and troubleshooting during the event. Four-hour minimum.</p><span class="rental-rate">CA$75 / hour</span></div></article>
+          <article class="rental-row"><h3>Delivery + setup</h3><div><p>On-island transport, installation, and strike. Lighting and additional equipment priced in your quote.</p><span class="rental-rate">From CA$200 / event</span></div></article>
         </div>
       </div>
     </section>
@@ -847,6 +857,7 @@
         </div>
       </div>
       <div class="event-index reveal" aria-label="Past event archive">
+        <a href="https://events.humanitix.com/moonbeat" target="_blank" rel="noopener noreferrer"><span><time datetime="2026-09-11">September 11, 2026</time> ↗</span><h3>Moonbeat at Soulstice Farm</h3></a>
         <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · I ↗</span><h3>Sacred / Saucy I</h3></a>
         <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · II · Aug 2025 ↗</span><h3>Sacred Saucy Summer</h3></a>
         <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span>Sacred/Saucy · III · Dec 2025 ↗</span><h3>Sacred Saucy Spice</h3></a>
@@ -854,7 +865,6 @@
         <a href="https://www.instagram.com/sacredsaucy/reel/DA_2yMhRkL7/" target="_blank" rel="noopener noreferrer"><span>Equinox 2024 ↗</span><h3>Soar Equinox Gathering</h3></a>
         <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2024-10-31">Halloween 2024</time> ↗</span><h3>Feral Feast</h3></a>
         <a href="https://instagram.com/samusunrose" target="_blank" rel="noopener noreferrer"><span><time datetime="2025-10-31">Halloween 2025</time> ↗</span><h3>Arcana Ascent</h3></a>
-        <article><span>At our events</span><h3>White Tara Tea House</h3></article>
       </div>
     </section>
 
