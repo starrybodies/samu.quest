@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f4b27d" />
   <title>Sacred/Saucy Productions — Salt Spring Island</title>
-  <meta name="description" content="Moonbeat at MATEADA on October 25. Tickets, event production, and sound system rentals on Salt Spring Island." />
+  <meta name="description" content="Moonbeat on October 25 and Cosmic Conference on Halloween. Tickets, event production, and sound system rentals on Salt Spring Island." />
   <meta property="og:title" content="Sacred/Saucy Productions" />
-  <meta property="og:description" content="Moonbeat at MATEADA · October 25, 2026. Music, art, poetry, and dance on Salt Spring Island." />
+  <meta property="og:description" content="Moonbeat · October 25. Cosmic Conference · October 31. Music, ritual, community, culture and events on Salt Spring Island." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://saucy.samu.quest/" />
   <meta property="og:image" content="https://saucy.samu.quest/assets/sacred-saucy-card.png" />
@@ -78,7 +78,7 @@
       --shadow: 0 42px 120px rgba(0, 0, 0, 0.52);
     }
 
-    html { scroll-behavior: smooth; background: var(--bg); }
+    html { scroll-behavior: smooth; overflow-x: clip; background: var(--bg); }
     html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     body {
       min-height: 100vh;
@@ -125,7 +125,7 @@
     }
     .skip-link:focus { transform: translate(-50%, 0); }
 
-    .ambient { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .ambient { position: fixed; inset: 0; z-index: 0; overflow: hidden; contain: paint; pointer-events: none; }
     .blob {
       position: absolute;
       width: min(56vw, 780px);
@@ -439,6 +439,46 @@
       .event-poster:hover img { transform: scale(1.035); }
     }
 
+    .cosmic-shell {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: 3rem;
+      padding: clamp(1.4rem, 4vw, 3.4rem);
+      color: #f7f4ff;
+      border: 1px solid rgba(224, 231, 255, 0.32);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 78% 10%, rgba(74, 85, 210, 0.35), transparent 38%),
+        radial-gradient(circle at 9% 76%, rgba(234, 78, 143, 0.16), transparent 34%),
+        #080d22;
+      box-shadow: 0 36px 90px rgba(16, 10, 47, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .cosmic-shell::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.45;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.5px);
+      background-size: 83px 79px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+    .cosmic-topline { display: flex; justify-content: space-between; gap: 1rem; color: #cad3ff; font-size: var(--label); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+    .cosmic-art { display: block; width: min(850px, 100%); margin: clamp(1.5rem, 4vw, 3rem) auto; filter: drop-shadow(0 0 32px rgba(190, 201, 255, 0.3)); transition: transform var(--slow) var(--ease), filter var(--slow) var(--ease); }
+    .cosmic-bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(290px, 0.64fr); align-items: end; gap: clamp(1.5rem, 5vw, 5rem); padding-top: clamp(1.5rem, 3vw, 2.5rem); border-top: 1px solid rgba(224, 231, 255, 0.28); }
+    .cosmic-bottom h3 { font-family: 'Aesthetic', sans-serif; font-size: clamp(3.2rem, 5.6vw, 6.3rem); line-height: 0.87; }
+    .cosmic-bottom p { max-width: 58ch; margin-top: 1.1rem; color: rgba(247, 244, 255, 0.78); }
+    .cosmic-details { display: grid; gap: 0.9rem; }
+    .cosmic-facts { color: #dce3ff; font-size: 0.92rem; font-weight: 600; }
+    .cosmic-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .cosmic-actions .button { min-width: 205px; }
+    .cosmic-actions .button-glass { color: #f7f4ff; border-color: rgba(224, 231, 255, 0.35); background: rgba(234, 240, 255, 0.1); }
+    @media (hover: hover) and (pointer: fine) {
+      .cosmic-shell:hover .cosmic-art { transform: scale(1.015); filter: drop-shadow(0 0 45px rgba(190, 201, 255, 0.48)); }
+      .cosmic-actions .button-glass:hover { background: rgba(234, 240, 255, 0.18); }
+    }
+
     #services .section-heading { max-width: none; display: grid; grid-template-columns: 1.2fr 0.8fr; column-gap: 4rem; align-items: end; }
     #services .section-heading .kicker { grid-column: 1 / -1; }
     #services .section-heading .intro { margin-top: 0; padding-bottom: 0.35rem; }
@@ -674,7 +714,7 @@
       .identity-stage { min-height: min(72vh, 680px); }
       #services .section-heading { display: block; }
       #services .section-heading .intro { margin-top: 1.4rem; padding-bottom: 0; }
-      .event-shell, .rental-shell, .join-card, .tea-house, .media-shell { grid-template-columns: 1fr; }
+      .event-shell, .rental-shell, .join-card, .tea-house, .media-shell, .cosmic-bottom { grid-template-columns: 1fr; }
       .event-poster { min-height: 360px; }
       .event-panel { border-left: 0; border-top: 1px solid rgba(255, 240, 215, 0.18); }
       .rental-lead { border-right: 0; border-bottom: 1px solid rgba(255, 240, 215, 0.18); }
@@ -699,6 +739,11 @@
       .event-shell, .rental-shell, .join-card { border-radius: 24px; }
       .event-poster { min-height: 250px; }
       .event-panel h3 { font-size: clamp(2.6rem, 11.5vw, 3.6rem); }
+      #cosmic .display { font-size: clamp(2.1rem, 11vw, 4rem); }
+      .cosmic-shell { border-radius: 24px; }
+      .cosmic-topline { flex-direction: column; gap: 0.25rem; }
+      .cosmic-bottom h3 { font-size: clamp(3rem, 12vw, 4.6rem); }
+      .cosmic-actions .button { width: 100%; }
       .service-grid { grid-template-columns: 1fr; }
       .service-grid .service { grid-column: auto; min-height: 0; }
       .rental-row, .event-fact { grid-template-columns: 1fr; gap: 0.35rem; }
@@ -757,6 +802,7 @@
       </a>
       <div class="nav-links">
         <a href="#moonbeat">Moonbeat</a>
+        <a href="#cosmic">Cosmic</a>
         <a href="#services">Services</a>
         <a href="#recaps">Recaps</a>
       </div>
@@ -775,12 +821,12 @@
       <p class="hero-copy">Music, ritual, community, culture and events for Salt Spring Island.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer">October Moonbeat tickets <span aria-hidden="true">↗</span></a>
-        <a class="button button-glass" href="#services">Produce an event <span aria-hidden="true">↓</span></a>
+        <a class="button button-glass" href="https://events.humanitix.com/cosmicconference/tickets" target="_blank" rel="noopener noreferrer">Cosmic Conference tickets <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
     <div class="hero-links">
-      <a class="hero-link" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+      <a class="hero-link" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Follow for event updates <span aria-hidden="true">↗</span></a>
       <a class="hero-link" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
       <a class="hero-link" href="mailto:hi@samu.quest">hi@samu.quest <span aria-hidden="true">→</span></a>
     </div>
@@ -810,6 +856,32 @@
             </div>
           </div>
           <a class="button button-primary" href="https://events.humanitix.com/mateadamoonbeat" target="_blank" rel="noopener noreferrer">Get October tickets <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="cosmic">
+      <div class="section-heading">
+        <p class="kicker">Halloween · Tickets live</p>
+        <h2 class="display">Cosmic Conference.</h2>
+        <p class="intro">The Cosmic Conference brings talks, exhibits, live music, DJs and dancing to Entelechy on October 31.</p>
+      </div>
+
+      <article class="cosmic-shell reveal" aria-labelledby="cosmic-title">
+        <div class="cosmic-topline"><span>Sacred/Saucy presents</span><span>Saturday · October 31, 2026</span></div>
+        <img class="cosmic-art" src="images/cosmic-conference-logo.webp" alt="Cosmic Conference — Connect, Develop, Embody" loading="lazy" />
+        <div class="cosmic-bottom">
+          <div>
+            <h3 id="cosmic-title">Welcome to Earth.</h3>
+            <p>A Halloween party dressed as a professional-development seminar for interdimensional beings. Come in costume for talks, exhibits, live music, DJs and dancing. Humans welcome.</p>
+          </div>
+          <div class="cosmic-details">
+            <p class="cosmic-facts"><time datetime="2026-10-31T18:00">October 31, 6pm</time>–<time datetime="2026-11-01T06:00">November 1, 6am</time><br />Entelechy · Salt Spring Island</p>
+            <div class="cosmic-actions">
+              <a class="button button-primary" href="https://events.humanitix.com/cosmicconference/tickets" target="_blank" rel="noopener noreferrer">Get Cosmic tickets <span aria-hidden="true">↗</span></a>
+              <a class="button button-glass" href="https://cosmic.symbai.studio/" target="_blank" rel="noopener noreferrer">Read the invitation <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
         </div>
       </article>
     </section>
@@ -908,10 +980,10 @@
         <div>
           <p class="kicker">Stay connected</p>
           <h2>Get the next date first.</h2>
-          <p>Join the mailing list for event announcements and ticket drops. Follow Instagram for posters, recaps, and production updates.</p>
+          <p>Follow our Humanitix host page for upcoming events and tickets. Find posters, recaps, and production updates on Instagram.</p>
         </div>
         <div class="join-actions">
-          <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Follow on Humanitix <span aria-hidden="true">↗</span></a>
           <a class="button button-glass" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
           <a class="button button-glass" href="mailto:hi@samu.quest?subject=Event%20production%20inquiry">hi@samu.quest <span aria-hidden="true">→</span></a>
         </div>
@@ -919,21 +991,21 @@
     </section>
   </main>
 
-  <button class="connect-trigger" type="button" popovertarget="connect-popout" aria-label="Open follow and subscribe options">
-    <span class="connect-label-desktop">Follow + subscribe</span><span class="connect-label-mobile">Follow</span><span aria-hidden="true">✦</span>
+  <button class="connect-trigger" type="button" popovertarget="connect-popout" aria-label="Open event updates and Instagram options">
+    <span class="connect-label-desktop">Event updates</span><span class="connect-label-mobile">Follow</span><span aria-hidden="true">✦</span>
   </button>
 
   <aside class="connect-popout" id="connect-popout" popover="auto" aria-labelledby="connect-popout-title">
     <div class="connect-popout-inner">
-      <button class="connect-close" type="button" popovertarget="connect-popout" popovertargetaction="hide" aria-label="Close follow and subscribe options">×</button>
+      <button class="connect-close" type="button" popovertarget="connect-popout" popovertargetaction="hide" aria-label="Close event updates options">×</button>
       <div class="connect-brand">
         <img src="assets/sacred-saucy-mark.svg" alt="" aria-hidden="true" />
         <p class="connect-eyebrow">Next dates + photos</p>
       </div>
       <h2 id="connect-popout-title">Don’t miss the next one.</h2>
-      <p class="connect-copy">Get event announcements by email, or follow Sacred/Saucy on Instagram.</p>
+      <p class="connect-copy">Follow Sacred/Saucy on Humanitix for upcoming events, or find us on Instagram.</p>
       <div class="connect-actions">
-        <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Join mailing list <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href="https://events.humanitix.com/host/sacred-saucy-productions" target="_blank" rel="noopener noreferrer">Follow on Humanitix <span aria-hidden="true">↗</span></a>
         <a class="button button-glass" href="https://instagram.com/sacredsaucy" target="_blank" rel="noopener noreferrer">Follow @sacredsaucy <span aria-hidden="true">↗</span></a>
       </div>
     </div>
