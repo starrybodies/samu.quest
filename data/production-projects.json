@@ -1,0 +1,20 @@
+[
+  {
+    "id": "starrybodies/gaiaai-web",
+    "title": "GAIA AI Web",
+    "description": "",
+    "url": "https://gaiaai-web.vercel.app",
+    "source": "https://github.com/starrybodies/gaiaai-web",
+    "category": "professional",
+    "deployedAt": "2026-09-25T01:29:52Z"
+  },
+  {
+    "id": "starrybodies/gaia-ai",
+    "title": "GAIA AI",
+    "description": "",
+    "url": "https://gaia-ai-three.vercel.app",
+    "source": "https://github.com/starrybodies/gaia-ai",
+    "category": "professional",
+    "deployedAt": "2026-02-23T17:29:41Z"
+  }
+]

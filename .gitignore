@@ -2,3 +2,4 @@
 .vercel
 .gstack/
 .freebuff/
+__pycache__/

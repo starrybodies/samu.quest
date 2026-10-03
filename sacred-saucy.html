@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,14 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <script>
-    try {
-      const savedTheme = localStorage.getItem('sacred-saucy-theme-v2');
-      document.documentElement.dataset.theme = savedTheme || 'light';
-    } catch {
-      document.documentElement.dataset.theme = 'light';
-    }
-  </script>
+  <script src="assets/theme.js?v=1a2bb9f0b8"></script>
   <style>
     @font-face {
       font-family: 'Aesthetic';
@@ -1031,7 +1024,7 @@
     syncThemeControl();
     themeToggle.addEventListener('click', () => {
       root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('sacred-saucy-theme-v2', root.dataset.theme); } catch {}
+      try { localStorage.setItem('samu-quest-theme', root.dataset.theme); } catch {}
       syncThemeControl();
     });
 
