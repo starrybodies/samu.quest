@@ -20,7 +20,7 @@
     dialog.showModal();
   }
 
-  const sigil = document.querySelector('.sigil-trigger');
+  const sigil = document.querySelector('.mark-trigger');
   if (sigil) {
     sigil.disabled = false;
     sigil.addEventListener('click', () => openDialog(garden));

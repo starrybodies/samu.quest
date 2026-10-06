@@ -4,10 +4,10 @@
   const active = new Set();
   const seen = new WeakSet();
 
-  function reveal(element, duration = 400, delay = 0) {
+  function reveal(element, duration = 360, delay = 0) {
     if (preference.matches || !element) return;
     const animation = element.animate([
-      { opacity: 0, transform: 'translateY(18px)' },
+      { opacity: 0, transform: 'translateY(8px)' },
       { opacity: 1, transform: 'translateY(0)' }
     ], { duration, delay, easing, fill: 'backwards' });
     active.add(animation);
@@ -22,7 +22,7 @@
   } catch {}
   if (firstVisit) {
     ['.hero h1', '.hero-summary', '.hero .actions'].forEach((selector, index) => {
-      reveal(document.querySelector(selector), 600, index * 50);
+      reveal(document.querySelector(selector), 420, index * 45);
     });
   }
 
@@ -37,23 +37,73 @@
   }, { threshold: 0, rootMargin: '0px 0px -35px 0px' });
   sections.forEach(element => observer.observe(element));
 
+  // Keep native details semantics; interpolate between measured heights on interaction.
   document.querySelectorAll('.case-study').forEach(element => {
-    element.addEventListener('toggle', () => {
-      if (element.open) reveal(element.querySelector('.case-body'), 200);
+    const summary = element.querySelector('summary');
+    const body = element.querySelector('.case-body');
+    let animation;
+    let expanded = element.open;
+    function settle() {
+      animation?.cancel();
+      animation = undefined;
+      element.open = expanded;
+      element.style.height = '';
+      element.style.overflow = '';
+      body.inert = false;
+      delete element.dataset.expanded;
+    }
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      const start = element.getBoundingClientRect().height;
+      if (!animation) expanded = element.open;
+      expanded = !expanded;
+      if (preference.matches) { settle(); return; }
+      animation?.cancel();
+      element.style.height = '';
+      element.open = true;
+      const full = element.getBoundingClientRect().height;
+      const end = expanded ? full : full - body.getBoundingClientRect().height;
+      element.style.height = `${start}px`;
+      element.style.overflow = 'clip';
+      element.dataset.expanded = String(expanded);
+      body.inert = !expanded;
+      animation = element.animate([
+        { height: `${start}px` }, { height: `${end}px` }
+      ], { duration: expanded ? 240 : 180, easing });
+      const current = animation;
+      active.add(current);
+      current.finished.then(() => {
+        active.delete(current);
+        if (animation === current) settle();
+      }, () => active.delete(current));
     });
+    preference.addEventListener('change', () => { if (preference.matches) settle(); });
   });
 
   const hero = document.querySelector('.hero');
   const art = document.querySelector('.hero-art img');
   if (hero && art) {
+    let pointerFrame;
+    let x = 0;
+    let y = 0;
+    function followPointer() {
+      art.style.transform = `translate(${x}px, ${y}px)`;
+      pointerFrame = undefined;
+    }
     hero.addEventListener('pointermove', event => {
       if (preference.matches || event.pointerType !== 'mouse') return;
       const bounds = hero.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-      art.style.transform = `translate(${x * 16}px, ${y * 12}px)`;
+      x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 10;
+      y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 8;
+      if (!pointerFrame) pointerFrame = requestAnimationFrame(followPointer);
     });
-    hero.addEventListener('pointerleave', () => { art.style.transform = ''; });
+    function resetPointer() {
+      cancelAnimationFrame(pointerFrame);
+      pointerFrame = undefined;
+      art.style.transform = '';
+    }
+    hero.addEventListener('pointerleave', resetPointer);
+    preference.addEventListener('change', () => { if (preference.matches) resetPointer(); });
   }
 
   const progress = document.createElement('div');
