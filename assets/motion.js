@@ -14,15 +14,16 @@
     animation.finished.then(() => active.delete(animation), () => active.delete(animation));
   }
 
-  // First visit: name at 0ms, summary at 50ms, actions at 100ms.
+  // The first visit introduces the name, then context, actions, and connected work.
   let firstVisit = true;
   try {
     firstVisit = !sessionStorage.getItem('samu-quest-intro');
     sessionStorage.setItem('samu-quest-intro', 'seen');
   } catch {}
   if (firstVisit) {
-    ['.hero h1', '.hero-summary', '.hero .actions', '.work-map'].forEach((selector, index) => {
-      reveal(document.querySelector(selector), 420, index * 45);
+    document.querySelector('.name-letters')?.classList.add('name-arriving');
+    ['.hero-summary', '.hero .actions', '.work-map'].forEach((selector, index) => {
+      reveal(document.querySelector(selector), 400, 100 + index * 60);
     });
   }
 
