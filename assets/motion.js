@@ -21,7 +21,7 @@
     sessionStorage.setItem('samu-quest-intro', 'seen');
   } catch {}
   if (firstVisit) {
-    ['.hero h1', '.hero-summary', '.hero .actions'].forEach((selector, index) => {
+    ['.hero h1', '.hero-summary', '.hero .actions', '.work-map'].forEach((selector, index) => {
       reveal(document.querySelector(selector), 420, index * 45);
     });
   }
@@ -80,32 +80,6 @@
     preference.addEventListener('change', () => { if (preference.matches) settle(); });
   });
 
-  const hero = document.querySelector('.hero');
-  const art = document.querySelector('.hero-art img');
-  if (hero && art) {
-    let pointerFrame;
-    let x = 0;
-    let y = 0;
-    function followPointer() {
-      art.style.transform = `translate(${x}px, ${y}px)`;
-      pointerFrame = undefined;
-    }
-    hero.addEventListener('pointermove', event => {
-      if (preference.matches || event.pointerType !== 'mouse') return;
-      const bounds = hero.getBoundingClientRect();
-      x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 10;
-      y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 8;
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(followPointer);
-    });
-    function resetPointer() {
-      cancelAnimationFrame(pointerFrame);
-      pointerFrame = undefined;
-      art.style.transform = '';
-    }
-    hero.addEventListener('pointerleave', resetPointer);
-    preference.addEventListener('change', () => { if (preference.matches) resetPointer(); });
-  }
-
   const progress = document.createElement('div');
   progress.className = 'page-progress';
   progress.setAttribute('aria-hidden', 'true');
@@ -127,6 +101,5 @@
   preference.addEventListener('change', () => {
     if (!preference.matches) return;
     active.forEach(animation => animation.cancel());
-    if (art) art.style.transform = '';
   });
 })();
