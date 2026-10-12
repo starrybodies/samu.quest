@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Unfurl</title>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="#0C0C0B"/>
+  <path d="M20 19V35C20 43.2843 25.3726 48 32 48C38.6274 48 44 43.2843 44 35V19" stroke="#D39A2E" stroke-width="5" stroke-linecap="round"/>
+  <path d="M32 12V50" stroke="#F0EDE6" stroke-width="3" stroke-linecap="round"/>
+</svg>

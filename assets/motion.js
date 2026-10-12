@@ -14,7 +14,7 @@
     animation.finished.then(() => active.delete(animation), () => active.delete(animation));
   }
 
-  // The first visit introduces the name, then context, actions, and connected work.
+  // The first visit introduces the name, then context, actions, and artwork.
   let firstVisit = true;
   try {
     firstVisit = !sessionStorage.getItem('samu-quest-intro');
@@ -22,12 +22,12 @@
   } catch {}
   if (firstVisit) {
     document.querySelector('.name-letters')?.classList.add('name-arriving');
-    ['.hero-summary', '.hero .actions', '.work-map'].forEach((selector, index) => {
+    ['.hero-summary', '.hero .actions', '.hero-art'].forEach((selector, index) => {
       reveal(document.querySelector(selector), 400, 100 + index * 60);
     });
   }
 
-  const sections = document.querySelectorAll('.work-head, .engineering-head, .engineering-record, .project-showcase, .ecosystem-links, .talk-feature, .personal-heading, .personal-grid, .about-grid, .contact-heading, .detail-section > .wrap');
+  const sections = document.querySelectorAll('.work-head, .engineering-head, .engineering-record, .projects-heading, .professional-project, .ecosystem-links, .talk-feature, .personal-heading, .personal-project, .publishing-note, .about-grid, .contact-heading, .detail-section > .wrap');
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;

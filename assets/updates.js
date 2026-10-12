@@ -1,5 +1,10 @@
 (() => {
   const curated = new Set(['starrybodies/overshoot', 'starrybodies/ghg-calculator']);
+  function projectURL(value) {
+    const url = new URL(value);
+    return url.origin + url.pathname.replace(/\/+$/, '');
+  }
+  const curatedURLs = new Set(Array.from(document.querySelectorAll('.professional-project, .personal-project, .publishing-note a'), anchor => projectURL(anchor.href)));
   const root = 'https://raw.githubusercontent.com/starrybodies/samu.quest/main/data/';
 
   function link(label, url) {
@@ -16,7 +21,7 @@
   function render(records, announcements = false) {
     const groups = { professional: [], personal: [] };
     for (const record of records) {
-      if (!groups[record.category] || (!announcements && curated.has(record.id))) continue;
+      if (!groups[record.category] || (!announcements && (curated.has(record.id) || curatedURLs.has(projectURL(record.url))))) continue;
       const article = document.createElement('article');
       article.className = 'shipped-project';
       const heading = document.createElement(record.category === 'personal' ? 'h4' : 'h5');
@@ -39,6 +44,9 @@
       article.append(links);
       groups[record.category].push(article);
     }
+    // Preserve a visible section's position when a remote feed expands above it.
+    const anchor = document.getElementById(location.hash.slice(1));
+    const anchorTop = anchor?.getBoundingClientRect().top;
     for (const [category, articles] of Object.entries(groups)) {
       if (!articles.length) continue;
       const prefix = announcements ? 'announcements' : 'shipped';
@@ -46,6 +54,10 @@
       if (!container) continue;
       container.replaceChildren(...articles.slice(0, 6));
       container.parentElement.hidden = false;
+    }
+    if (anchor && anchorTop >= 0 && anchorTop < innerHeight) {
+      const shift = anchor.getBoundingClientRect().top - anchorTop;
+      if (Math.abs(shift) > 1) window.scrollBy({ top: shift, behavior: 'instant' });
     }
   }
 
