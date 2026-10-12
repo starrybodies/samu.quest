@@ -1,0 +1,56 @@
+/* Approved Unfurl artwork keeps its mineral palette in both portfolio themes. */
+.unfurl-project {
+ --unfurl-night: #101610;
+ --unfurl-botanical: #bbcca2;
+ --accent-ink: var(--mint-ink);
+ grid-column: 1 / -1;
+ display: grid;
+ grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+ align-items: center;
+ gap: 48px;
+ scroll-margin-top: 105px;
+}
+.unfurl-project .unfurl-art {
+ position: relative;
+ isolation: isolate;
+ margin-bottom: 0;
+ aspect-ratio: 1.4;
+ background: var(--unfurl-night) url('../images/unfurl-mineral-stage.webp') center / cover;
+ border: 1px solid #526047;
+ overflow: clip;
+}
+.unfurl-art img {
+ position: absolute;
+ top: 44%;
+ left: 50%;
+ translate: -50% -50%;
+ width: 78%;
+ height: auto;
+ pointer-events: none;
+}
+.unfurl-art figcaption {
+ position: absolute;
+ bottom: 24px;
+ left: 0;
+ width: 100%;
+ color: #faf9f5;
+ font-size: clamp(28px, 3.2vw, 42px);
+ line-height: 1;
+ letter-spacing: -.045em;
+ text-align: center;
+}
+.unfurl-project h4 { font-size: clamp(36px, 4vw, 52px); letter-spacing: -.035em; }
+.unfurl-project .professional-project-kind { font-size: 14px; }
+.unfurl-project p { font-size: 16px; }
+.unfurl-project .project-capabilities { margin-top: 24px; }
+.unfurl-project:focus-visible .unfurl-art { border-color: var(--unfurl-botanical); }
+.unfurl-project:active .professional-project-domain { text-decoration-thickness: 2px; }
+@media (hover: hover) and (pointer: fine) {
+ .unfurl-project:hover .unfurl-art { border-color: var(--unfurl-botanical); }
+}
+@media (max-width: 760px) {
+ .unfurl-project { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+ .unfurl-project .unfurl-art { aspect-ratio: 1.2; }
+ .unfurl-art figcaption { bottom: 24px; font-size: 32px; }
+ .unfurl-project h4 { font-size: 36px; }
+}

@@ -18,4 +18,4 @@ Source of truth: assets/site.css.
 | Layout | 1320px maximum; 48px desktop and 20px mobile gutters |
 | Interaction | 120/200/280/400ms; cubic-bezier(0.22, 1, 0.36, 1) |
 
-Light mode uses deep terracotta links, deep blue engineering links, forest-green systems links, and deeper pink. Project marks stay on dark surfaces. New elements use these tokens without new dependencies.
+Light mode uses deep terracotta links, deep blue engineering links, forest-green systems links, and deeper pink. Project marks stay on dark surfaces. The hero uses separate night and daylight artworks within the same masked composition. Unfurl's isolated artwork preserves its source palette: Night #101610, Botanical #BBCCA2, Leaf #526047, and Warm White #FAF9F5. Its text follows the portfolio's systems-link tokens. New elements use these tokens without new dependencies.

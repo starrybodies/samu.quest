@@ -14,8 +14,12 @@
 .art-motion-toggle .play-icon { display: none; }
 .art-motion-toggle[aria-pressed="true"] .pause-icon { display: none; }
 .art-motion-toggle[aria-pressed="true"] .play-icon { display: block; }
-html[data-theme="light"] .art-viewport { width: 100%; margin-left: 0; mask-image: none; aspect-ratio: 1.05; }
-html[data-theme="light"] .hero-art figcaption { margin-top: 12px; padding-left: 0; }
+.art-daylight { display: none; }
+html[data-theme="light"] .art-night { display: none; }
+html[data-theme="light"] .art-daylight { display: block; }
+html[data-theme="light"] .art-viewport { background: var(--bg); }
+html[data-theme="light"] .filament-front { stroke: var(--accent-ink); opacity: .14; }
+html[data-theme="light"] .filament-back { opacity: .1; }
 @keyframes textile-unfurl { from { transform: scale(1.02) rotate(-2deg) translate(-1%, 1%); } to { transform: scale(1.09) rotate(2deg) translate(1%, -1%); } }
 @keyframes thread-front { from { transform: translate(-2%, 2%) rotate(-3deg); } to { transform: translate(3%, -3%) rotate(4deg); } }
 @keyframes thread-back { from { transform: translate(3%, -2%) rotate(3deg); } to { transform: translate(-3%, 3%) rotate(-4deg); } }
@@ -30,7 +34,6 @@ html[data-theme="light"] .hero-art figcaption { margin-top: 12px; padding-left: 
  .art-viewport { height: auto; aspect-ratio: 1.35; width: 112%; margin-left: -6%; }
  .hero-art figcaption { margin-top: -12px; font-size: 11px; gap: 8px; }
  .art-motion-toggle { font-size: 11px; padding-inline: 8px; }
- html[data-theme="light"] .art-viewport { aspect-ratio: 1.35; }
 }
 @media (prefers-reduced-motion: reduce) {
  .hero-art .art-viewport, .art-image, .filament-front, .filament-back { animation: none; }

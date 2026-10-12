@@ -11,9 +11,11 @@ Keep the approved Tektur and Bricolage Grotesque pairing, dark default with ligh
 - October 8: the chrome/mycelium hero was rejected; avoid generic AI sculpture or stock imagery.
 - October 8: company logos and project sections need fuller context and consistent optical weight.
 - Previous passes: recruiter-friendly copy; no mystical metaphors, inflated aptitude claims, or invented results.
+- October 12: the woven hero is approved in dark mode. Preserve its original artwork, crop, and motion; light mode needs an equally intentional daylight edition with edges blended into the page.
+- October 12: Unfurl's sculptural botanical wings and mineral material system deserve a full feature. Use approved artwork from the supplied brand reference; preserve its proportions and avoid unverified investment-performance claims.
 
 ## Current pass
-October 11: strengthen the hero and integrate recent projects. Signature: an original woven-light artwork, with a flowing crop and subtle layered movement. Preserve the approved split composition, fonts, spectrum, exact subheading, family photograph, CV, and contact paths. Project brands sit beside factual descriptions. Keep Alchememes in a quiet independent-publishing row. Motion expresses depth and connection; it can be paused and remains static under reduced-motion preferences.
+October 12: give the existing woven hero a daylight edition and feature Unfurl's approved botanical winged U on its mineral stage. Preserve the approved dark hero, split composition, fonts, spectrum, exact subheading, family photograph, CV, and contact paths. Symbai/Overshoot and NOOG/gAIas remain paired; Unfurl spans the project grid with artwork beside factual copy, stacked on mobile. Keep Alchememes in its quiet independent-publishing row. Motion remains pausable and static under reduced-motion preferences.
 
 ## Voice
 Direct, knowledgeable, approachable. Short factual sentences. Each project explains purpose and useful capabilities. Do not infer unconfirmed personal roles.
