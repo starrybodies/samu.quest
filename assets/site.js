@@ -1,3 +1,12 @@
+// Aggregate public-page measurement for the private Symbai Center.
+const measurementSource = "https://noog.symbai.studio/portfolio-metrics.js";
+if (!document.querySelector(`script[src="${measurementSource}"]`)) {
+  const measurement = document.createElement("script");
+  measurement.src = measurementSource;
+  measurement.defer = true;
+  document.head.append(measurement);
+}
+
 const toggle = document.querySelector('.menu-toggle');
 const links = document.querySelector('#site-navigation');
 
