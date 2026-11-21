@@ -104,7 +104,7 @@ export function addLandscape(T,scene) {
   for(let ring=1;ring<=rings;ring++) for(let i=0;i<segments;i++) {
     const frac=ring/rings, a=point(i,frac), b=point(i+1,frac);
     const c=point(i,(ring-1)/rings), d=point(i+1,(ring-1)/rings);
-    const meadow = frac>.975 ? '#9e9f8d' : frac>.922 ? '#98a38e' : '#9baf94';
+    const meadow = frac>.975 ? '#8d9384' : frac>.922 ? '#828a78' : '#778d74';
     triangle(top,colors,a,c,b,meadow,.13);
     if(ring>1) triangle(top,colors,b,c,d,meadow,.13);
     if(ring===rings) {
@@ -132,7 +132,7 @@ export function addLandscape(T,scene) {
   }
   surface(surf,surfColors);
   const paths=[];
-  function makePath(points,width) {
+  function makePath(points,width,threadColor='#f7b79e') {
     const curve=new T.CatmullRomCurve3(points.map(([x,z])=>new T.Vector3(x,0,z)));
     const ribbon=[], rgb=[], left=[],right=[];
     for(let i=0;i<=48;i++) {
@@ -140,15 +140,20 @@ export function addLandscape(T,scene) {
       paths.push([p.x,p.z]);
       for(const [edge,sign] of [[left,1],[right,-1]]) {
         const x=p.x+d.z*w*sign,z=p.z-d.x*w*sign;
-        edge.push([x,groundHeight(x,z)+.081,z]);
+        edge.push([x,groundHeight(x,z)+.19,z]);
       }
       if(i) {triangle(ribbon,rgb,left[i-1],left[i],right[i-1],'#dbd8c2',.055);triangle(ribbon,rgb,left[i],right[i],right[i-1],'#d4cebe',.04);}
     }
     surface(ribbon,rgb);
+    const threadPoints=left.map(([x,y,z])=>new T.Vector3(x,y+.025,z));
+    const filament=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(threadPoints),48,.031,4,false),
+      new T.MeshBasicMaterial({color:threadColor}));
+    scene.add(filament);
   }
+  const pathTints={observatory:'#f7b79e',workshop:'#9cc9ee',glasshouse:'#9ad3b2',stage:'#f3a2d9',library:'#f7b79e','field-station':'#9cc9ee'};
   for(const p of locations){
     const e=doorway(p),len=Math.hypot(e.x,e.z);
-    makePath([[e.x/len*2.5,e.z/len*2.5],[e.x*.54-.5,e.z*.55+.8],[e.x,e.z]],.60);
+    makePath([[e.x/len*2.5,e.z/len*2.5],[e.x*.54-.5,e.z*.55+.8],[e.x,e.z]],.48,pathTints[p.id]);
   }
   makePath([[0,2.65],[-1.7,7.3],[.2,12.4],[1.6,15.0]],.65);
   const material=(color)=>new T.MeshLambertMaterial({color});
@@ -178,14 +183,27 @@ export function addLandscape(T,scene) {
     temp.position.set(x,y,z);temp.rotation.set(rx,ry,rz);temp.scale.set(sx,sy,sz);temp.updateMatrix();
     category.get(group).items.push([temp.matrix.clone(),new T.Color(color)]);
   }
-  const trunk=()=>new T.CylinderGeometry(.13,.18,1,5), cone=()=>new T.ConeGeometry(1,1,7), stone=()=>new T.DodecahedronGeometry(1,0),bud=()=>new T.IcosahedronGeometry(1,0);
+  function evergreenCanopy(){
+    const position=[],index=[],n=12;
+    for(const [level,y,radius] of [[0,-.50,1],[1,-.28,.80],[2,.08,.40],[3,.50,.018]]) {
+      for(let i=0;i<n;i++){
+        const a=i*TAU/n+level*.08, alternating=i%2 ? .68 : 1;
+        const r=radius*alternating*(1+.06*Math.sin(3*i));
+        position.push(r*Math.cos(a),y+((!level&&!(i%2))?-.12:0),r*Math.sin(a));
+        if(level){const prev=(level-1)*n+i,next=(level-1)*n+(i+1)%n;index.push(prev,prev+n,next,next,prev+n,next+n);}
+      }
+    }
+    const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(position,3));
+    g.setIndex(index);g.computeVertexNormals();return g;
+  }
+  const trunk=()=>new T.CylinderGeometry(.13,.18,1,5), cone=evergreenCanopy, stone=()=>new T.DodecahedronGeometry(1,0),bud=()=>new T.IcosahedronGeometry(1,0);
   for(let i=0;i<1150;i++) {
     const x=(rng()-.5)*48,z=(rng()-.5)*33;
     const e=edgeRatio(x,z);
     if(e>.953 || e<.20 || locations.some(p=>Math.hypot(p.x-x,p.z-z)<4.2) || Math.hypot(x-beaconLocation.x,z-beaconLocation.z)<2.2 || paths.some(p=>(x-p[0])**2+(z-p[1])**2<2.05)) continue;
     const y=groundHeight(x,z),v=rng();
-    if(v < (e>.67 ? .23 : .07)) {
-      const h=(1.4+rng()*2.2)*(z>6?.75:1), r=h*.25,turn=rng()*TAU;
+    if(v < (e>.62 ? .34 : .09)) {
+      const h=(1.4+rng()*2.8)*(z>6?.75:1), r=h*.25,turn=rng()*TAU;
       instance('trunks',trunk,'#826768',x,y+h*.30,z,1,h*.6,1);
       instance('trees',cone,'#374f51',x,y+h*.46,z,r,h*.52,r,0,turn);
       instance('trees',cone,'#4d6964',x,y+h*.64,z,r*.80,h*.57,r*.8,0,turn+.5);
@@ -216,7 +234,7 @@ export function addLandscape(T,scene) {
     instance('distant',stone,'#57779b',x,-2.8,z,5+rng()*10,1.8+rng()*3.5,4+rng()*9,0,rng()*TAU);
   }
   for(const [name,{geo,items}] of category){
-    const mat=name==='globes'? new T.MeshBasicMaterial():new T.MeshLambertMaterial({flatShading:true});
+    const mat=name==='globes'? new T.MeshBasicMaterial():new T.MeshLambertMaterial({flatShading:true,side:name==='trees'?T.DoubleSide:T.FrontSide});
     const mesh=new T.InstancedMesh(geo,mat,items.length);
     items.forEach(([matrix,color],i)=>{mesh.setMatrixAt(i,matrix);mesh.setColorAt(i,color);});
     mesh.castShadow=['trunks','trees','stone','dock','posts'].includes(name);mesh.receiveShadow=true;scene.add(mesh);
@@ -233,8 +251,8 @@ export function addLandscape(T,scene) {
         vec3 color=mix(vec3(.085,.134,.18),vec3(.25,.42,.48),shore*.88);
         float ripple=sin(p.y*2.5+sin(p.x*.52+time*.28)*1.6+time*.56);
         float flicker=sin(p.x*1.05+p.y*.30+sin(p.y*.8-time*.25));
-        float line=smoothstep(.92,1.,ripple)*smoothstep(.12,.99,flicker);
-        color+=vec3(.24,.28,.31)*line*(.30+.7*shore);
+        float line=smoothstep(.925,1.,ripple)*smoothstep(.22,.99,flicker);
+        color+=vec3(.18,.21,.22)*line*(.21+.60*shore);
         float lavender=exp(-abs(p.x-18.+p.y*.3)*.095);
         color+=vec3(.17,.095,.12)*lavender*(.3+line*.8);
         float farwater=smoothstep(65.,190.,length(p));

@@ -11,14 +11,14 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   const canvas=renderer.domElement;
   canvas.tabIndex=0;canvas.setAttribute('aria-label','Island walk. Use WASD or arrow keys to move, and Enter to visit a nearby landmark.');
   host.append(canvas);
-  const scene=new T.Scene(); scene.background=new T.Color('#8998ac');scene.fog=new T.FogExp2('#8e9aac',.0075);
+  const scene=new T.Scene(); scene.background=new T.Color('#8998ac');scene.fog=new T.Fog('#8190a3',85,165);
   const camera=new T.OrthographicCamera(-32,32,19,-19,.15,235);
-  const sky=new T.HemisphereLight(0xdfefff,0x8291ac,1.65);scene.add(sky);
-  const sun=new T.DirectionalLight(0xffeedc,2.25);sun.position.set(-25,47,26);
+  const sky=new T.HemisphereLight(0xd7e6f3,0x655a5c,1.15);scene.add(sky);
+  const sun=new T.DirectionalLight(0xffdbbd,2.05);sun.position.set(-25,47,26);
   sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
   Object.assign(sun.shadow.camera,{left:-34,right:34,top:30,bottom:-30,near:1,far:98});
   sun.shadow.normalBias=.045;sun.shadow.bias=-.00028;scene.add(sun,sun.target);
-  const rim=new T.DirectionalLight(0xacbfd8,1.5);rim.position.set(18,11,-22);scene.add(rim);
+  const rim=new T.DirectionalLight(0xadc5e4,1.05);rim.position.set(18,11,-22);scene.add(rim);
   const {land,waterMaterial}=addLandscape(T,scene);
   const buildings=[],lamps=new Map(),anchors=new Map(),entries=new Map();
   const landingRing=new T.TorusGeometry(.89,.041,6,40);
