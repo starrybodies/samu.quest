@@ -4,7 +4,7 @@
     const url = new URL(value);
     return url.origin + url.pathname.replace(/\/+$/, '');
   }
-  const curatedURLs = new Set(Array.from(document.querySelectorAll('.professional-project, .personal-project, .publishing-note a'), anchor => projectURL(anchor.href)));
+  const curatedURLs = new Set(Array.from(document.querySelectorAll('.professional-project, .personal-project, .publishing-note a, .exhibit > a'), anchor => projectURL(anchor.href)));
   const root = 'https://raw.githubusercontent.com/starrybodies/samu.quest/main/data/';
 
   function link(label, url) {

@@ -1,0 +1,392 @@
+{
+  "places": [
+    {
+      "id": "observatory",
+      "name": "Observatory",
+      "category": "Sky & myth",
+      "intro": "The copper dome opens over Starry Bodies. Pull up the sky for today, follow a planet across a map, or step inside a story.",
+      "color": "#f3a2d9"
+    },
+    {
+      "id": "field-station",
+      "name": "Field Station",
+      "category": "Earth & energy",
+      "intro": "Start at the shoreline. These maps follow water, minerals, electricity, and the people making decisions about them.",
+      "color": "#9ad3b2"
+    },
+    {
+      "id": "workshop",
+      "name": "Workshop",
+      "category": "Software",
+      "intro": "Tools I wanted badly enough to build. Some live in a browser, some work alongside a writer, and a few are still on my workbench.",
+      "color": "#9cc9ee"
+    },
+    {
+      "id": "stage",
+      "name": "Amphitheatre",
+      "category": "Music & gatherings",
+      "intro": "The island after dark. Headphones are handy for the midnight set, recorded down the road at Entelechy.",
+      "color": "#f3a2d9"
+    },
+    {
+      "id": "glasshouse",
+      "name": "Glasshouse",
+      "category": "Plants & family",
+      "intro": "Tea for a room full of dancers, an altar you can visit from home, and a small forest made of family stories.",
+      "color": "#9ad3b2"
+    },
+    {
+      "id": "library",
+      "name": "Reading Room",
+      "category": "Writing & publishing",
+      "intro": "A shelf for essays, field guides, little illustrated books, and one long-running experiment in alchemy by meme.",
+      "color": "#f7b79e"
+    }
+  ],
+  "projects": [
+    {
+      "id": "starry-bodies",
+      "place": "observatory",
+      "title": "Starry Bodies",
+      "kind": "Astrology software",
+      "summary": "Lay today’s sky over your natal chart, follow your planetary lines across a map, or put the whole family in one synastry wheel.",
+      "url": "https://starrybodies.com/",
+      "action": "Cast a chart",
+      "image": "/images/projects/starry.webp",
+      "alt": "Apollo and Selene beneath the constellations of Starry Bodies.",
+      "related": [
+        [
+          "Book a reading",
+          "https://starrybodies.com/read"
+        ]
+      ]
+    },
+    {
+      "id": "symbiocene",
+      "place": "field-station",
+      "title": "Symbiocene · GAIA AI",
+      "kind": "Ecological intelligence",
+      "summary": "Shawn Anderson, Darren Zal, and I build tools for reading landscapes. Four interactive studies follow water from Sacramento farms to the shorelines of the Salish Sea.",
+      "url": "https://symbiocene.si/",
+      "action": "Explore the studies",
+      "image": "/images/projects/symbiocene.webp",
+      "alt": "An aerial view from the Gowanus stormwater simulation.",
+      "related": [
+        [
+          "Salish Sea shoreline study",
+          "https://symbiocene.si/sims/salish-sea/"
+        ],
+        [
+          "Gowanus stormwater study",
+          "https://symbiocene.si/sims/gowanus/"
+        ]
+      ]
+    },
+    {
+      "id": "cosmic-conference",
+      "place": "stage",
+      "title": "Cosmic Conference",
+      "kind": "Gathering & digital archive",
+      "summary": "On Halloween we turned Entelechy on Salt Spring into a conference for interdimensional visitors. The program, delegate badges, photo album, and midnight set live on.",
+      "url": "https://cosmic.symbai.studio/",
+      "action": "Visit the afterglow",
+      "image": "/images/projects/cosmic.webp",
+      "alt": "The glass pavilion and glowing landscape of Cosmic Conference."
+    },
+    {
+      "id": "reword",
+      "place": "workshop",
+      "title": "Reword",
+      "kind": "Open-source writing tool",
+      "summary": "Give Reword a few pieces you love writing. It learns what makes them yours and brings that voice to a letter, a post, or the next draft.",
+      "url": "https://reword.symbai.studio/",
+      "action": "Try Reword",
+      "image": "/images/projects/reword.webp",
+      "alt": "Reword’s light interface, monospaced wordmark, and electric-lime cursor.",
+      "related": [
+        [
+          "Get the source",
+          "https://github.com/starrybodies/reword"
+        ]
+      ]
+    },
+    {
+      "id": "overshoot",
+      "place": "field-station",
+      "title": "Overshoot",
+      "kind": "Material-flow atlas",
+      "summary": "Where did the copper in a wire come from? Follow a material through mines, ports, factories, and waste streams. The atlas keeps the sources and gaps in view.",
+      "url": "https://overshoot.gaiaai.xyz/",
+      "action": "Trace a material",
+      "image": "/images/projects/overshoot.webp",
+      "alt": "A luminous globe from the Overshoot atlas."
+    },
+    {
+      "id": "white-tara",
+      "place": "glasshouse",
+      "title": "White Tara Tea & Botanicals",
+      "kind": "Botanicals & interactive altar",
+      "summary": "Mackenzie and I make tea and botanical extracts on Salt Spring. Our online tea house takes the form of an altar with incense, a prayer wheel, and objects you can pick up.",
+      "url": "https://tara.samu.quest/",
+      "action": "Visit the altar",
+      "image": "/images/projects/white-tara.webp",
+      "alt": "The illuminated White Tara altar with bottles and offerings.",
+      "related": [
+        [
+          "The travelling tea house",
+          "/white-tara-tea.html"
+        ]
+      ]
+    },
+    {
+      "id": "sun-rose",
+      "place": "stage",
+      "title": "Sun Rose",
+      "kind": "Recorded sets & original music",
+      "summary": "I make bass music as Sun Rose. My midnight set from Cosmic Conference moves from ceremony into the sweatier end of a Salt Spring dance floor.",
+      "url": "https://soundcloud.com/djsunrose/cosmic",
+      "action": "Play the midnight set",
+      "image": "/images/sunrose.jpg",
+      "alt": "Sun Rose’s figure surrounded by cosmic fire.",
+      "related": [
+        [
+          "More Sun Rose",
+          "/sun-rose.html"
+        ]
+      ]
+    },
+    {
+      "id": "refinery-atlas",
+      "place": "field-station",
+      "title": "Refinery Atlas",
+      "kind": "Energy infrastructure",
+      "summary": "At Refinery I worked on where to put the machines. The Atlas helps you look for industrial buildings with existing power for data centres or container batteries.",
+      "url": "https://atlas.symbai.studio/",
+      "action": "Explore the sites",
+      "related": [
+        [
+          "The GPUs Showed Up. The Power Didn’t.",
+          "https://refinery.io/blog/the-gpus-showed-up-the-power-didnt"
+        ]
+      ],
+      "image": "/images/projects/refinery.webp",
+      "alt": "Modular infrastructure at sunset in the Refinery site film."
+    },
+    {
+      "id": "symbai",
+      "place": "workshop",
+      "title": "Symbai Studios",
+      "kind": "Independent studio",
+      "summary": "My studio builds software with people who know their field. The work ranges from a first working prototype to a private client portal and a workshop for the team using it.",
+      "url": "https://symbai.studio/",
+      "action": "Visit the studio",
+      "image": "/images/projects/symbai-idea-garden.webp",
+      "alt": "An illuminated sprig growing from a glass seed in the Symbai idea garden."
+    },
+    {
+      "id": "provider-graph",
+      "place": "field-station",
+      "title": "Symbiocene Provider Graph",
+      "kind": "Interactive research demo",
+      "summary": "Choose a place and a restoration job. A branching 3D graph shows how a request could find an environmental service provider.",
+      "url": "https://graph.symbiocene.si/",
+      "action": "Run the demo"
+    },
+    {
+      "id": "gaia-layer",
+      "place": "field-station",
+      "title": "Gaia Ecological Intelligence Layer",
+      "kind": "Wildfire research map",
+      "summary": "An Okanagan research map brings vegetation, water, and drought indicators together. Each layer carries its sources and a record of what has been validated.",
+      "url": "https://gaia-layer.vercel.app/",
+      "action": "Open the map"
+    },
+    {
+      "id": "noog",
+      "place": "workshop",
+      "title": "NOOG",
+      "kind": "Chrome extension",
+      "summary": "Replace the parts of a feed you didn’t come for with cats, nature, or a little quiet. The image checks run on your device, and you can reveal what they cover.",
+      "url": "https://noog.symbai.studio/",
+      "action": "See the extension",
+      "image": "/images/projects/noog.webp",
+      "alt": "NOOG’s lime-green site with a cat in the preview."
+    },
+    {
+      "id": "iti",
+      "place": "stage",
+      "title": "Institute for Terrestrial Integration",
+      "kind": "Participatory fiction",
+      "summary": "Our fictional field office for interdimensional residents at Cosmic Conference. Delegates revisited the 1983 Earth User Manual and submitted revisions for life on this planet.",
+      "url": "https://iti.symbai.studio/",
+      "action": "Visit the field office",
+      "image": "/images/projects/iti.webp",
+      "alt": "The Institute for Terrestrial Integration’s field-office interface."
+    },
+    {
+      "id": "starrytelling",
+      "place": "observatory",
+      "title": "The Eternal Wedding",
+      "kind": "Starrytelling audio",
+      "summary": "The storytelling side of Starry Bodies. The Eternal Wedding is a myth you can listen to, told through the characters of the sky.",
+      "url": "https://starrybodies.com/starrytelling.html#eternal-wedding",
+      "action": "Listen to the story"
+    },
+    {
+      "id": "maria",
+      "place": "observatory",
+      "title": "María",
+      "kind": "Interactive chapel",
+      "summary": "A browser chapel for Mary, Tonantzin, and Guadalupe. Walk between the three devotional spaces, light a votive, or leave a rose.",
+      "url": "https://roses.samu.quest/",
+      "action": "Enter the chapel",
+      "image": "/images/projects/maria.webp",
+      "alt": "Roses and candlelight in the María chapel."
+    },
+    {
+      "id": "things-water",
+      "place": "library",
+      "title": "Things That Took More Water",
+      "kind": "Illustrated web book",
+      "summary": "I made a picture book about the water cost of using AI. Everyday comparisons lead back to the calculations, sources, and assumptions.",
+      "url": "https://www.thingsthattookmorewaterthanbuildingthis.site/",
+      "action": "Read the picture book",
+      "image": "/images/projects/water.webp",
+      "alt": "Artwork from the illustrated book on water use."
+    },
+    {
+      "id": "body-made-of-stars",
+      "place": "library",
+      "title": "Body Made of Stars",
+      "kind": "Essays & lunar letters",
+      "summary": "My letters on astrology, mythology, and what the sky stirs up down here. The Phoenix is one of the recent dark-moon essays.",
+      "url": "https://bodymadeofstars.substack.com/",
+      "action": "Read the letters"
+    },
+    {
+      "id": "family-forest",
+      "place": "glasshouse",
+      "title": "Family Forest",
+      "kind": "In development",
+      "summary": "An explorable family tree I’m building. Children can wander through an ancestor’s story, while an elder can take a simpler route to the same person."
+    },
+    {
+      "id": "hunnywomb",
+      "place": "glasshouse",
+      "title": "Hunnywomb",
+      "kind": "Collaborative web design",
+      "summary": "I worked with Mackenzie on a digital home for her birth work, Mama Psychedelia, and the women and families who gather around it."
+    },
+    {
+      "id": "sacred-saucy",
+      "place": "stage",
+      "title": "Sacred/Saucy",
+      "kind": "Music & event production",
+      "summary": "Our home for Salt Spring gatherings, from the first invitation through the sound system and the last dance. The archive includes flyers, photos, and films.",
+      "url": "https://saucy.samu.quest/",
+      "action": "Explore the gatherings",
+      "image": "/assets/sacred-saucy-card.png",
+      "alt": "The Sacred/Saucy Productions emblem."
+    },
+    {
+      "id": "moonbeat",
+      "place": "stage",
+      "title": "Moonbeat",
+      "kind": "Salt Spring dance night",
+      "summary": "A night of bass music at Mateada. The poster and event archive sit alongside our other island gatherings.",
+      "url": "https://saucy.samu.quest/#moonbeat",
+      "action": "See the event",
+      "image": "/images/mateada-moonbeat-2026.webp",
+      "alt": "The Moonbeat event poster."
+    },
+    {
+      "id": "mateada",
+      "place": "stage",
+      "title": "Mateada Host Circle",
+      "kind": "Community venue pilot",
+      "summary": "A place for island hosts to bring workshops, performances, and gatherings to Mateada and find out what it takes to put an event on.",
+      "url": "https://mateada.symbai.studio/",
+      "action": "Explore the host circle"
+    },
+    {
+      "id": "unfurl",
+      "place": "workshop",
+      "title": "Unfurl",
+      "kind": "Invitation-only software",
+      "summary": "Paris and I built a system for researching trading strategies, setting exposure limits, and reviewing execution. The public introduction explains how those pieces fit together.",
+      "url": "https://unfurl.trade/",
+      "action": "Visit Unfurl",
+      "image": "/images/unfurl-winged-u.webp",
+      "alt": "The sculpted botanical wings of Unfurl."
+    },
+    {
+      "id": "treasury",
+      "place": "workshop",
+      "title": "Treasury",
+      "kind": "Private software",
+      "summary": "A household finance app I’ve been building to put accounts, transfers, and a shared view of spending in one place."
+    },
+    {
+      "id": "riot-act",
+      "place": "workshop",
+      "title": "Riot Act",
+      "kind": "Private studio prototype",
+      "summary": "Benjamin and I have been building a production desk for creative work. It keeps source material, treatments, and the queue of pieces to make in one place."
+    },
+    {
+      "id": "gaias",
+      "place": "workshop",
+      "title": "gAIas",
+      "kind": "Community tools",
+      "summary": "A home for people building with AI. The directory and nightly digest make it easier to find a collaborator or catch up with the community.",
+      "url": "https://gaias.symbai.studio/",
+      "action": "Visit gAIas",
+      "image": "/images/gaias-portal.webp",
+      "alt": "The orbital gAIas mark."
+    },
+    {
+      "id": "ghg-calculator",
+      "place": "field-station",
+      "title": "GHG Calculator",
+      "kind": "Open-source emissions tools",
+      "summary": "A calculation engine with agent tools for emissions factors, units, activity records, and reports. Each result keeps a reference to the factor behind it.",
+      "url": "https://github.com/starrybodies/ghg-calculator",
+      "action": "Explore the source"
+    },
+    {
+      "id": "alchememes",
+      "place": "library",
+      "title": "Alchememes",
+      "kind": "Independent publishing",
+      "summary": "An ongoing collection of memes about inner life, internet culture, and the strange overlap between them. There’s a daily edition and an archive to fall into.",
+      "url": "https://alchememes.vercel.app/",
+      "action": "Read Alchememes"
+    },
+    {
+      "id": "gaian-times",
+      "place": "library",
+      "title": "The Gaian Times",
+      "kind": "Ecological reporting",
+      "summary": "A publication following people and projects working on planetary regeneration. Its editorial process pairs AI curation with human editing.",
+      "url": "/gaian-times.html",
+      "action": "Explore the publication"
+    },
+    {
+      "id": "encyclopedia",
+      "place": "library",
+      "title": "Encyclopedia of Regeneration",
+      "kind": "Living reference",
+      "summary": "A reference work for looking up regenerative ideas and practices across disciplines, built as part of GAIA AI.",
+      "url": "/encyclopedia-of-regeneration.html",
+      "action": "Open the reference"
+    }
+  ],
+  "featured": [
+    "starry-bodies",
+    "symbiocene",
+    "cosmic-conference",
+    "reword",
+    "overshoot",
+    "white-tara"
+  ]
+}

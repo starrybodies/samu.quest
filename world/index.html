@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+ <title>The island — Samu Quest</title><meta name="description" content="Explore a walkable island of six landmarks, each home to projects by Samuel Barnes."><meta name="theme-color" content="#090909">
+ <link rel="canonical" href="https://samu.quest/world/"><meta property="og:type" content="website"><meta property="og:url" content="https://samu.quest/world/"><meta property="og:title" content="The island — Samu Quest"><meta property="og:description" content="Explore a walkable island of six landmarks, each home to projects by Samuel Barnes."><meta property="og:image" content="https://samu.quest/images/quest-island.webp"><meta name="twitter:card" content="summary_large_image">
+ <link rel="icon" href="/favicon.svg" type="image/svg+xml"><script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/site.css?v=fb22c8c6bb"><link rel="stylesheet" href="/assets/quest.css">
+ <script defer src="/_vercel/insights/script.js"></script><script defer src="https://noog.symbai.studio/portfolio-metrics.js"></script><link rel="stylesheet" href="/assets/world.css"><script type="module" src="/world/island-ui.js"></script></head>
+<body class="island-page">
+<a class="skip" href="#island-directory">Skip to the list of places</a>
+<main class="island-screen" id="world">
+ <div class="world-backdrop" aria-hidden="true"></div>
+ <div class="scene-host" id="scene-host"></div>
+ <div class="map-labels" id="map-labels"></div>
+ <header class="world-header"><div><a class="world-brand" href="/"><img src="/assets/samu-mark.svg" width="24" height="24" alt="">samu.quest</a><h1>The island</h1></div><nav aria-label="Island navigation"><a href="/projects/" class="world-link">Project index</a><a href="#island-directory" id="places-toggle" class="world-control" aria-expanded="false">Places</a></nav></header>
+ <div class="world-progress" aria-live="polite"><span class="beacon-glyph" aria-hidden="true">✧</span><span id="progress-text">Visit the six landmarks</span></div>
+ <div class="world-hud" id="world-hud" hidden><button id="nearby" type="button" hidden></button><div class="hud-row"><span id="movement-tip">Click a path to walk · Drag to orbit · WASD to move</span><div class="zoom-buttons"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="frame-island" aria-label="Show the whole island"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="m15.7 8.3-2.3 5.1-5.1 2.3 2.3-5.1z"/></svg></button></div></div></div>
+ <div class="world-status" id="world-status" role="status"></div>
+ <div class="world-intro" id="world-intro"><div><p class="quest-kicker">Samu Quest</p><h2>Welcome to<br><em>the island.</em></h2><p>Walk between six places where my projects live. Visit them all to light the lighthouse.</p><button id="begin-walk" type="button" class="quest-button primary" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M7.3 6.5h9.4c2.5 0 3.5 2.1 4.3 7.3.7 4.5-1.4 5.6-4.1 2.6l-1.6-1.5H8.7l-1.6 1.5C4.4 19.4 2.3 18.3 3 13.8c.8-5.2 1.8-7.3 4.3-7.3Z"/><path d="M7.8 9.1v4M5.8 11.1h4"/><circle cx="16" cy="11.8" r=".65"/><circle cx="18.1" cy="9.9" r=".65"/></svg> Start exploring</button><a class="intro-index" href="#island-directory">Browse the places</a></div></div>
+</main>
+<section id="island-directory" class="island-directory" aria-labelledby="places-title" tabindex="-1"><div class="sheet-heading"><div><p class="quest-kicker">Island guide</p><h2 id="places-title">Places</h2></div><button class="close-sheet" type="button" aria-label="Close places" hidden>×</button></div>
+ <nav class="place-menu" aria-label="Choose a place">
+ <!-- directory:start -->
+<a href="#place-observatory" data-go="observatory"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21h22M7 18h18v3H7zM8 17a8 8 0 0 1 16 0M12 16c0-4 2-7 4-8m2 0 5-5 2 2-5 5M10 24v3m12-3v3"/></svg><span>Observatory<small>Sky &amp; myth</small></span></a>
+<a href="#place-field-station" data-go="field-station"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21c4-1 5-6 9-6 3 0 4 3 7 3s4-4 9-4M3 25c4 0 6-4 10-4 5 0 6 3 13-1M6 14l4-7 4 7M17 11l4-8 5 9"/></svg><span>Field Station<small>Earth &amp; energy</small></span></a>
+<a href="#place-workshop" data-go="workshop"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 25h24V12l-7 4V9l-8 6V7l-6 4-3 5Zm4-5h3m4 0h3m4 0h3"/></svg><span>Workshop<small>Software</small></span></a>
+<a href="#place-stage" data-go="stage"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 23h24M7 21V10a9 9 0 0 1 18 0v11M10 19v-8a6 6 0 0 1 12 0v8m-8-1v-4m4 4v-6M6 27h20"/></svg><span>Amphitheatre<small>Music &amp; gatherings</small></span></a>
+<a href="#place-glasshouse" data-go="glasshouse"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 25h24M6 24V13l10-8 10 8v11M6 14h20M11 24V12l5-7 5 7v12m-6 0v-5h3v5"/></svg><span>Glasshouse<small>Plants &amp; family</small></span></a>
+<a href="#place-library" data-go="library"><svg class="place-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7c6-1 9 0 13 3 4-3 7-4 13-3v17c-6-1-9 0-13 3-4-3-7-4-13-3Zm13 3v17M6 11l6 2m8 0 6-2"/></svg><span>Reading Room<small>Writing &amp; publishing</small></span></a>
+<!-- directory:end -->
+ </nav>
+ <!-- places:start -->
+<section class="place-section" id="place-observatory" data-place="observatory" data-color="#f3a2d9" aria-labelledby="heading-observatory">
+ <p class="quest-kicker">Sky &amp; myth</p><h2 id="heading-observatory">Observatory</h2>
+ <p class="place-intro">The copper dome opens over Starry Bodies. Pull up the sky for today, follow a planet across a map, or step inside a story.</p><div class="island-projects"><article><p class="island-kind">Astrology software</p><h3>Starry Bodies</h3><p>Lay today’s sky over your natal chart, follow your planetary lines across a map, or put the whole family in one synastry wheel.</p>
+ <div class="record-links"><a href="https://starrybodies.com/">Cast a chart</a> <a href="https://starrybodies.com/read">Book a reading</a></div></article>
+<article><p class="island-kind">Starrytelling audio</p><h3>The Eternal Wedding</h3><p>The storytelling side of Starry Bodies. The Eternal Wedding is a myth you can listen to, told through the characters of the sky.</p>
+ <div class="record-links"><a href="https://starrybodies.com/starrytelling.html#eternal-wedding">Listen to the story</a></div></article>
+<article><p class="island-kind">Interactive chapel</p><h3>María</h3><p>A browser chapel for Mary, Tonantzin, and Guadalupe. Walk between the three devotional spaces, light a votive, or leave a rose.</p>
+ <div class="record-links"><a href="https://roses.samu.quest/">Enter the chapel</a></div></article></div>
+</section>
+<section class="place-section" id="place-field-station" data-place="field-station" data-color="#9ad3b2" aria-labelledby="heading-field-station">
+ <p class="quest-kicker">Earth &amp; energy</p><h2 id="heading-field-station">Field Station</h2>
+ <p class="place-intro">Start at the shoreline. These maps follow water, minerals, electricity, and the people making decisions about them.</p><div class="island-projects"><article><p class="island-kind">Ecological intelligence</p><h3>Symbiocene · GAIA AI</h3><p>Shawn Anderson, Darren Zal, and I build tools for reading landscapes. Four interactive studies follow water from Sacramento farms to the shorelines of the Salish Sea.</p>
+ <div class="record-links"><a href="https://symbiocene.si/">Explore the studies</a> <a href="https://symbiocene.si/sims/salish-sea/">Salish Sea shoreline study</a> <a href="https://symbiocene.si/sims/gowanus/">Gowanus stormwater study</a></div></article>
+<article><p class="island-kind">Material-flow atlas</p><h3>Overshoot</h3><p>Where did the copper in a wire come from? Follow a material through mines, ports, factories, and waste streams. The atlas keeps the sources and gaps in view.</p>
+ <div class="record-links"><a href="https://overshoot.gaiaai.xyz/">Trace a material</a></div></article>
+<article><p class="island-kind">Energy infrastructure</p><h3>Refinery Atlas</h3><p>At Refinery I worked on where to put the machines. The Atlas helps you look for industrial buildings with existing power for data centres or container batteries.</p>
+ <div class="record-links"><a href="https://atlas.symbai.studio/">Explore the sites</a> <a href="https://refinery.io/blog/the-gpus-showed-up-the-power-didnt">The GPUs Showed Up. The Power Didn’t.</a></div></article>
+<article><p class="island-kind">Interactive research demo</p><h3>Symbiocene Provider Graph</h3><p>Choose a place and a restoration job. A branching 3D graph shows how a request could find an environmental service provider.</p>
+ <div class="record-links"><a href="https://graph.symbiocene.si/">Run the demo</a></div></article>
+<article><p class="island-kind">Wildfire research map</p><h3>Gaia Ecological Intelligence Layer</h3><p>An Okanagan research map brings vegetation, water, and drought indicators together. Each layer carries its sources and a record of what has been validated.</p>
+ <div class="record-links"><a href="https://gaia-layer.vercel.app/">Open the map</a></div></article>
+<article><p class="island-kind">Open-source emissions tools</p><h3>GHG Calculator</h3><p>A calculation engine with agent tools for emissions factors, units, activity records, and reports. Each result keeps a reference to the factor behind it.</p>
+ <div class="record-links"><a href="https://github.com/starrybodies/ghg-calculator">Explore the source</a></div></article></div>
+</section>
+<section class="place-section" id="place-workshop" data-place="workshop" data-color="#9cc9ee" aria-labelledby="heading-workshop">
+ <p class="quest-kicker">Software</p><h2 id="heading-workshop">Workshop</h2>
+ <p class="place-intro">Tools I wanted badly enough to build. Some live in a browser, some work alongside a writer, and a few are still on my workbench.</p><div class="island-projects"><article><p class="island-kind">Open-source writing tool</p><h3>Reword</h3><p>Give Reword a few pieces you love writing. It learns what makes them yours and brings that voice to a letter, a post, or the next draft.</p>
+ <div class="record-links"><a href="https://reword.symbai.studio/">Try Reword</a> <a href="https://github.com/starrybodies/reword">Get the source</a></div></article>
+<article><p class="island-kind">Independent studio</p><h3>Symbai Studios</h3><p>My studio builds software with people who know their field. The work ranges from a first working prototype to a private client portal and a workshop for the team using it.</p>
+ <div class="record-links"><a href="https://symbai.studio/">Visit the studio</a></div></article>
+<article><p class="island-kind">Chrome extension</p><h3>NOOG</h3><p>Replace the parts of a feed you didn’t come for with cats, nature, or a little quiet. The image checks run on your device, and you can reveal what they cover.</p>
+ <div class="record-links"><a href="https://noog.symbai.studio/">See the extension</a></div></article>
+<article><p class="island-kind">Invitation-only software</p><h3>Unfurl</h3><p>Paris and I built a system for researching trading strategies, setting exposure limits, and reviewing execution. The public introduction explains how those pieces fit together.</p>
+ <div class="record-links"><a href="https://unfurl.trade/">Visit Unfurl</a></div></article>
+<article><p class="island-kind">Private software</p><h3>Treasury</h3><p>A household finance app I’ve been building to put accounts, transfers, and a shared view of spending in one place.</p>
+ </article>
+<article><p class="island-kind">Private studio prototype</p><h3>Riot Act</h3><p>Benjamin and I have been building a production desk for creative work. It keeps source material, treatments, and the queue of pieces to make in one place.</p>
+ </article>
+<article><p class="island-kind">Community tools</p><h3>gAIas</h3><p>A home for people building with AI. The directory and nightly digest make it easier to find a collaborator or catch up with the community.</p>
+ <div class="record-links"><a href="https://gaias.symbai.studio/">Visit gAIas</a></div></article></div>
+</section>
+<section class="place-section" id="place-stage" data-place="stage" data-color="#f3a2d9" aria-labelledby="heading-stage">
+ <p class="quest-kicker">Music &amp; gatherings</p><h2 id="heading-stage">Amphitheatre</h2>
+ <p class="place-intro">The island after dark. Headphones are handy for the midnight set, recorded down the road at Entelechy.</p><div class="island-projects"><article><p class="island-kind">Gathering &amp; digital archive</p><h3>Cosmic Conference</h3><p>On Halloween we turned Entelechy on Salt Spring into a conference for interdimensional visitors. The program, delegate badges, photo album, and midnight set live on.</p>
+ <div class="record-links"><a href="https://cosmic.symbai.studio/">Visit the afterglow</a></div></article>
+<article><p class="island-kind">Recorded sets &amp; original music</p><h3>Sun Rose</h3><p>I make bass music as Sun Rose. My midnight set from Cosmic Conference moves from ceremony into the sweatier end of a Salt Spring dance floor.</p>
+ <div class="record-links"><a href="https://soundcloud.com/djsunrose/cosmic">Play the midnight set</a> <a href="/sun-rose.html">More Sun Rose</a></div></article>
+<article><p class="island-kind">Participatory fiction</p><h3>Institute for Terrestrial Integration</h3><p>Our fictional field office for interdimensional residents at Cosmic Conference. Delegates revisited the 1983 Earth User Manual and submitted revisions for life on this planet.</p>
+ <div class="record-links"><a href="https://iti.symbai.studio/">Visit the field office</a></div></article>
+<article><p class="island-kind">Music &amp; event production</p><h3>Sacred/Saucy</h3><p>Our home for Salt Spring gatherings, from the first invitation through the sound system and the last dance. The archive includes flyers, photos, and films.</p>
+ <div class="record-links"><a href="https://saucy.samu.quest/">Explore the gatherings</a></div></article>
+<article><p class="island-kind">Salt Spring dance night</p><h3>Moonbeat</h3><p>A night of bass music at Mateada. The poster and event archive sit alongside our other island gatherings.</p>
+ <div class="record-links"><a href="https://saucy.samu.quest/#moonbeat">See the event</a></div></article>
+<article><p class="island-kind">Community venue pilot</p><h3>Mateada Host Circle</h3><p>A place for island hosts to bring workshops, performances, and gatherings to Mateada and find out what it takes to put an event on.</p>
+ <div class="record-links"><a href="https://mateada.symbai.studio/">Explore the host circle</a></div></article></div>
+</section>
+<section class="place-section" id="place-glasshouse" data-place="glasshouse" data-color="#9ad3b2" aria-labelledby="heading-glasshouse">
+ <p class="quest-kicker">Plants &amp; family</p><h2 id="heading-glasshouse">Glasshouse</h2>
+ <p class="place-intro">Tea for a room full of dancers, an altar you can visit from home, and a small forest made of family stories.</p><div class="island-projects"><article><p class="island-kind">Botanicals &amp; interactive altar</p><h3>White Tara Tea &amp; Botanicals</h3><p>Mackenzie and I make tea and botanical extracts on Salt Spring. Our online tea house takes the form of an altar with incense, a prayer wheel, and objects you can pick up.</p>
+ <div class="record-links"><a href="https://tara.samu.quest/">Visit the altar</a> <a href="/white-tara-tea.html">The travelling tea house</a></div></article>
+<article><p class="island-kind">In development</p><h3>Family Forest</h3><p>An explorable family tree I’m building. Children can wander through an ancestor’s story, while an elder can take a simpler route to the same person.</p>
+ </article>
+<article><p class="island-kind">Collaborative web design</p><h3>Hunnywomb</h3><p>I worked with Mackenzie on a digital home for her birth work, Mama Psychedelia, and the women and families who gather around it.</p>
+ </article></div>
+</section>
+<section class="place-section" id="place-library" data-place="library" data-color="#f7b79e" aria-labelledby="heading-library">
+ <p class="quest-kicker">Writing &amp; publishing</p><h2 id="heading-library">Reading Room</h2>
+ <p class="place-intro">A shelf for essays, field guides, little illustrated books, and one long-running experiment in alchemy by meme.</p><div class="island-projects"><article><p class="island-kind">Illustrated web book</p><h3>Things That Took More Water</h3><p>I made a picture book about the water cost of using AI. Everyday comparisons lead back to the calculations, sources, and assumptions.</p>
+ <div class="record-links"><a href="https://www.thingsthattookmorewaterthanbuildingthis.site/">Read the picture book</a></div></article>
+<article><p class="island-kind">Essays &amp; lunar letters</p><h3>Body Made of Stars</h3><p>My letters on astrology, mythology, and what the sky stirs up down here. The Phoenix is one of the recent dark-moon essays.</p>
+ <div class="record-links"><a href="https://bodymadeofstars.substack.com/">Read the letters</a></div></article>
+<article><p class="island-kind">Independent publishing</p><h3>Alchememes</h3><p>An ongoing collection of memes about inner life, internet culture, and the strange overlap between them. There’s a daily edition and an archive to fall into.</p>
+ <div class="record-links"><a href="https://alchememes.vercel.app/">Read Alchememes</a></div></article>
+<article><p class="island-kind">Ecological reporting</p><h3>The Gaian Times</h3><p>A publication following people and projects working on planetary regeneration. Its editorial process pairs AI curation with human editing.</p>
+ <div class="record-links"><a href="/gaian-times.html">Explore the publication</a></div></article>
+<article><p class="island-kind">Living reference</p><h3>Encyclopedia of Regeneration</h3><p>A reference work for looking up regenerative ideas and practices across disciplines, built as part of GAIA AI.</p>
+ <div class="record-links"><a href="/encyclopedia-of-regeneration.html">Open the reference</a></div></article></div>
+</section>
+<!-- places:end -->
+</section>
+<dialog id="place-dialog" class="place-dialog" aria-labelledby="dialog-title"><div class="place-dialog-heading"><div><p class="quest-kicker" id="dialog-category"></p><h2 id="dialog-title"></h2></div><button class="close-place" type="button" aria-label="Close this place">×</button></div><p class="place-intro" id="dialog-intro"></p><div id="dialog-projects" class="island-projects"></div><button class="quest-button return-world" type="button">Back to the island</button></dialog>
+</body></html>
