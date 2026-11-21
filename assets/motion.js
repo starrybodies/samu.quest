@@ -2,7 +2,6 @@
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const easing = 'cubic-bezier(0.22, 1, 0.36, 1)';
   const active = new Set();
-  const seen = new WeakSet();
 
   function reveal(element, duration = 360, delay = 0) {
     if (preference.matches || !element) return;
@@ -14,26 +13,27 @@
     animation.finished.then(() => active.delete(animation), () => active.delete(animation));
   }
 
-  // The first visit introduces the name, then context, actions, and artwork.
-  let firstVisit = true;
-  try {
-    firstVisit = !sessionStorage.getItem('samu-quest-intro');
-    sessionStorage.setItem('samu-quest-intro', 'seen');
-  } catch {}
-  if (firstVisit) {
-    document.querySelector('.name-letters')?.classList.add('name-arriving');
-    ['.hero-summary', '.hero .actions', '.hero-art'].forEach((selector, index) => {
-      reveal(document.querySelector(selector), 400, 100 + index * 60);
+  // Choreograph each fresh homepage load, including a visit from a project deep link.
+  const cover = document.querySelector('.quest-cover');
+  if (cover && !preference.matches) {
+    cover.querySelector('.name-letters').classList.add('name-arriving');
+    ['.hero-role', '.hero-intro', '.quest-actions'].forEach((selector, index) => {
+      reveal(cover.querySelector(selector), 420, 100 + index * 65);
     });
   }
 
-  const sections = document.querySelectorAll('.work-head, .engineering-head, .engineering-record, .projects-heading, .professional-project, .ecosystem-links, .talk-feature, .personal-heading, .personal-project, .publishing-note, .about-grid, .contact-heading, .detail-section > .wrap');
+  const sections = document.querySelectorAll('.collection-heading, .exhibit, .project-record, .work-head, .engineering-head, .engineering-record, .projects-heading, .professional-project, .ecosystem-links, .talk-feature, .personal-heading, .personal-project, .publishing-note, .about-grid, .contact-heading, .detail-section > .wrap');
   const observer = new IntersectionObserver(entries => {
+    let cardDelay = 0;
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
-      if (!seen.has(entry.target) && entry.boundingClientRect.top > 0) reveal(entry.target);
-      seen.add(entry.target);
-      observer.unobserve(entry.target);
+      const element = entry.target;
+      if (entry.boundingClientRect.top > 0 && !element.contains(document.activeElement)) {
+        const card = element.matches('.exhibit, .project-record');
+        reveal(element, card ? 440 : 360, card ? cardDelay : 0);
+        if (card) cardDelay = Math.min(100, cardDelay + 50);
+      }
+      observer.unobserve(element);
     }
   }, { threshold: 0, rootMargin: '0px 0px -35px 0px' });
   sections.forEach(element => observer.observe(element));
@@ -100,7 +100,10 @@
   updateProgress();
 
   preference.addEventListener('change', () => {
-    if (!preference.matches) return;
-    active.forEach(animation => animation.cancel());
+    if (preference.matches) {
+      cover?.querySelector('.name-letters')?.classList.remove('name-arriving');
+      active.forEach(animation => animation.cancel());
+    }
+    updateProgress();
   });
 })();
