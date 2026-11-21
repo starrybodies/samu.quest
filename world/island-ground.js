@@ -39,9 +39,29 @@ export function walkable(x,z) {
     return Math.abs(c*dx-s*dz) < 3.28 && Math.abs(s*dx+c*dz) < 2.65;
   });
 }
+function crossBuilding(from,to,place) {
+  // Clip the segment against the same rotated footprint used for single steps.
+  const c=Math.cos(place.turn),s=Math.sin(place.turn);
+  const dx=from.x-place.x,dz=from.z-place.z,vx=to.x-from.x,vz=to.z-from.z;
+  const axes=[[c*dx-s*dz,c*vx-s*vz,3.28],[s*dx+c*dz,s*vx+c*vz,2.65]];
+  let enter=0,leave=1;
+  for(const [origin,velocity,extent] of axes){
+    if(Math.abs(velocity)<.000001){if(Math.abs(origin)>=extent)return false;continue;}
+    const first=(-extent-origin)/velocity,second=(extent-origin)/velocity;
+    enter=Math.max(enter,Math.min(first,second));leave=Math.min(leave,Math.max(first,second));
+    if(enter>=leave)return false;
+  }
+  return leave>0 && enter<1;
+}
 function clearLine(from,to) {
-  const n=Math.ceil(Math.hypot(to.x-from.x,to.z-from.z)/.45);
-  for(let i=1;i<=n;i++) if(!walkable(from.x+(to.x-from.x)*i/n,from.z+(to.z-from.z)*i/n)) return false;
+  if(locations.some(place=>crossBuilding(from,to,place)))return false;
+  const dx=to.x-from.x,dz=to.z-from.z,lengthSq=dx*dx+dz*dz;
+  for(const [cx,cz,r] of [[0,0,1.5],[beaconLocation.x,beaconLocation.z,1.05]]){
+    const t=lengthSq?Math.max(0,Math.min(1,((cx-from.x)*dx+(cz-from.z)*dz)/lengthSq)):0;
+    if(Math.hypot(from.x+dx*t-cx,from.z+dz*t-cz)<r)return false;
+  }
+  const samples=Math.max(1,Math.ceil(Math.sqrt(lengthSq)/.25));
+  for(let i=1;i<=samples;i++) if(edgeRatio(from.x+dx*i/samples,from.z+dz*i/samples)>.937)return false;
   return true;
 }
 // A small eight-way grid keeps tap travel on land and outside the buildings.
