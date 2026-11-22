@@ -88,7 +88,7 @@
 @media (hover: hover) and (pointer: fine) {
   .quest-cover .name-trigger:hover .name-letters > span { color: var(--tint); transform: translateY(var(--lift)); }
 }
-.collection-heading em, .archive-head em, .world-intro em { font-style: normal; }
+.collection-heading em, .archive-head em { font-style: normal; }
 .exhibit[data-place="field-station"] .art-kind { color: var(--mint-ink); }
 .exhibit[data-place="stage"] .art-kind { color: var(--pink); }
 .exhibit[data-place="workshop"] .art-kind { color: var(--sky-ink); }

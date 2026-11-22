@@ -2,13 +2,15 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { locations, doorway, walkingRoute, walkable } from '../world/island-ground.js';
 
-test('a visitor can walk from the dock or any landmark to every other entrance', () => {
-  const starts = [{ id: 'dock', x: -1.6, z: 7.7 }, ...locations.map(place => ({
+import { landing, tideStars } from '../world/island-quest.js';
+
+test('all landmark entrances and tide stars can be reached on foot from each other and the dock', () => {
+  const destinations = [...tideStars, ...locations.map(place => ({
     id: place.id, ...doorway(place)
   }))];
-  for (const from of starts) {
-    for (const destination of locations) {
-      const entrance = doorway(destination);
+  for (const from of [{ id: 'dock', ...landing }, ...destinations]) {
+    for (const destination of destinations) {
+      const entrance = { x: destination.x, z: destination.z };
       const path = walkingRoute(from, entrance);
       assert.ok(path.length, from.id + ' to ' + destination.id);
       assert.deepEqual(path.at(-1), entrance);

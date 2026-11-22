@@ -260,10 +260,10 @@ export function addLandscape(T,scene) {
     mesh.castShadow=['trunks','trees','stone','dock','posts'].includes(name);mesh.receiveShadow=true;scene.add(mesh);
   }
   const waterMaterial=new T.ShaderMaterial({
-    uniforms:{time:{value:0}},
+    uniforms:{time:{value:0},aurora:{value:0}},
     vertexShader:'varying vec3 pos; void main(){vec4 w=modelMatrix*vec4(position,1.);pos=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}',
     fragmentShader:`
-      varying vec3 pos; uniform float time;
+      varying vec3 pos; uniform float time; uniform float aurora;
       void main() {
         vec2 p=pos.xz;
         float scale=length(p/vec2(25.,18.));
@@ -277,6 +277,11 @@ export function addLandscape(T,scene) {
         color+=vec3(.17,.095,.12)*lavender*(.3+line*.8);
         float farwater=smoothstep(65.,190.,length(p));
         color=mix(color,vec3(.36,.43,.52),farwater);
+        float curve=p.x*.16+sin(p.y*.17+time*.17)*1.2+sin(p.y*.53+time*.68)*.17;
+        float stream=.5+.5*cos(curve+sin(p.x*.11-time*.14));
+        float openSea=smoothstep(.99,1.85,scale);
+        vec3 reflected=mix(vec3(.12,.56,.46),vec3(.62,.31,.55),.5+.5*sin(curve*.6));
+        color=mix(color,color*vec3(.47,.56,.77)+reflected*openSea*pow(stream,3.)*(.18+.19*line),aurora);
         gl_FragColor=vec4(color,1.);
       }`,side:T.DoubleSide
   });

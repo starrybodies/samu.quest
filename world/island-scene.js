@@ -2,13 +2,15 @@ import * as T from '../assets/vendor/three.module.min.js';
 import { buildLandmark, buildTraveler, buildBeacon } from './island-models.js';
 import { locations, doorway, walkable, walkingRoute, groundHeight, addLandscape, beaconLocation } from './island-ground.js';
 
+import { landing, tideStars } from './island-quest.js';
+import { addIslandLife } from './island-life.js';
+
 const limit=(x,min,max)=>Math.max(min,Math.min(max,x));
-export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
-  const renderer=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
+export function createIsland({host,canvas,context,markers,starMarkers,foxButton,places,onNearby,onArrive,onStar,onLost}) {
+  const renderer=new T.WebGLRenderer({canvas,context,antialias:true,alpha:false,powerPreference:'low-power'});
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1,matchMedia('(pointer:coarse)').matches ? 1.5 : 1.75));
   renderer.shadowMap.enabled=true; renderer.shadowMap.type=T.PCFSoftShadowMap;
   renderer.outputColorSpace=T.SRGBColorSpace;
-  const canvas=renderer.domElement;
   canvas.tabIndex=0;canvas.setAttribute('aria-label','Island walk. Use WASD or arrow keys to move, and Enter to visit a nearby landmark.');
   host.append(canvas);
   const scene=new T.Scene(); scene.background=new T.Color('#8998ac');scene.fog=new T.Fog('#8190a3',85,165);
@@ -42,12 +44,17 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   const beam=new T.Group();beam.position.set(beaconLocation.x,by+3.56,beaconLocation.z);
   const beamCone=new T.Mesh(new T.ConeGeometry(1.8,10,20,1,true),new T.MeshBasicMaterial({color:'#ffdcc5',transparent:true,opacity:.16,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
   beamCone.rotation.z=Math.PI/2;beamCone.position.x=5;beam.add(beamCone);beam.visible=false;scene.add(beam);
-  const avatar=buildTraveler(T);avatar.position.set(-1.6,0,7.7);avatar.rotation.y=Math.PI;scene.add(avatar);
+  const avatar=buildTraveler(T);avatar.position.set(landing.x,0,landing.z);avatar.rotation.y=Math.PI;scene.add(avatar);
+  const life=addIslandLife(T,scene,landing);
+  let collected=new Set(),twilight=0;
+  const daylight=sun.color.clone(),evening=new T.Color('#f7bcb0');
+  const skyDay=sky.color.clone(),skyNight=new T.Color('#99abc9');
   const avatarHalo=new T.Mesh(new T.RingGeometry(.36,.49,32),new T.MeshBasicMaterial({color:'#fff3fd',side:T.DoubleSide}));
   avatarHalo.rotation.x=-Math.PI/2;scene.add(avatarHalo);
   const targetRing=new T.Mesh(new T.RingGeometry(.36,.45,28),new T.MeshBasicMaterial({color:'#f7b79e',side:T.DoubleSide}));
   targetRing.rotation.x=-Math.PI/2;targetRing.visible=false;scene.add(targetRing);
-  let yaw=0.13,zoom=1,follow=new T.Vector2(0,0),width=1,height=1;
+  const startBounds=host.getBoundingClientRect();
+  let yaw=0.13,zoom=startBounds.width/startBounds.height<.9?1.90:1.45,follow=new T.Vector2(0,0),width=1,height=1;
   let route=[],arriveAt=null,nearest=null,paused=false,disposed=false;
   let frameID=0,last=0,time=0,stride=0,dirty=true,hasFrame=false;
   const keys=new Set(),projected=new T.Vector3(),ray=new T.Raycaster();
@@ -56,25 +63,31 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   const addEvent=(target,event,fn,options={})=>target.addEventListener(event,fn,{...options,signal});
   const phase=()=>!document.hidden&&!paused&&!disposed;
   function cameraFor(dt=1){
-    const level=limit((zoom-1)*.72,0,.92);
-    const lookX=avatar.position.x*level,lookZ=avatar.position.z*level;
+    const level=limit((zoom-1)*1.24,0,.94);
+    const aspect=width/height;
+    // On portrait screens, leave room to see the winding trail ahead of the traveler.
+    const lead=aspect<.9 ? 11.5*level : 0;
+    const lookX=avatar.position.x*level-Math.sin(yaw)*lead;
+    const lookZ=avatar.position.z*level-Math.cos(yaw)*lead;
     const damp=reduced.matches?1:1-Math.exp(-7*dt);
     follow.x+=(lookX-follow.x)*damp;follow.y+=(lookZ-follow.y)*damp;
-    const aspect=width/height;
-    const minSpan = aspect<.9 ? 50.5/aspect : Math.max(34.5,56/aspect);
+    const minSpan = aspect<.9 ? 43/aspect : Math.max(34.5,56/aspect);
     const vertical = minSpan/zoom;
     camera.top=vertical/2;camera.bottom=-vertical/2;camera.right=vertical*aspect/2;camera.left=-camera.right;
-    const centerY=1.6;
-    camera.position.set(follow.x+Math.sin(yaw)*64,centerY+47,follow.y+Math.cos(yaw)*64);
+    const centerY=1.6+twilight*1.9;
+    camera.position.set(follow.x+Math.sin(yaw)*64,centerY+47-twilight*16,follow.y+Math.cos(yaw)*64);
     camera.lookAt(follow.x,centerY,follow.y);camera.updateProjectionMatrix();camera.updateMatrixWorld();
   }
   function positionMarkers(){
-    for(const [id,marker] of markers){
-      projected.copy(anchors.get(id)).project(camera);
+    function pin(marker,anchor,yOffset=0){
+      projected.copy(anchor);projected.y+=yOffset;projected.project(camera);
       const x=(projected.x*.5+.5)*width,y=(-projected.y*.5+.5)*height;
       marker.style.visibility=projected.z < -1 || projected.z > 1||x<9||y<12||x>width-9||y>height-16?'hidden':'';
       marker.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px) translate(-50%,-100%)';
     }
+    pin(foxButton,life.foxPosition,.12);
+    for(const [id,marker] of markers)pin(marker,anchors.get(id));
+    for(const [id,marker] of starMarkers)if(!collected.has(id))pin(marker,life.stars.get(id).group.position,.46);
   }
   function resize(){
     const r=host.getBoundingClientRect();width=Math.max(1,r.width);height=Math.max(1,r.height);
@@ -118,6 +131,13 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
     }
     routeTo(e,id);
   }
+  function travelToStar(id){
+    const star=tideStars.find(item=>item.id===id);
+    if(!star||collected.has(id))return;
+    if(reduced.matches){
+      clearTravel();placeAt(star.x,star.z,0,0,false);onStar(id);dirty=true;request();
+    }else routeTo(star,null);
+  }
   function move(dt){
     let horizontal=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0);
     let vertical=(keys.has('w')||keys.has('arrowup')?1:0)-(keys.has('s')||keys.has('arrowdown')?1:0);
@@ -137,6 +157,7 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
     const moving=Math.hypot(avatar.position.x-x,avatar.position.z-z)>.0001;
     if(moving)stride+=dt*10;
     placeAt(x,z,dx,dz,moving);visitNearby();
+    for(const star of tideStars)if(!collected.has(star.id)&&Math.hypot(x-star.x,z-star.z)<.88)onStar(star.id);
     if(!route.length&&targetRing.visible){
       const label=arriveAt;clearTravel();
       if(label)onArrive(label);
@@ -146,12 +167,21 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   function draw(now){
     frameID=0;
     if(disposed||document.hidden)return;
-    const dt=Math.min(.055,Math.max(0,(now-(last||now))/1000));
+    const dt=Math.min(.65,Math.max(0,(now-(last||now))/1000));
     const active=keys.size||route.length;
     if(!dirty&&!active&&!paused&&!reduced.matches&&now-last<32) { request(); return; }
     last=now;
-    const moving=paused?false:move(dt);
+    // Keep keyboard collision steps short on slower GPUs while preserving walking speed.
+    const steps=Math.max(1,Math.ceil(dt/.05));
+    let moving=false;
+    for(let i=0;i<steps&&!paused;i++)moving=move(dt/steps)||moving;
     if(!paused&&!reduced.matches)time+=dt;
+    const target=Number(collected.size===tideStars.length);
+    twilight=reduced.matches?target:twilight+(target-twilight)*(1-Math.exp(-dt*2.2));
+    sun.color.lerpColors(daylight,evening,twilight);sun.intensity=2.05-.75*twilight;
+    sky.color.lerpColors(skyDay,skyNight,twilight);sky.intensity=1.15-.18*twilight;
+    waterMaterial.uniforms.aurora.value=twilight;
+    life.update(time,paused?0:dt,avatar.position,reduced.matches,yaw);
     waterMaterial.uniforms.time.value=time;
     beam.rotation.y=reduced.matches?-.6:time*.55;
     for(const {orb,y} of lamps.values())orb.position.y=y+(reduced.matches?0:.095*Math.sin(time*1.45+y));
@@ -161,6 +191,9 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   function request(){if(!frameID&&!disposed&&!document.hidden)frameID=requestAnimationFrame(draw);}
   function changeZoom(factor){zoom=limit(zoom*factor,.83,2.35);dirty=true;request();}
   function frame(){zoom=1;yaw=.13;follow.set(0,0);dirty=true;request();}
+  function setCollected(value,discovery){
+    collected=new Set(value);life.setCollected(collected,discovery);dirty=true;request();
+  }
   function setVisited(visited){
     for(const [id,objects] of lamps){
       objects.signal.visible=visited.has(id);objects.ring.material.opacity=visited.has(id)?1:.65;
@@ -176,11 +209,13 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   function pick(x,y){
     const r=canvas.getBoundingClientRect();
     ray.setFromCamera(new T.Vector2((x-r.left)/r.width*2-1,-(y-r.top)/r.height*2+1),camera);
-    const hit=ray.intersectObjects([...buildings,land],true)[0];
+    const availableStars=[...life.stars.values()].map(star=>star.group).filter(group=>group.visible);
+    const hit=ray.intersectObjects([...buildings,...availableStars,land],true)[0];
     if(!hit)return;
     let group=hit.object;
-    while(group&&!group.userData.place)group=group.parent;
-    if(group?.userData.place)travelTo(group.userData.place);
+    while(group&&!group.userData.place&&!group.userData.star)group=group.parent;
+    if(group?.userData.star)travelToStar(group.userData.star);
+    else if(group?.userData.place)travelTo(group.userData.place);
     else if(walkable(hit.point.x,hit.point.z))routeTo({x:hit.point.x,z:hit.point.z},null);
   }
   let pointer=null;
@@ -205,7 +240,7 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
   const movementKeys=new Set(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright']);
   addEvent(window,'keydown',e=>{
     const focus=document.activeElement;
-    if(paused||e.ctrlKey||e.altKey||e.metaKey || (focus!==canvas && !focus?.closest('.place-marker')))return;
+    if(paused||e.ctrlKey||e.altKey||e.metaKey || (focus!==document.body && focus!==canvas && !focus?.closest('.place-marker')))return;
     const key=e.key.toLowerCase();
     if(movementKeys.has(key)){e.preventDefault();if(focus!==canvas)canvas.focus({preventScroll:true});keys.add(key);dirty=true;request();}
     else if(focus===canvas&&(key==='e'||key==='enter')&&nearest&&!e.repeat){e.preventDefault();onArrive(nearest);}
@@ -224,5 +259,7 @@ export function createIsland({host,markers,places,onNearby,onArrive,onLost}) {
     geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());renderer.dispose();canvas.remove();
   }
   placeAt(avatar.position.x,avatar.position.z,0,0,false);resize();
-  return {travelTo,placeTraveler,setVisited,setPaused,zoom:changeZoom,frame,focus:()=>canvas.focus({preventScroll:true}),dispose};
+  cancelAnimationFrame(frameID);frameID=0;
+  try{draw(performance.now());}catch(error){dispose();throw error;}
+  return {travelTo,travelToStar,placeTraveler,greet(){life.greet();dirty=true;request();},setVisited,setCollected,setPaused,zoom:changeZoom,frame,focus:()=>canvas.focus({preventScroll:true}),dispose};
 }

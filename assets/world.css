@@ -22,7 +22,6 @@
 .world-header nav a:hover, .world-hud button:hover, .close-sheet:hover, .close-place:hover { background: #353735; color: #fff; }
 .world-header .world-control { color: #f7b79e; }
 .world-progress { position: absolute; z-index: 1; top: clamp(7rem,8.1vw,9rem); left: clamp(1rem,3vw,3rem); color: #eeeee8; font-size: .86rem; padding: .27rem .6rem; display: inline-flex; gap: .45rem; align-items: center; background: #131516ee; border: 1px solid #777b78; border-radius: 3px; }
-.beacon-glyph { color: #f7b79e; font-size: 1.1rem; }
 .world-hud { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; padding: 0 clamp(1rem,3vw,3rem) max(1rem,env(safe-area-inset-bottom)); pointer-events: none; }
 .hud-row { display: flex; justify-content: space-between; align-items: flex-end; gap: .55rem; }
 #movement-tip { display: inline-block; padding: .35rem .65rem; color: #eeeae6; font: 500 .84rem/1.35 var(--quest-body); background: #171919eb; border-radius: 3px; }
@@ -33,12 +32,6 @@
 .world-hud #nearby:not([hidden]) { display: flex; width: max-content; }
 .world-status { position: absolute; z-index: 3; left: 50%; bottom: 5.3rem; transform: translateX(-50%); width: max-content; max-width: calc(100% - 2rem); padding: .4rem .8rem; border-radius: 3px; color: #eeeee8; background: #24272aed; font-size: .93rem; pointer-events: none; text-align: center; }
 .world-status:empty { display: none; }
-.world-intro { position: absolute; inset: 0; background: linear-gradient(90deg,#090909fc 1%,#090909ef 23%,#090909a8 42%,transparent 67%); display: flex; align-items: center; pointer-events: none; }
-.world-intro > div { width: min(30rem,46%); margin-left: clamp(1.2rem,7vw,7.5rem); padding-block: 5.5rem 2rem; pointer-events: auto; }
-.world-intro h2 { font-size: clamp(3rem,5.2vw,6.2rem); line-height: .97; margin-bottom: 1.1rem; }
-.world-intro h2 em { color: #f7b79e; }
-.world-intro p:not(.quest-kicker) { max-width: 25rem; font: 400 1.1rem/1.48 var(--quest-body); color: #e1e1dc; margin: 0 0 1.2rem; }
-.intro-index { color: #eeeee8; min-height: 44px; display: inline-flex; align-items: center; margin: .15rem .75rem; font-size: .92rem; }
 .island-directory { padding: 2rem; background: #1b1c1c; }
 .island-directory.enhanced { position: fixed; z-index: 8; top: 5.7rem; right: clamp(1rem,3vw,3rem); width: min(23rem,calc(100% - 2rem)); max-height: calc(100svh - 7rem); overflow-y: auto; display: none; padding: 1.15rem; border: 1px solid #8e928a; border-radius: 6px; box-shadow: 0 12px 45px #091426ad; }
 .island-directory.enhanced.open { display: block; }
@@ -63,15 +56,10 @@
 .island-projects h3 { font: 550 1.28rem/1.25 var(--quest-body); color: #eeeee8; margin: .28rem 0; letter-spacing: -.025em; }
 .island-projects article > p:not(.island-kind) { color: #cccdc4; font-size: 1rem; }
 .return-world { color: #eeeee8; border-color: #908a83; background: #343737; margin-top: .7rem; }
-.island-screen[data-mode="map"] .place-marker { transform: translate(-50%,-50%); }
 @media(max-width: 680px) {
   .world-header { padding-top: .8rem; } .world-header nav { gap: .3rem; } .world-header nav a { padding: .5rem .6rem; font-size: .85rem; }
   .world-progress { top: 5.7rem; font-size: .77rem; }
   .world-backdrop { background-position: 61% 0; }
-  .world-intro { align-items: flex-end; background: linear-gradient(0deg,#090909fc 8%,#090909f2 28%,#090909a8 43%,transparent 72%); }
-  .world-intro > div { width: calc(100% - 2.4rem); margin: 0 1.2rem; padding: 1rem 0 2rem; }
-  .world-intro h2 { font-size: clamp(2.35rem,9vw,3rem); margin-bottom: .6rem; } .world-intro h2 br { display:none; }
-  .world-intro p:not(.quest-kicker) { font-size: 1rem; max-width: 29rem; }
   .world-status { bottom: 4.9rem; font-size: .82rem; }
   .place-marker { padding: .25rem; min-height: 36px; min-width: 36px; justify-content:center; }
   .place-marker > span { display:none; }
@@ -79,15 +67,107 @@
   #movement-tip { font-size: .73rem; padding: .35rem .45rem; }
   .world-hud { padding-inline: .65rem; }
   .zoom-buttons button { width: 38px; min-height: 38px; }
-  .island-screen[data-mode="map"] .place-marker > span { display: inline; font-size: .68rem; }
-  .island-screen[data-mode="map"] .place-marker .place-icon { display:none; }
-  .island-screen[data-mode="map"] .world-backdrop { background-size: 100% auto; background-position: 50% 50%; }
 }
 @media(max-height:580px) and (orientation:landscape) {
  .world-header h1 { font-size: 1.6rem; }.world-progress { top:auto; bottom:4rem; }
- .world-intro h2 { font-size:3.25rem; }.world-intro > div { padding-block:3rem 0; }
  .island-directory.enhanced { top:1rem; max-height:calc(100svh - 2rem); }
 }
 
-.island-screen[data-mode="map"] .world-backdrop { background-size: contain; background-position: center; }
-.island-screen[data-mode="map"] .map-labels { inset: auto; left: 50%; top: 50%; width: min(100%,200svh); height: auto; aspect-ratio: 2; transform: translate(-50%,-50%); overflow: visible; }
+
+.island-page [hidden] { display: none !important; }
+.island-screen, .scene-host, .map-labels { overflow: clip; }
+.island-screen { min-height: min(420px,100svh); }
+.world-header { background: linear-gradient(180deg,#10111cd4,transparent); }
+.world-header h1 { font-family: var(--quest-display); letter-spacing: -.05em; }
+.world-brand, .world-header h1 { text-shadow: 0 1px 8px #061222b3; }
+.world-header nav a, .zoom-buttons button { border-color: #938a82; background: linear-gradient(#302f30ed,#1c1d21f5); box-shadow: inset 0 1px #ffffff1a, 0 2px 8px #0c151c40; }
+.world-progress { top:calc(max(1.25rem,env(safe-area-inset-top)) + 3.25rem); right:clamp(1rem,3vw,3rem); left:auto; bottom:auto; gap: .67rem; padding: .35rem .65rem; border-color: #91847a; box-shadow: 0 2px 7px #0b172449; background: #17191def; }
+.progress-item { display: inline-flex; align-items: center; gap: .32rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.progress-item + .progress-item { border-left: 1px solid #55514f; padding-left:.62rem; }
+.progress-item svg { width: 1.18em; height: 1.18em; stroke: #f7b79e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.stars-count svg { fill: #f5d09a; stroke: #f5d09a; }
+.aurora-awake .stars-count { color:#a6dcca; }
+.lighthouse-lit .progress-item:first-child { color:#f7cea3; }
+.world-hud { background: linear-gradient(0deg,#10121bb8,transparent); padding-top: 1.5rem; }
+#movement-tip { max-width: 29rem; }
+.world-status { border: 1px solid #8f8274; background: #242327f2; line-height:1.4; }
+.world-status:empty { border:0; }
+.star-marker { position:absolute; top:0; left:0; display:grid; place-items:center; padding:0; width:44px; height:44px; border:0; background:transparent; pointer-events:auto; cursor:pointer; border-radius:50%; }
+.star-marker::before { content:''; position:absolute; inset:5px; border-radius:50%; background: radial-gradient(circle,#ffe7b67d, #ffcb831c 50%,transparent 75%); }
+.star-marker svg { width:27px; height:27px; filter:drop-shadow(0 1px 2px #663920) drop-shadow(0 0 4px #ffeac4); animation:star-drift 3.4s ease-in-out infinite; }
+.star-marker[data-star="cedar"] svg { animation-delay:-1.6s; }
+.star-marker[data-star="tidepool"] svg { animation-delay:-.8s; }
+.star-marker:focus-visible, .star-marker:hover { outline: 1px solid #ffe2aa; background: #261e1f9e; }
+@keyframes star-drift { 0%,100%{ transform:translateY(1px) scale(.93); } 50%{ transform:translateY(-2px) scale(1.08); } }
+.place-marker { padding-inline: .5rem; border-color: #a69a8b; background:linear-gradient(#2c2c30f5,#1d1d22f7); box-shadow:inset 0 1px #fff2,0 3px 8px #141b2180; }
+.star-guide { margin-top:1rem; padding-top:.85rem; border-top:1px solid #6c625a; }
+.star-guide h3 { font:600 1.15rem/1.3 var(--quest-display); margin:0 0 .25rem; }
+.star-guide p { margin:0 0 .5rem; color:#c9cac3; font-size:.88rem; }
+#star-trails { display:grid; }
+#star-trails button { display:flex; align-items:center; gap:.5rem; text-align:left; font:500 .91rem/1.2 var(--quest-body); padding:.55rem .18rem; min-height:42px; color:#f2e3cf; background:transparent; border:0; border-top:1px solid #403f3e; cursor:pointer; }
+#star-trails button:hover { color:white; background:#ffffff0a; }
+#star-trails button:disabled { color:#a6b9ac; cursor:default; }
+#star-trails svg { flex:none; width:1.2rem; }
+#star-trails small { margin-left:auto; color:#c0bdb8; font-size:.76rem; }
+#quest-sound[aria-pressed="false"] .sound-waves, #quest-sound[aria-pressed="true"] .mute-mark { display:none; }
+#quest-sound[aria-pressed="true"] { color: #f7b79e; }
+.static-guide { position:absolute; left:5%; bottom:8%; background:#191a1b; color:#eeeee8; padding:.7rem 1rem; }
+.island-screen[data-mode="map"] .world-backdrop { background:linear-gradient(0deg,#101825ab,#14192b29 60%), url('/images/quest-island.webp') 72% 55%/cover; filter:blur(14px) brightness(.55); transform:scale(1.07); }
+.paint-view { position:absolute; inset:0; overflow:clip; touch-action:none; cursor:grab; }
+.paint-view:active { cursor:grabbing; }
+.paint-view:focus-visible { outline:2px solid #9cc9ee; outline-offset:-3px; }
+.paint-board { position:absolute; top:0; left:0; aspect-ratio:2; background: url('/images/quest-island.webp') center/100% 100% no-repeat; user-select:none; pointer-events:none; }
+.paint-board::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg,#1620364d,transparent 12%,transparent 93%,#1b20332e); pointer-events:none; }
+.paint-ranger, .paint-fox, .paint-gull { position:absolute; --face:1; transform:translate(-50%,-94%); pointer-events:none; }
+.paint-ranger { width:clamp(24px,2.3vw,37px); z-index:2; }
+.paint-fox { width:clamp(25px,2.5vw,42px); z-index:2; }
+.paint-ranger svg, .paint-fox svg { display:block; width:100%; overflow:visible; transform:scaleX(var(--face)); filter:drop-shadow(0 1px 1px #352930); }
+.walking .sprite-body { animation:trail-step .28s ease-in-out alternate infinite; }
+.fox-tail { transform-origin:50% 65%; animation:fox-tail 2.3s ease-in-out alternate infinite; }
+.paint-gull { width:clamp(15px,1.8vw,30px); animation:gull-glide 13s ease-in-out var(--delay) infinite alternate; }
+.paint-gull svg { width:100%; animation:gull-wing 1.2s ease-in-out var(--delay) infinite alternate; }
+.paint-beacon { position:absolute; width:13%; height:5%; transform-origin:0 50%; opacity:0; background:linear-gradient(90deg,#ffe2aeb0,#ffdd9e12 86%,transparent); clip-path:polygon(0 46%,100% 0,100% 100%,0 54%); }
+.paint-beacon.lit { opacity:1; animation:light-sweep 6s ease-in-out infinite alternate; }
+.paint-aurora { position:absolute; width:84%; height:16%; transform:translate(-50%,-58%) rotate(-4deg); opacity:0; transition:opacity 1.5s ease; mix-blend-mode:screen; pointer-events:none; }
+.paint-aurora.lit { opacity:.95; }
+.paint-aurora::before, .paint-aurora::after { content:''; position:absolute; inset:0; border-radius:50% 0 50% 18%; filter:blur(2px); background:linear-gradient(175deg,transparent 9%,#b5a6ed24 26%,#9bbbe877 39%,#88e2caaa 46%,#9cecba40 50%,transparent 59%); mask-image:linear-gradient(90deg,transparent,#000 19%,#000 86%,transparent); animation:aurora-tide 9s ease-in-out infinite alternate; }
+.paint-aurora::after { inset:12% 10% 0 14%; border-radius:0 0 74% 40%; background:linear-gradient(167deg,transparent 28%,#de9ca95c 43%,#acd6dd66 48%,transparent 58%); animation-delay:-4s; }
+.paint-sparks { position:absolute; width:0; height:0; z-index:4; }
+.paint-sparks i { position:absolute; width:4px; height:4px; background:#ffebbb; transform:rotate(45deg); box-shadow:0 0 4px #f7bd88; animation:star-scatter .7s ease-out both; }
+@keyframes trail-step { to{ transform:translateY(-2px) rotate(2deg); } }
+@keyframes fox-tail { from{transform:rotate(-4deg);} to{transform:rotate(6deg);} }
+@keyframes gull-glide { from{ transform:translate(-180%,-40%) rotate(-5deg); } to{ transform:translate(230%,45%) rotate(7deg); } }
+@keyframes gull-wing { from{transform:scaleY(.58);} to{transform:scaleY(1.04);} }
+@keyframes light-sweep { from{transform:rotate(-5deg) scaleX(1);} to{transform:rotate(6deg) scaleX(-1.7);} }
+@keyframes aurora-tide { from{transform:skewX(-8deg) translateY(-4%);} to{transform:skewX(9deg) translateY(10%);} }
+@keyframes star-scatter { to{ transform:translate(var(--dx),var(--dy)) rotate(130deg) scale(.2); opacity:0; } }
+.paint-view.paused *, .paint-view.paused *::before, .paint-view.paused *::after { animation-play-state:paused; }
+@media(max-width:680px) {
+ .world-header h1 { font-size:clamp(1.8rem,8vw,2.6rem); }
+ .world-header nav a { font-size:.82rem; }
+ .world-progress { top:4.95rem; gap:.45rem; }
+ .progress-item + .progress-item { padding-left:.4rem; }
+ .place-marker { min-width:40px; min-height:40px; padding:.25rem; }
+ .world-hud { padding-bottom:max(.7rem,env(safe-area-inset-bottom)); }
+ .zoom-buttons button { min-width:40px; min-height:42px; }
+ #movement-tip { max-width:14rem; }
+ #nearby { max-width:95%; }
+ .world-status { bottom:6.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .island-screen *, .island-screen *::before, .island-screen *::after { animation:none!important; transition:none!important; }
+}
+#switch-3d { font:600 .85rem/1 var(--quest-display); color:#f7b79e; }
+@media (max-aspect-ratio: 3/4) {
+ .paint-board { mask-image:linear-gradient(0deg,transparent,#000 5%,#000 95%,transparent); }
+}
+.fox-target { position:absolute; top:0; left:0; width:44px; height:44px; padding:0; border:0; background:transparent; pointer-events:auto; cursor:pointer; border-radius:50%; }
+.fox-target span { position:absolute; left:50%; bottom:85%; transform:translateX(-50%); color:#ffc7c1; font:600 18px/1 var(--quest-body); opacity:0; text-shadow:0 1px 3px #4f3037; }
+.fox-target:focus-visible { outline:1px dashed #ffe2b1; }
+.fox-target:hover span, .fox-target:focus-visible span, .fox-target.happy span { opacity:1; }
+.fox-target.happy span { animation:fox-heart 1s ease-out both; }
+.paint-fox.greeting .sprite-body { animation:fox-hop .65s ease-in-out; }
+.paint-fox.greeting .fox-tail { animation:fox-tail .09s ease-in-out alternate infinite; }
+@keyframes fox-hop { 40%{transform:translateY(-5px) rotate(-4deg);} 70%{transform:translateY(0);} 85%{transform:translateY(-2px);} }
+@keyframes fox-heart { from{transform:translate(-50%,6px) scale(.72);} to{transform:translate(-50%,-9px) scale(1.04);} }
+.island-screen:has(#nearby:not([hidden])) .world-status { bottom:8rem; }
